@@ -1,0 +1,91 @@
+import { adminApi } from "../setup/AdminBaseApi";
+
+export const adminProductApi = adminApi.injectEndpoints({
+  endpoints: (builder) => ({
+    productAdd: builder.mutation({
+      query: (data) => ({
+        url: "/products/",
+        method: "post",
+        body: data,
+      }),
+      providesTags: ["Product"],
+    }),
+    getProducts: builder.query({
+      query: (params) => ({
+        url: `/products/`,
+        params: params,
+      }),
+      providesTags: ["Product"],
+    }),
+    updateProduct: builder.mutation({
+      query: ({ data, id }) => ({
+        url: `/products/${id}`,
+        method: "put",
+        body: data,
+      }),
+      invalidatesTags: ["Product"],
+    }),
+    unlistProduct: builder.mutation({
+      query: (id) => ({
+        url: `/products/unlist/${id}`,
+        method: "patch",
+      }),
+      invalidatesTags: ["Product"],
+    }),
+    getVariants: builder.query({
+      query: (id) => ({
+        url: `/products/variants/${id}`,
+        method: "get",
+      }),
+      providesTags: ["Variants"],
+    }),
+    getProductById: builder.query({
+      query: (id) => ({
+        url: `/products/${id}`,
+        method: "get",
+      }),
+    }),
+    unlistVariant: builder.mutation({
+      query: (id) => ({
+        url: `/products/variants/unlist/${id}`,
+        method: "patch",
+      }),
+      invalidatesTags: ["Variants"],
+    }),
+    editVariant: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/products/variants/${id}`,
+        method: "put",
+        body: data,
+      }),
+      invalidatesTags: ["Variants"],
+    }),
+    addVariant: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/products/variants/${id}`,
+        method: "post",
+        body: data,
+      }),
+      invalidatesTags: ["Variants"],
+    }),
+    getSearchSuggestions: builder.query({
+      query: (params) => ({
+        url: "/products/search/suggestions",
+        params,
+      }),
+    }),
+  }),
+});
+
+export const {
+  useProductAddMutation,
+  useGetProductsQuery,
+  useUpdateProductMutation,
+  useUnlistProductMutation,
+  useGetVariantsQuery,
+  useGetProductByIdQuery,
+  useUnlistVariantMutation,
+  useEditVariantMutation,
+  useAddVariantMutation,
+  useGetSearchSuggestionsQuery,
+} = adminProductApi;
