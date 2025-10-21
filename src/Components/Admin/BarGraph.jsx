@@ -6,20 +6,10 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  ReferenceLine,
 } from "recharts";
+import { useGetUsersChartDataQuery } from "../../Store/Api/admin/users";
 
-// Example data — replace with your real user data
-const data = [
-  { name: "Mon", users: 120 },
-  { name: "Tue", users: 150 },
-  { name: "Wed", users: 80 },
-  { name: "Thu", users: 200 },
-  { name: "Fri", users: 170 },
-  { name: "Sat", users: 140 },
-  { name: "Sun", users: 100 },
-];
-
-// Tooltip style
 const tooltipStyles = {
   backgroundColor: "rgba(255, 255, 255, 0.9)",
   padding: "10px",
@@ -30,7 +20,6 @@ const tooltipStyles = {
   fontFamily: "inter",
 };
 
-// Custom tooltip
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
@@ -42,13 +31,31 @@ const CustomTooltip = ({ active, payload, label }) => {
   }
   return null;
 };
+const CustomBarShape = (props) => {
+  const { x, y, width, height, value } = props;
+  const barHeight = value === 0 ? 4 : height; 
+  const barY = value === 0 ? y - 4 : y; 
 
-const Performance = ({ show }) => {
+  return (
+    <rect
+      x={x}
+      y={barY}
+      width={width}
+      height={barHeight}
+      fill="url(#userBar)"
+      rx={10}
+      ry={10}
+    />
+  );
+};
+
+const Performance = ({ show , filter}) => {
+  const { data } = useGetUsersChartDataQuery(filter);
   return (
     <div className="performance">
       <ResponsiveContainer width={show ? 530 : 700} height={280}>
         <BarChart
-          data={data}
+          data={data?.data}
           margin={{
             top: 20,
             right: 5,
@@ -76,14 +83,14 @@ const Performance = ({ show }) => {
               fontSize: "11px",
               fontFamily: "inter",
             }}
+            allowDecimals={false}
           />
 
           <Tooltip content={<CustomTooltip />} />
-
           <Bar
             dataKey="users"
             barSize={30}
-            fill="url(#userBar)"
+            shape={<CustomBarShape />}
             radius={[10, 10, 0, 0]}
           />
         </BarChart>

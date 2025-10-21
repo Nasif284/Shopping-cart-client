@@ -10,12 +10,26 @@ import { useGetCategoriesByLevelQuery } from "../../Store/Api/admin/category";
 import { useGetSizesQuery } from "../../Store/Api/admin/size";
 import { useDispatch, useSelector } from "react-redux";
 import { setParams } from "../../Store/StoreSlices/uiSlice";
+import { Button, Menu, MenuItem } from "@mui/material";
 const ProductSidebar = ({ catParams }) => {
   const { params } = useSelector((state) => state.ui);
+  const [min, setMin] = useState({ param: 50, label: "50" });
+  const [max, setMax] = useState({ param: 1000, label: "max" });
   const dispatch = useDispatch();
   const [isOpenCat, setIsOpenCat] = useState(true);
   const [isOpenAvai, setIsOpenAvai] = useState(true);
   const [isOpenSize, setIsOpenSize] = useState(true);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleMaxPrice = ({ param, label }) => {
+    setMax({ param, label });
+  };
 
   let { data: subCats, isLoading: isSubCatLoading } =
     useGetCategoriesByLevelQuery({ level: "second" });
@@ -193,21 +207,75 @@ const ProductSidebar = ({ catParams }) => {
           Filter By Price
         </h1>
         <RangeSlider
-          min={100}
-          max={1500}
+          min={min.param}
+          max={max.param}
           step={50}
-          value={[params.minPrice || 100, params.maxPrice || 750]}
-          onInput={(values) =>
-            dispatch(setParams({ minPrice: values[0], maxPrice: values[1] }))
-          }
+          value={[params.minPrice || 50, params.maxPrice || 750]}
+          onInput={(values) => {
+            dispatch(setParams({ minPrice: values[0], maxPrice: values[1] }));
+            setMin((prev) => ({ ...prev, label: values[0] }));
+            setMax((prev) => ({ ...prev, label: values[1] }));
+          }}
         />
-        <div className="flex justify-between pb-2 pt-4">
-          <p className="text-[14px]">
-            From <span className="font-[700]">Rs: 100</span>
-          </p>
-          <p className="text-[14px]">
-            To <span className="font-[700]">Rs: 1500</span>
-          </p>
+        <div className="flex justify-between items-center pb-2 pt-4">
+          <div className="flex items-center">
+            <p className="text-[14px]">
+              From:
+              <span className="font-bold"> {min.label}</span>
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <p className="text-[14px]">
+              To:{" "}
+              <span className="font-bold">
+                {max.label == 3000 ? "3000 +" : max.label}
+              </span>
+            </p>
+            <div>
+              <Button
+                className="!bg-gray-200 rounded-lg !text-[12px] !text-black !font-[700] !capitalize"
+                id="basic-button"
+                aria-controls={open ? "basic-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                onClick={handleClick}
+              >
+                {max.param == 3000 ? "3000 +" : max.param}
+                <IoIosArrowDown className="ml-2" />
+              </Button>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                slotProps={{
+                  list: {
+                    "aria-labelledby": "basic-button",
+                  },
+                }}
+              >
+                <MenuItem
+                  className="!text-[13px] !text-black"
+                  onClick={() => handleMaxPrice({ param: 1000, label:"1000" })}
+                >
+                  1000
+                </MenuItem>
+                <MenuItem
+                  className="!text-[13px] !text-black"
+                  onClick={() => handleMaxPrice({ param: 2000,label:"2000" })}
+                >
+                  2000
+                </MenuItem>
+                <MenuItem
+                  className="!text-[13px] !text-black"
+                  onClick={() => handleMaxPrice({ param: 3000,label:"3000 +" })}
+                >
+                  3000 +
+                </MenuItem>
+              </Menu>
+            </div>
+          </div>
         </div>
       </div>
       <div className="box">

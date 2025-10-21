@@ -82,7 +82,7 @@ const VariantListView = ({ variants, category }) => {
                   <p className="text-[15px]">
                     <span className="font-[600]">Old Price :</span>{" "}
                     <span className="text-gray-500 font-[500] text-[15px]">
-                      ${variant.oldPrice}
+                      ₹{variant.oldPrice.toLocaleString()}
                     </span>
                   </p>
                 </li>
@@ -90,7 +90,7 @@ const VariantListView = ({ variants, category }) => {
                   <p className="text-[15px]">
                     <span className="font-[600]">Price :</span>{" "}
                     <span className="text-primary font-[600] text-[15px]">
-                      ${variant.price}
+                      ₹{variant.price.toLocaleString()}
                     </span>
                   </p>
                 </li>

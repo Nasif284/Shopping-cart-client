@@ -19,9 +19,10 @@ export const adminCategoryApi = adminApi.injectEndpoints({
       providesTags: ["Category"],
     }),
     getAllCategories: builder.query({
-      query: () => ({
+      query: (params) => ({
         url: `/category/`,
         method: "get",
+        params
       }),
       providesTags: ["Category"],
     }),

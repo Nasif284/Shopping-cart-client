@@ -5,19 +5,29 @@ import {
   useGetVariantsQuery,
 } from "../../Store/Api/admin/product";
 import { Review } from "../../Components/User";
-import { Button } from "@mui/material";
+import { Button, Pagination } from "@mui/material";
 import { FaPlus } from "react-icons/fa6";
 import AddVariantModal from "../../Components/Admin/AddVariantModal";
 import { useState } from "react";
+import { useGetReviewsQuery } from "../../Store/Api/user/order";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [open, setOpen] = useState(false);
-  const { data, isLoading } = useGetVariantsQuery(id);
-  const { data: product, isLoading: isProductLoading } =
-    useGetProductByIdQuery(id);
-
-  if (isLoading || isProductLoading) return <h1>Loading...</h1>;
+  const { data: reviews, isLoading: reviewsLoading } = useGetReviewsQuery(id);
+  const [page, setPage] = useState(1);
+  const [params, setParams] = useState({ page: 1, perPage: 5 });
+  const { data, isLoading } = useGetVariantsQuery({ id, params },{refetchOnMountOrArgChange:true});
+  const { data: product, isLoading: isProductLoading } = useGetProductByIdQuery(
+    id,
+    { refetchOnMountOrArgChange: true }
+  );
+  const handlePagination = (event, value) => {
+    setPage(value);
+    setParams({ page: value });
+  };
+  if (isLoading || isProductLoading || reviewsLoading)
+    return <h1>Loading...</h1>;
 
   return (
     <>
@@ -42,24 +52,28 @@ const ProductDetails = () => {
         </Button>
       </div>
       <VariantListView
-        variants={data.variants}
+        variants={data?.variants}
         category={product.product.category.name}
       />
+      <div className="flex mb-3 items-center justify-center mt-5">
+        <Pagination
+          page={page}
+          onChange={handlePagination}
+          count={data.totalPages}
+          color="primary"
+        />
+      </div>
       <div className=" pt-10 bg-white w-full border-[#d8d8d8] overflow-hidden shadow-md rounded-md px-5 py-3">
         <div className="flex items-center gap-8 mb-5">
           <span className={` text-[17px] font-[600] cursor-pointer link`}>
-            Reviews (12)
+            Reviews ({reviews.reviews.length})
           </span>
         </div>
         <div className="shadow-md py-5 px-8 w-full rounded-md">
           <div className="reviewsWrapper max-h-[500px] overflow-x-hidden overflow-y-scroll w-full">
-            <Review />
-            <Review />
-            <Review />
-            <Review />
-            <Review />
-            <Review />
-            <Review />
+            {reviews.reviews.map((review) => (
+              <Review review={review} />
+            ))}
           </div>
         </div>
       </div>

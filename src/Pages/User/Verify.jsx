@@ -69,13 +69,16 @@ const Verify = () => {
           <form onSubmit={verifyOtp} action="">
             <OtpBox length={6} onChange={onChangeOtp} />
             <div className="flex w-full mt-1 items-center py-2 text-[12px] px-3 justify-between">
-              <Link onClick={resendOtp} className="link">
-                {isResending ? (
-                  <CircularProgress size={10} color="inherit" />
-                ) : (
-                  "Resend OTP"
-                )}
-              </Link>
+              {timer == 0 ? (
+                <Link onClick={resendOtp} className="link">
+                  {isResending ? (
+                    <CircularProgress size={10} color="inherit" />
+                  ) : (
+                    "Resend OTP"
+                  )}
+                </Link>
+              ) : <div></div>}
+
               {timer > 0 ? <span>00:{timer}</span> : <span>OTP Expired</span>}
             </div>
             <div className="px-3">

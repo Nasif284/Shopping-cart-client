@@ -29,7 +29,7 @@ const ForgotPassVerify = () => {
     if (timer === 0) return;
     const timerSet = setInterval(() => setTimer((prev) => prev - 1), 1000);
     return () => clearInterval(timerSet);
-  }, []);
+  }, [timer]);
   const onChangeOtp = (value) => {
     setOtp(value);
   };
@@ -49,6 +49,8 @@ const ForgotPassVerify = () => {
     try {
       const res = await resend({ email });
       toast.success(res.message || "OTP resend to you mail");
+      localStorage.setItem("otpExpiry", Date.now() + 60000);
+      setTimer(60);
     } catch (error) {
       toast.error(error.data || "Could not resend OTP");
     }
@@ -69,13 +71,18 @@ const ForgotPassVerify = () => {
           <form onSubmit={verifyOtp} action="">
             <OtpBox length={6} onChange={onChangeOtp} />
             <div className="flex w-full mt-1 items-center py-2 text-[12px] px-3 justify-between">
-              <Link onClick={resendOtp} className="link">
-                {isResending ? (
-                  <CircularProgress size={10} color="inherit" />
-                ) : (
-                  "Resend OTP"
-                )}
-              </Link>
+              {timer > 0 ? (
+                <div></div>
+              ) : (
+                <Link onClick={resendOtp} className="link">
+                  {isResending ? (
+                    <CircularProgress size={10} color="inherit" />
+                  ) : (
+                    "Resend OTP"
+                  )}
+                </Link>
+              )}
+
               {timer > 0 ? <span>00:{timer}</span> : <span>OTP Expired</span>}
             </div>
             <div className="px-3">

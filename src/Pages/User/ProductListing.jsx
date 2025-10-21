@@ -18,13 +18,17 @@ import { useGetProductsQuery } from "../../Store/Api/admin/product";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setParams } from "../../Store/StoreSlices/uiSlice";
+import { CircularProgress } from "@mui/material";
 const ProductListing = () => {
-  const catParams = useParams();
+  const [sort,setSort] = useState("Sort By")
+   const catParams = useParams();
   const { params } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
-  const { data, isLoading } = useGetProductsQuery(params);
-  console.log(data)
+  const { data, isLoading } = useGetProductsQuery(params, {
+    refetchOnMountOrArgChange: true,
+  });
+  console.log(data);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -34,17 +38,18 @@ const ProductListing = () => {
     setAnchorEl(null);
   };
   const toUppercase = (value) => {
-     return value
+    return value
       .split(" ")
       .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
       .join(" ");
-  }
+  };
   const handlePagination = (event, value) => {
     setPage(value);
     dispatch(setParams({ page: value }));
   };
-  const handleSort = (sortBy) => {
-    dispatch(setParams({ sortBy }));
+  const handleSort = ({param,label}) => {
+    setSort(label)
+    dispatch(setParams({ sortBy:param }));
     handleClose();
   };
   useEffect(() => {
@@ -81,7 +86,12 @@ const ProductListing = () => {
     }
   }, [catParams, dispatch]);
   const [itemView, setItemView] = useState("grid");
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading)
+    return (
+      <div className="w-full h-[100vh] flex items-center justify-center">
+        <CircularProgress color="inherit" />
+      </div>
+    );
   return (
     <section className="pt-5 ">
       <div className="breadCrumbs container">
@@ -140,7 +150,7 @@ const ProductListing = () => {
             </Typography>
           </Breadcrumbs>
         ) : (
-          catParams.subCategory &&(
+          catParams.subCategory && (
             <Breadcrumbs aria-label="breadcrumb">
               <Link
                 underline="hover"
@@ -198,7 +208,7 @@ const ProductListing = () => {
                       aria-expanded={open ? "true" : undefined}
                       onClick={handleClick}
                     >
-                      Sort By <IoIosArrowDown className="ml-2" />
+                      {sort} <IoIosArrowDown className="ml-2" />
                     </Button>
                     <Menu
                       id="basic-menu"
@@ -213,25 +223,39 @@ const ProductListing = () => {
                     >
                       <MenuItem
                         className="!text-[13px] !text-black"
-                        onClick={() => handleSort("aToZ")}
+                        onClick={() =>
+                          handleSort({ param: "aToZ", label: "Name ,A-Z" })
+                        }
                       >
                         Name, A-Z
                       </MenuItem>
                       <MenuItem
                         className="!text-[13px] !text-black"
-                        onClick={() => handleSort("zToA")}
+                        onClick={() =>
+                          handleSort({ param: "zToA", label: "Name, Z-A" })
+                        }
                       >
                         Name, Z-A
                       </MenuItem>
                       <MenuItem
                         className="!text-[13px] !text-black"
-                        onClick={() => handleSort("lowToHigh")}
+                        onClick={() =>
+                          handleSort({
+                            param: "lowToHigh",
+                            label: "Price, low to high",
+                          })
+                        }
                       >
                         Price, low to high
                       </MenuItem>
                       <MenuItem
                         className="!text-[13px] !text-black"
-                        onClick={() => handleSort("highToLow")}
+                        onClick={() =>
+                          handleSort({
+                            param: "highToLow",
+                            label: "Price, high to low",
+                          })
+                        }
                       >
                         Price, high to low
                       </MenuItem>

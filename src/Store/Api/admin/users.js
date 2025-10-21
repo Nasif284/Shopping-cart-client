@@ -3,9 +3,10 @@ import { adminApi } from "../setup/AdminBaseApi";
 export const userManagementApi = adminApi.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query({
-      query: () => ({
+      query: (params) => ({
         url: "/users/",
         method: "get",
+        params,
       }),
       providesTags: ["Users"],
     }),
@@ -16,8 +17,14 @@ export const userManagementApi = adminApi.injectEndpoints({
       }),
       invalidatesTags: ["Users"],
     }),
-
+    getUsersChartData: builder.query({
+      query: (params) => ({
+        url: `/users/chart`,
+        method: "get",
+        params
+      }),
+    }),
   }),
 });
 
-export const { useGetUsersQuery, useBlockUserMutation } = userManagementApi;
+export const { useGetUsersQuery, useBlockUserMutation, useGetUsersChartDataQuery } = userManagementApi;

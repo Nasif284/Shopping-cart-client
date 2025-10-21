@@ -1,7 +1,6 @@
-import React from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
 const UserProtected = () => {
   const { user, isLoading } = useSelector((state) => state.userAuth);
@@ -9,10 +8,10 @@ const UserProtected = () => {
     return <div>Loading...</div>;
   }
   if (user) {
-    return <Outlet />;
+    return <Outlet/>
   } else {
     toast.error("Please Login");
-    return <Navigate to="/admin/login" replace />;
+    return <Navigate to="/login" replace />;
   }
 };
 

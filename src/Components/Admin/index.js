@@ -23,6 +23,9 @@ import EditSizeModal from "./EditSizeModal";
 import EditProductModal from "./EditProductModal";
 import VariantListView from "./VariantListView";
 import ImageCropper from "./ImageCropper";
+import PasswordResetModal from "./PawordResentMdal";
+import OrderStatusModal from "./OrderStatusModal";
+import ReturnRequestTable from "./RetrunRequestsTable";
 export {
   AdminHeader,
   AdminSidebar,
@@ -49,4 +52,7 @@ export {
   EditProductModal,
   VariantListView,
   ImageCropper,
+  PasswordResetModal,
+  OrderStatusModal,
+  ReturnRequestTable
 };

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AdminTable from "./AdminTable";
-import { Button, Tooltip } from "@mui/material";
+import { Button, CircularProgress, Tooltip } from "@mui/material";
 import EditProductModal from "./EditProductModal";
 import {
   useGetProductsQuery,
@@ -8,6 +8,7 @@ import {
 } from "../../Store/Api/admin/product";
 import BlockConfirmModal from "./BlockConfirmModel";
 import { Link } from "react-router-dom";
+import AddProductOfferModal from "./AddProductOfferModal";
 const ProductsColumns = [
   { id: "productId", label: "Product Id", minWidth: 100 },
   { id: "productName", label: "Product Name", minWidth: 300 },
@@ -95,6 +96,8 @@ const ProductTable = ({ params, setParams }) => {
   const [open, setOpen] = useState(false);
   const [confOpen, setConfOpen] = useState(false);
   const [isUnlisted, setIsUnlisted] = useState();
+  const [offerOpen, setOfferOpen] = useState(false)
+  
   const { data, isLoading } = useGetProductsQuery(params);
   const [product, setProduct] = useState(null);
   const handleEdit = (product) => {
@@ -107,7 +110,9 @@ const ProductTable = ({ params, setParams }) => {
     setIsUnlisted(isUnlisted);
   };
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return  <div className="w-full h-[100vh] flex items-center justify-center">
+            <CircularProgress color="inherit" />
+          </div>;
   }
   const ProductsRows = data.products.map((product) =>
     productsCreateData(
@@ -136,8 +141,15 @@ const ProductTable = ({ params, setParams }) => {
       >
         Edit
       </Button>,
-      <Button className="!bg-blue-400 !text-white !capitalize !text-[12px]">
-        Add Offer
+      <Button
+        onClick={() => {
+          setOfferOpen(true);
+          setProduct(product);
+        }}
+        className="!bg-blue-400 !text-white !capitalize !text-[12px]"
+      >
+        {product.discount > 0 ? "Edit Offer" :"Add Offer" }
+        
       </Button>,
       <Link to={`/admin/products/${product._id}`}>
         <Button className="!bg-green-500 !text-white !capitalize !text-[12px]">
@@ -189,6 +201,8 @@ const ProductTable = ({ params, setParams }) => {
           id={product}
         />
       )}
+      {offerOpen && 
+      <AddProductOfferModal open={offerOpen} product={product} handleClose={()=> setOfferOpen(false)}/>}
     </>
   );
 };

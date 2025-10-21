@@ -10,7 +10,7 @@ import { FiMinusSquare } from "react-icons/fi";
 import { useGetAllCategoriesQuery } from "../../Store/Api/admin/category";
 const CategoryPanel = ({ toggleFunc }) => {
   const [submenuIndex, setSubmenuIndex] = useState(null);
-  const { data, isLoading } = useGetAllCategoriesQuery();
+  const { data, isLoading } = useGetAllCategoriesQuery({user:true});
   const [secIndex, setSecIndex] = useState(null);
   function toggle(index) {
     if (index === submenuIndex) {

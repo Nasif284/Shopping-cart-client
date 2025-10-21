@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Navigation } from "swiper/modules";
+import ImageZoom from "react-image-zooom";
 const ProductZoom = ({ variant }) => {
   const [sliderIndex, setSliderIndex] = useState(0);
   const zoomSliderBig = useRef();
@@ -47,7 +48,7 @@ const ProductZoom = ({ variant }) => {
         <Swiper ref={zoomSliderBig} slidesPerView={1} className="mySwiper">
           {variant?.images?.map((img, i) => (
             <SwiperSlide key={i}>
-              <InnerImageZoom zoomType={"hover"} zoomScale={1} src={img} />
+              <ImageZoom src={img} fullWidth={true} />
             </SwiperSlide>
           ))}
         </Swiper>

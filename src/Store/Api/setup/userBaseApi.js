@@ -6,8 +6,10 @@ export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: axiosBaseQuery({
     baseUrl: "/api/user",
-    instance: userInstance, 
+    instance: userInstance,
   }),
+  refetchOnFocus: true,
+  refetchOnReconnect: true,
   endpoints: () => ({}),
-  tagTypes: ["Auth", "Product", "Cart", "Order", "Users"],
+  tagTypes: ["Auth", "Addresses", "Cart", "Users", "Orders","Order", "wishlist", "Coupons","Wallet"],
 });

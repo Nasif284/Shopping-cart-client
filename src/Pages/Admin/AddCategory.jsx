@@ -7,6 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { catSchema } from "../../Utils/YupSchemas";
 import { useCategoryAddMutation } from "../../Store/Api/admin/category";
 import toast from "react-hot-toast";
+import NormalUploadBox from "../../Components/Admin/NormalUploadBox";
 const AddCategory = () => {
   const [addCat, { isLoading }] = useCategoryAddMutation();
   const {
@@ -19,18 +20,25 @@ const AddCategory = () => {
     resolver: yupResolver(catSchema),
   });
   const [image, setImage] = useState(null);
+  const [file,setFile] = useState(null)
   const handleImageUpload = (file) => {
     setImage(URL.createObjectURL(file[0]));
+    setFile(file[0])
   };
   const handleRemoveImage = () => {
     setImage(null);
     reset({ image: null });
+    setFile(null)
   };
   const onSubmit = async (data) => {
+    if (!file) {
+      toast.error("Image is required")
+      return
+    }
     const formData = new FormData();
 
     formData.append("name", data.name);
-    formData.append(`image`, data.image[0]);
+    formData.append(`image`, file);
     formData.append("level", "first");
 
     try {
@@ -73,7 +81,7 @@ const AddCategory = () => {
           </div>
         )}
 
-        <UploadBox
+        <NormalUploadBox
           register={register("image")}
           errors={errors?.image}
           handleImageUpload={handleImageUpload}

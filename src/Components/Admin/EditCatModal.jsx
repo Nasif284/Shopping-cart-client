@@ -10,9 +10,9 @@ import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { IoIosClose } from "react-icons/io";
-import UploadBox from "./UploadBox";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { editCatSchema } from "../../Utils/YupSchemas";
+import NormalUploadBox from "./NormalUploadBox";
 
 const EditCatModal = ({ open, handleClose, category }) => {
   const [edit, { isLoading }] = useEditCategoryMutation();
@@ -20,30 +20,34 @@ const EditCatModal = ({ open, handleClose, category }) => {
     register,
     formState: { errors },
     handleSubmit,
-    reset,
   } = useForm({
     mode: "onBlur",
     resolver: yupResolver(editCatSchema),
     defaultValues: {
       name: category.name,
+      image: "",
     },
   });
   const [image, setImage] = useState(category.image);
+  const [file ,setFile ] = useState(null)
   const handleImageUpload = (file) => {
     setImage(URL.createObjectURL(file[0]));
+    setFile(file[0])
   };
   const handleRemoveImage = () => {
     setImage(null);
-    reset({ image: null });
+    setFile(null);
+    
   };
   const onSubmit = async (data) => {
     if (!image) {
       toast.error("Please upload an Image");
+      return
     }
     const formData = new FormData();
     formData.append("name", data.name);
-    if (data.image[0]) {
-      formData.append(`image`, data.image[0]);
+    if (file) {
+      formData.append(`image`, file);
     }
     try {
       const res = await edit({ id: category._id, data: formData }).unwrap();
@@ -87,7 +91,7 @@ const EditCatModal = ({ open, handleClose, category }) => {
               </div>
             )}
 
-            <UploadBox
+            <NormalUploadBox
               edit={true}
               register={register("image")}
               errors={errors?.image}

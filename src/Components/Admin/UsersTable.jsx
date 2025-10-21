@@ -1,6 +1,6 @@
 import AdminTable from "./AdminTable";
 import { CiCalendar } from "react-icons/ci";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import {
   useBlockUserMutation,
   useGetUsersQuery,
@@ -20,7 +20,7 @@ function usersCreateData(user, email, phone, created, action) {
   return { user, email, phone, created, action };
 }
 
-const UsersTable = () => {
+const UsersTable = ({params, setParams}) => {
   const [blockUser, { isLoading: blockLoading }] = useBlockUserMutation();
   const [user, setUser] = useState();
   const [isBlocked, setIsBlocked] = useState();
@@ -30,9 +30,11 @@ const UsersTable = () => {
     setOpen(true);
     setIsBlocked(isBlocked);
   };
-  const { data, isLoading } = useGetUsersQuery();
+  const { data, isLoading } = useGetUsersQuery(params);
   if (isLoading) {
-    return <h1>Loading Users ...</h1>;
+    return  <div className="w-full h-[100vh] flex items-center justify-center">
+            <CircularProgress color="inherit" />
+          </div>;
   }
   const UsersRows = data.users.map((user) =>
     usersCreateData(
@@ -52,7 +54,8 @@ const UsersTable = () => {
       user.mobile,
       <span className="flex gap-2 items-center">
         <CiCalendar className="text-[20px]" />
-        {new Date(user.createdAt).toLocaleDateString()}
+
+        {new Date(user.createdAt).toLocaleDateString("en-GB")}
       </span>,
       user.isBlocked ? (
         <Button
@@ -73,7 +76,7 @@ const UsersTable = () => {
   );
   return (
     <>
-      <AdminTable columns={UsersColumns} rows={UsersRows} />
+      <AdminTable columns={UsersColumns} rows={UsersRows} setParams={setParams} totalPosts={data.totalPosts} page={data.page}  />
       {open && (
         <BlockConfirmModal
           open={open}

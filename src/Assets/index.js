@@ -7,6 +7,8 @@ import verify from "./shield.png";
 import dashbordImg from "./dash.png";
 import userPlaceHolder from "./userPlaceHolder.png";
 import typing from './Loading Animation.gif'
+import success from './success.png'
+import failed from "./close.png"
 export {
   slide1,
   cat1,
@@ -16,5 +18,7 @@ export {
   verify,
   dashbordImg,
   userPlaceHolder,
-  typing
+  typing,
+  success,
+  failed
 };

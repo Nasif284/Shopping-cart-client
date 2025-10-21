@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useGetTopSellingProductsQuery } from "../../Store/Api/admin/orders";
 import AdminTable from "./AdminTable";
 const topProductsColumns = [
   { id: "productName", label: "Product name", minWidth: 170 },
@@ -32,17 +34,21 @@ function topProductsCreateData(
   return { productName, category, totalQuantitySold, totalRevenue, orderCount };
 }
 
-const topProductsRows = [
-  topProductsCreateData(
-    "Apple MacBook Pro 17",
-    "Fashion",
-    "234",
-    "$1234",
-    "234"
-  ),
-];
-const TopProducts = () => {
-  return <AdminTable columns={topProductsColumns} rows={topProductsRows} />;
+
+const TopProducts = ({filter}) => {
+  const [params,setParams] = useState({page:1, perPage:10})
+  const { data } = useGetTopSellingProductsQuery({...params, ...filter})
+  const topProductsRows = data?.products.map((product) =>
+    topProductsCreateData(
+      product._id,
+      product.category,
+      product.count,
+      <span>₹{product.totalRevenue.toLocaleString()}</span>,
+      product.orderCount
+    )
+  );
+  
+  return <AdminTable setParams={setParams} page={data?.page}  totalPosts={data?.totalPosts}  columns={topProductsColumns} rows={topProductsRows} />;
 };
 
 export default TopProducts;

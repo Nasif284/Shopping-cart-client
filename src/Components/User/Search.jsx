@@ -94,8 +94,12 @@ const Search = () => {
         type="text"
         value={search}
         onChange={(e) => {
-          setSearch(e.target.value);
-          setSuggestionsShow(true);
+          if (e.target.value.length == 0) {
+             handleClear()
+          } else {
+            setSearch(e.target.value);
+            setSuggestionsShow(true);
+           } 
         }}
         onClick={() => {
           setSuggestionsShow(true);

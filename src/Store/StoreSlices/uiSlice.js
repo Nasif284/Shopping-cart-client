@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   modalOpen: false,
   id: null,
-  params: { page: 1, perPage: 12 },
+  params: { page: 1, perPage: 3 },
 };
 
 const uiSlice = createSlice({
@@ -19,8 +19,11 @@ const uiSlice = createSlice({
     setParams: (state, action) => {
       state.params = { ...state.params, ...action.payload };
     },
+    clearParams: (state) => {
+      state.params = { page: 1, perPage: 12 };
+    }
   },
 });
 
-export const { setModalOpen, setProductId, setParams } = uiSlice.actions;
+export const { setModalOpen, setProductId, setParams,clearParams } = uiSlice.actions;
 export default uiSlice.reducer;

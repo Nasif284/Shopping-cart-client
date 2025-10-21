@@ -57,7 +57,7 @@ const ImageCropper = ({
         </div>
       </DialogTitle>
       <DialogContent className="h-[500px] relative p-0">
-        <Cropper
+        {/* <Cropper
           image={image}
           crop={crop}
           zoom={zoom}
@@ -66,7 +66,17 @@ const ImageCropper = ({
           onCropChange={setCrop}
           onZoomChange={setZoom}
           onCropComplete={handleCropComplete}
+        /> */}
+        <Cropper
+          image={image}
+          crop={crop}
+          zoom={zoom}
+          aspect={1}
+          onCropChange={setCrop}
+          onZoomChange={setZoom}
+          onCropComplete={handleCropComplete}
         />
+        ;
       </DialogContent>
       <DialogActions>
         <Button

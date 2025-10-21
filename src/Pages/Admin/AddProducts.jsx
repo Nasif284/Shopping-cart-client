@@ -112,7 +112,7 @@ const AddProducts = () => {
     try {
       const formData = new FormData();
 
-      formData.append("name", data.name);
+  formData.append("name", data.name);
       formData.append("description", data.description);
       formData.append("category", data.category);
       formData.append("subCategory", data.subCategory);
@@ -130,6 +130,8 @@ const AddProducts = () => {
           variant.images.forEach((imageObj) => {
             formData.append(`variants[${i}][images]`, imageObj.file);
           });
+        } else {
+          toast.error("Image field is required")
         }
       });
 
@@ -162,7 +164,9 @@ const AddProducts = () => {
     isThirdCatLoading ||
     sizesLoading
   ) {
-    return <h1>Loading</h1>;
+    return  <div className="w-full h-[100vh] flex items-center justify-center">
+            <CircularProgress color="inherit" />
+          </div>;
   }
 
   subCats = subCats.categories
@@ -299,6 +303,8 @@ const AddProducts = () => {
                   />
                   <TextField
                     {...register(`variants.${i}.oldPrice`)}
+                    error={!!errors?.variants?.[i]?.oldPrice}
+                    helperText={errors?.variants?.[i]?.oldPrice?.message}
                     label="Old Price"
                     type="number"
                     variant="outlined"
@@ -364,7 +370,7 @@ const AddProducts = () => {
               )}
 
               <UploadBox
-                error={errors?.variants?.[i]?.images}
+                errors={errors?.variants?.[i]?.images}
                 register={register(`variants.${i}.images`)}
                 handleImageUpload={(files) => handleImageUpload(files, i)}
                 multiple={true}

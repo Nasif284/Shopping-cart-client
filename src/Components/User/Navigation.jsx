@@ -8,7 +8,7 @@ import CategoryPanel from "./CategoryPanel";
 import { useGetAllCategoriesQuery } from "../../Store/Api/admin/category";
 const Navigation = () => {
   const [toggle, setToggle] = useState(false);
-  const { data, isLoading } = useGetAllCategoriesQuery();
+  const { data, isLoading } = useGetAllCategoriesQuery({user:true});
   if (isLoading) {
     return <h1>Loading...</h1>;
   }

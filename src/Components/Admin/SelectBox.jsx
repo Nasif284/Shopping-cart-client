@@ -14,7 +14,12 @@ const MenuProps = {
   },
 };
 
-export default function SelectBox({ placeholder, category, onChange }) {
+export default function SelectBox({
+  placeholder,
+  category,
+  statuses,
+  onChange,
+}) {
   const [selectedValue, setSelectedValue] = React.useState("");
 
   const handleChange = (event) => {
@@ -44,11 +49,17 @@ export default function SelectBox({ placeholder, category, onChange }) {
         <MenuItem disabled value="">
           <em>{placeholder}</em>
         </MenuItem>
-        {category.map((cat) => (
-          <MenuItem key={cat.name} value={cat.name}>
-            {cat.name}
-          </MenuItem>
-        ))}
+        {statuses
+          ? statuses.map((status) => (
+              <MenuItem key={status} value={status}>
+                {status}
+              </MenuItem>
+            ))
+          : category.map((cat) => (
+              <MenuItem key={cat.name} value={cat.name}>
+                {cat.name}
+              </MenuItem>
+            ))}
       </Select>
     </div>
   );

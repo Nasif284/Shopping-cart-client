@@ -6,74 +6,63 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
-  ReferenceLine,
-  Area,
 } from "recharts";
-const data = [
-  {
-    name: "01 OCT",
-    uv: 700,
-    pv: 1300,
-  },
-  {
-    name: "02 COT",
-    uv: 600,
-    pv: 900,
-  },
-  {
-    name: "03 OCT",
-    uv: 700,
-    pv: 1500,
-  },
-  {
-    name: "04 OCT",
-    uv: 750,
-    pv: 1300,
-  },
-  {
-    name: "05 OCT",
-    uv: 650,
-    pv: 1000,
-  },
-  {
-    name: "06 OCT",
-    uv: 500,
-    pv: 1200,
-  },
-  {
-    name: "07 OCT",
-    uv: 400,
-    pv: 1000,
-  },
-  {
-    name: "08 OCT",
-    uv: 750,
-    pv: 1100,
-  },
-  {
-    name: "09 OCT",
-    uv: 1300,
-    pv: 1000,
-  },
-];
+import { useGetRevenueChartQuery } from "../../Store/Api/admin/orders";
 
-const LineGraph = ({ show }) => {
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div
+        style={{
+          backgroundColor: "white",
+          padding: "8px 12px",
+          border: "1px solid #ccc",
+          borderRadius: "5px",
+          fontFamily: "inter",
+          fontSize: "12px",
+        }}
+      >
+        <p>{label}</p>
+        <p>Revenue: ₹{payload[0].value}</p>
+      </div>
+    );
+  }
+  return null;
+};
+
+const LineGraph = ({ show, filter }) => {
+  const { data, isLoading, isError } = useGetRevenueChartQuery(filter);
+
+  if (isLoading)
+    return (
+      <div className="completed">
+        <div className="chart-container text-sm text-gray-500">
+          Loading chart...
+        </div>
+      </div>
+    );
+
+  if (isError)
+    return (
+      <div className="completed">
+        <div className="chart-container text-red-500">
+          Failed to load chart data
+        </div>
+      </div>
+    );
+
   return (
     <div className="completed">
       <div className="chart-container">
         <LineChart
           width={show ? 530 : 700}
           height={280}
-          data={data}
+          data={data?.data || []}
           margin={{
             top: 20,
             right: 5,
             bottom: 5,
             left: -20,
-          }}
-          padding={{
-            left: 0,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
@@ -81,10 +70,7 @@ const LineGraph = ({ show }) => {
           <XAxis
             dataKey="name"
             strokeWidth={0}
-            style={{
-              fontSize: "11px",
-              fontFamily: "inter",
-            }}
+            style={{ fontSize: "11px", fontFamily: "inter" }}
             padding={{ left: 30, right: 0 }}
           />
 
@@ -92,32 +78,20 @@ const LineGraph = ({ show }) => {
             strokeDasharray="3 3"
             type="number"
             strokeWidth={0}
-            style={{
-              fontSize: "11px",
-              fontFamily: "inter",
-            }}
+            style={{ fontSize: "11px", fontFamily: "inter" }}
+            allowDecimals={false}
           />
 
-          <Tooltip style={{}} cursor={{ stroke: "#8042ff" }} />
+          <Tooltip content={<CustomTooltip />} cursor={{ stroke: "#8042ff" }} />
 
           <Line
             activeDot={{ r: 5 }}
             type="monotone"
-            fill="url(#colorUv)"
             strokeLinecap="round"
             strokeWidth={3}
-            dot={false}
-            dataKey="pv"
+            dot={true}
+            dataKey="total"
             stroke="#8042ff"
-          />
-          <Line
-            activeDot={{ r: 5 }}
-            type="monotone"
-            dataKey="uv"
-            strokeWidth={3}
-            strokeLinecap="round"
-            dot={false}
-            stroke="#00b879"
           />
         </LineChart>
       </div>

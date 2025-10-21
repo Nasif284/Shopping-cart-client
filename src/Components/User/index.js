@@ -21,13 +21,21 @@ import QtyBox from "./QtyBox";
 import Review from "./Review";
 import ProductDetailsComponent from "./ProductDetailsComponent";
 import OtpBox from "./OtpBox";
-import CartQtyBox from "./CartQtyBox";
 import CartItem from "./CartItem";
 import UserSidebar from "./UserSidebar";
 import MyListItems from "./MylistItems";
 import Badge from "./Badge";
 import ProductDialogBox from "./ProductDialogBox";
 import ChatBot from "./ChatBox";
+import EditProfileImageModal from "./EditProfileImageModal";
+import EditProfile from "../../Pages/User/EditProfile";
+import EmailVerifyModal from "./EmailVerifyModal";
+import AddNewAddressModal from "./AddNewAddressModal";
+import EditAddressModal from "./EditAddressModal";
+import CartQtyBox from "./CartQtyBox";
+import OrderStatus from "./OrderStatus";
+import ReasonModal from "./ReasoneModal";
+import Razorpay from "./Razorpay";
 
 export {
   Header,
@@ -53,11 +61,19 @@ export {
   Review,
   ProductDetailsComponent,
   OtpBox,
-  CartQtyBox,
   CartItem,
   UserSidebar,
   MyListItems,
   Badge,
   ProductDialogBox,
-  ChatBot
+  ChatBot,
+  EditProfileImageModal,
+  EditProfile,
+  EmailVerifyModal,
+  AddNewAddressModal,
+  EditAddressModal,
+  CartQtyBox,
+  OrderStatus,
+  ReasonModal,
+  Razorpay
 };

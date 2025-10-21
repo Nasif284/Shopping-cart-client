@@ -54,29 +54,36 @@ const ProductListView = ({ product }) => {
           </Tooltip>
         </div>
       </div>
-      <div className="product-info px-8 w-[75%] py-5">
-        <h6 className="text-[15px]">
-          <Link className="link transition-all">kasee</Link>
-        </h6>
-        <h3 className="text-[18px] leading-[18px]  mt-3 font-[500] mb-3">
-          <Link className="link transition-all">{product.name}</Link>
-        </h3>
-        <p className="text-[14px] mb-3">{product.description}</p>
-        <Rating name="size-small" defaultValue={2} size="small" readOnly />
-        <div className="price-box flex items-center gap-4">
-          <span className="line-through text-gray-500 font-[500] text-[15px]">
-            ${product.defaultVariant.oldPrice}
-          </span>
-          <span className="text-primary font-[600] text-[15px] ">
-            ${product.defaultVariant.price}
-          </span>
-        </div>
+ 
+        <div className="product-info px-8 w-[75%] py-5">
+          <h6 className="text-[15px]">
+            <Link className="link transition-all">kasee</Link>
+          </h6>
+          <h3 className="text-[18px] leading-[18px]  mt-3 font-[500] mb-3">
+            <Link
+              to={`/product/${product._id}`}
+              className="link transition-all"
+            >
+              {product.name}
+            </Link>
+          </h3>
+          <p className="text-[14px] mb-3">{product.description}</p>
+          <Rating name="size-small" defaultValue={2} size="small" readOnly />
+          <div className="price-box flex items-center gap-4">
+            <span className="line-through text-gray-500 font-[500] text-[15px]">
+              ${product.defaultVariant.oldPrice}
+            </span>
+            <span className="text-primary font-[600] text-[15px] ">
+              ${product.defaultVariant.price}
+            </span>
+          </div>
 
-        <Button className="!bg-primary !text-white !text-[13px] !px-3 !py-2 flex gap-2 !mt-3 hover:!bg-[rgba(0,0,0,0.8)] !font-[500]">
-          <IoCartOutline className="!text-[19px]" />
-          Add To Cart
-        </Button>
-      </div>
+          <Button className="!bg-primary !text-white !text-[13px] !px-3 !py-2 flex gap-2 !mt-3 hover:!bg-[rgba(0,0,0,0.8)] !font-[500]">
+            <IoCartOutline className="!text-[19px]" />
+            Add To Cart
+          </Button>
+        </div>
+  
     </div>
   );
 };

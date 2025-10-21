@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import AdminTable from "./AdminTable";
+import { useGetTopSellingCategoriesQuery } from "../../Store/Api/admin/orders";
 const topCategoryColumns = [
   { id: "category", label: "Category", minWidth: 100 },
   {
@@ -31,17 +32,18 @@ function topCategoryCreateData(
   return { category, totalQuantitySold, totalRevenue, orderCount };
 }
 
-const topProductsRows = [
-  topCategoryCreateData(
-    "Apple MacBook Pro 17",
-    "Fashion",
-    "234",
-    "$1234",
-    "234"
-  ),
-];
-const TopCategory = () => {
-  return <AdminTable columns={topCategoryColumns} rows={topProductsRows} />;
+const TopCategory = ({ filter }) => {
+  const [params, setParams] = useState({ page: 1, perPage: 10 });
+  const { data } = useGetTopSellingCategoriesQuery({ ...params, ...filter });
+  const topProductsRows = data?.categories.map((category) =>
+    topCategoryCreateData(
+      category._id,
+      category.count,
+      <span>₹{category.totalRevenue.toLocaleString()}</span>,
+      category.orderCount
+    )
+  );
+  return <AdminTable page={data?.page} setParams={setParams} totalPosts={data?.totalPosts} columns={topCategoryColumns} rows={topProductsRows} />;
 };
 
 export default TopCategory;

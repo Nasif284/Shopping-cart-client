@@ -88,6 +88,16 @@ const Register = () => {
                 errors={errors?.confirmPassword?.message}
                 label={"Confirm Password"}
               />
+              <TextField
+                disabled={isLoading}
+                {...register("referralCode")}
+                error={!!errors.referralCode}
+                helperText={errors?.referralCode?.message}
+                id="outlined-basic"
+                label="Referral Code (Optional) "
+                variant="outlined"
+                className="w-full !mb-5 "
+              />
             </div>
             <div className="my-3">
               <Button
@@ -118,15 +128,15 @@ const Register = () => {
               onClick={handleGoogleLogin}
               className="!flex !gap-3 !w-full !font-[600] !text-black  !bg-gray-100"
             >
-              <FcGoogle className="text-[20px]" /> Login with Google
+              <FcGoogle className="text-[20px]" /> Continue with Google
             </Button>
-             <Button
-                          onClick={handleFacebookLogin}
-                          className="!flex !gap-3 !mt-3 !w-full !font-[600] !text-black !bg-gray-100"
-                        >
-                          <FaFacebook className="text-[20px] text-blue-700" />
-                          Login with Facebook
-                        </Button>
+            <Button
+              onClick={handleFacebookLogin}
+              className="!flex !gap-3 !mt-3 !w-full !font-[600] !text-black !bg-gray-100"
+            >
+              <FaFacebook className="text-[20px] text-blue-700" />
+              Continue with Facebook
+            </Button>
           </form>
         </div>
       </div>

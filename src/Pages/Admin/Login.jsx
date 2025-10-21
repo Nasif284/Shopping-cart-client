@@ -10,10 +10,23 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAdmin } from "../../Store/StoreSlices/adminAuthSlice";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useEffect } from "react";
 const AdminLogin = () => {
   const [login, { isLoading }] = useAdminLoginMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.history.pushState(null, "", window.location.href);
+    window.onpopstate = () => {
+      navigate("/admin/login", { replace: true });
+    };
+    return () => {
+      window.onpopstate = null;
+    };
+  }, [navigate]);
+
+  
   const {
     register,
     handleSubmit,

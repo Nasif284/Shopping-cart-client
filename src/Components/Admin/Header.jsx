@@ -10,10 +10,11 @@ import IconButton from "@mui/material/IconButton";
 import Divider from "@mui/material/Divider";
 import { FaRegUser } from "react-icons/fa6";
 import { IoMdLogOut } from "react-icons/io";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useAdminLogoutMutation } from "../../Store/Api/admin/auth";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { clearAdmin } from "../../Store/StoreSlices/adminAuthSlice";
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
     right: -3,
@@ -25,6 +26,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 const Header = ({ setShow, show }) => {
   const { admin } = useSelector((state) => state.adminAuth);
+  const dispatch = useDispatch()
   const [logout] = useAdminLogoutMutation()
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate()
@@ -39,6 +41,7 @@ const Header = ({ setShow, show }) => {
     try {
       setAnchorEl(null);
       const res = await logout().unwrap()
+        dispatch(clearAdmin());
       navigate("/admin/login")
       toast.success(res.message || "Admin Logged Out Successfully")
     } catch (error) {

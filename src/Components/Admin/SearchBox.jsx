@@ -1,12 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import { MdClose } from "react-icons/md";
 const SearchBox = ({ onSearch }) => {
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState("");
   const handleChange = (e) => {
-    setSearch(e.target.value);
-    onSearch(e.target.value);
-  };
+    if (!e.target.value) {
+            setSearch("");
+            onSearch("");
+      } setSearch(e.target.value);
+    };
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (search.trim().length > 0) {
+        onSearch(search)
+      }
+    }, 300)
+    return ()=>  clearTimeout(timer)
+  },[search,onSearch])
+
   const handleClear = () => {
     setSearch("");
     onSearch("");

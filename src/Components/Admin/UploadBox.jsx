@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { IoMdImages } from "react-icons/io";
 import ImageCropper from "./ImageCropper";
+import toast from "react-hot-toast";
 
 const UploadBox = ({
   register,
@@ -13,7 +14,7 @@ const UploadBox = ({
   const [currentFileIndex, setCurrentFileIndex] = useState(0);
   const [cropOpen, setCropOpen] = useState(false);
   const [croppedImages, setCroppedImages] = useState([]);
-
+const allowedFormats = ["image/jpeg", "image/png", "image/webp", "image/jpg"];
   const startCroppingSequence = (files) => {
     const fileArray = Array.from(files);
     if (fileArray.length === 0) return;
@@ -26,6 +27,21 @@ const UploadBox = ({
 
   const onChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
+      const fileArray = Array.from(e.target.files);
+      
+       const invalidFiles = fileArray.filter(
+         (file) => !allowedFormats.includes(file.type)
+       );
+
+       if (invalidFiles.length > 0) {
+         toast.error(
+           `Invalid file format: ${invalidFiles
+             .map((f) => f.name)
+             .join(", ")}. Only JPG, PNG, and WEBP are allowed.`
+         );
+         e.target.value = ""; 
+         return;
+       }
       startCroppingSequence(e.target.files);
       e.target.value = "";
     }

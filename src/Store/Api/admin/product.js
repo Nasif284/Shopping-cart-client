@@ -8,14 +8,14 @@ export const adminProductApi = adminApi.injectEndpoints({
         method: "post",
         body: data,
       }),
-      providesTags: ["Product"],
+      invalidatesTags: ["Product"],
     }),
     getProducts: builder.query({
       query: (params) => ({
         url: `/products/`,
         params: params,
       }),
-      providesTags: ["Product"],
+      providesTags:["Product"]
     }),
     updateProduct: builder.mutation({
       query: ({ data, id }) => ({
@@ -30,12 +30,13 @@ export const adminProductApi = adminApi.injectEndpoints({
         url: `/products/unlist/${id}`,
         method: "patch",
       }),
-      invalidatesTags: ["Product"],
+      invalidatesTags: ["Product","ProductById"]
     }),
     getVariants: builder.query({
-      query: (id) => ({
+      query: ({ id, params }) => ({
         url: `/products/variants/${id}`,
         method: "get",
+        params,
       }),
       providesTags: ["Variants"],
     }),
@@ -44,13 +45,15 @@ export const adminProductApi = adminApi.injectEndpoints({
         url: `/products/${id}`,
         method: "get",
       }),
+      providesTags:["ProductById"]
     }),
     unlistVariant: builder.mutation({
       query: (id) => ({
         url: `/products/variants/unlist/${id}`,
         method: "patch",
       }),
-      invalidatesTags: ["Variants"],
+      invalidatesTags: ["Variants","ProductById"],
+      
     }),
     editVariant: builder.mutation({
       query: ({ id, data }) => ({

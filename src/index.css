@@ -167,6 +167,7 @@ input[type="number"]::-webkit-outer-spin-button {
 span.iiz__btn.iiz__hint {
   display: none;
 }
+
 p {
   font-size: 14px;
   line-height: 25px;
@@ -196,3 +197,11 @@ h5 {
 .MuiBadge-badge {
   background-color: #ff5252 !important;
 }
+
+
+.catSwiper .swiper-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

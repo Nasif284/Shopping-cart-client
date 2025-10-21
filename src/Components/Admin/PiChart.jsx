@@ -2,27 +2,15 @@ import {
   Cell,
   Pie,
   PieChart,
-  ResponsiveContainer,
   Tooltip,
   Legend,
-  Text,
 } from "recharts";
+import { useGetStatusChartQuery } from "../../Store/Api/admin/orders";
 
-// Example order status data — replace with your real counts
-const data = [
-  { name: "Pending", value: 120 },
-  { name: "Confirmed", value: 90 },
-  { name: "Delivered", value: 200 },
-  { name: "Cancelled", value: 40 },
-  { name: "Returned", value: 25 },
-];
-
-// Status colors
 const COLORS = ["#FFA500", "#00C49F", "#4CAF50", "#FF4C4C", "#8A2BE2"];
 
 const RADIAN = Math.PI / 180;
 
-// Custom percentage label
 const renderCustomizedLabel = ({
   cx,
   cy,
@@ -40,7 +28,7 @@ const renderCustomizedLabel = ({
       x={x}
       y={y}
       fill="white"
-      textAnchor={x > cx ? "start" : "end"}
+      textAnchor="middle"
       dominantBaseline="central"
       style={{ fontSize: "12px", fontFamily: "inter" }}
     >
@@ -49,19 +37,45 @@ const renderCustomizedLabel = ({
   );
 };
 
-export default function OrderStatusChart({ show }) {
+export default function OrderStatusChart({ show, filter }) {
+  const { data } = useGetStatusChartQuery(filter);
+  const chartData = data?.data || [];
+
+  const hasData = chartData.some((item) => item.total > 0);
+
+  if (!hasData) {
+    return (
+      <div
+        style={{
+          width: show ? 530 : 700,
+          height: 270,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: "inter",
+          fontSize: "14px",
+          color: "#888",
+          border: "1px dashed #ccc",
+          borderRadius: "10px",
+        }}
+      >
+        No Orders Available
+      </div>
+    );
+  }
+
   return (
     <PieChart width={show ? 530 : 700} height={270}>
       <Pie
-        data={data}
+        data={chartData}
         cx="50%"
         cy="50%"
         labelLine={false}
         label={renderCustomizedLabel}
         outerRadius={100}
-        dataKey="value"
+        dataKey="total"
       >
-        {data.map((entry, index) => (
+        {chartData.map((entry, index) => (
           <Cell
             key={`cell-${entry.name}`}
             fill={COLORS[index % COLORS.length]}
@@ -72,7 +86,6 @@ export default function OrderStatusChart({ show }) {
         formatter={(value, name) => [`${value} Orders`, name]}
         contentStyle={{ fontFamily: "inter", fontSize: "13px" }}
       />
-
       <Legend
         verticalAlign="bottom"
         align="center"
@@ -82,3 +95,4 @@ export default function OrderStatusChart({ show }) {
     </PieChart>
   );
 }
+

@@ -78,5 +78,5 @@ export const {
   useResetPasswordMutation,
   useAuthMeQuery,
   useLogoutMutation,
-  useSendMessageMutation
+  useSendMessageMutation,
 } = userAuthApi;

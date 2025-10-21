@@ -9,26 +9,29 @@ import PasswordFiled from "./PasswordFiled";
 import { CircularProgress } from "@mui/material";
 import { useUserLoginMutation } from "../../Store/Api/user/auth";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../Store/StoreSlices/userAuthSlice";
 import { FaFacebook } from "react-icons/fa";
 import { useEffect } from "react";
+import { useAddToCartMutation } from "../../Store/Api/user/cart";
+import { clearCart } from "../../Store/StoreSlices/cartSlice";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const Login = () => {
   const [login, { isLoading: isPending }] = useUserLoginMutation();
   const [searchParams] = useSearchParams();
-    useEffect(() => {
-      const error = searchParams.get("error");
-      const message = searchParams.get("message");
-
-      if (error && message) {
-        const decodedMessage = decodeURIComponent(message);
-          toast.error(decodedMessage);
-        const newUrl = window.location.pathname;
-        window.history.replaceState({}, document.title, newUrl);
-      }
-    }, [searchParams]);
+  const cart = useSelector((state) => state.cart);
+  const [add] = useAddToCartMutation();
+  useEffect(() => {
+    const error = searchParams.get("error");
+    const message = searchParams.get("message");
+    if (error && message) {
+      const decodedMessage = decodeURIComponent(message);
+      toast.error(decodedMessage);
+      const newUrl = window.location.pathname;
+      window.history.replaceState({}, document.title, newUrl);
+    }
+  }, [searchParams]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
@@ -40,6 +43,10 @@ const Login = () => {
     try {
       const res = await login(data).unwrap();
       dispatch(setUser(res.user));
+      if (cart.length) {
+        await add(cart).unwrap();
+      }
+      dispatch(clearCart());
       navigate("/");
       toast.success(res.message || "User Logged In Successfully");
     } catch (error) {
@@ -48,6 +55,8 @@ const Login = () => {
   };
   const isLoading = false;
   const handleGoogleLogin = async () => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+    dispatch(clearCart());
     window.location.href = `${apiUrl}/api/user/google`;
   };
   const handleFacebookLogin = async () => {
@@ -123,7 +132,7 @@ const Login = () => {
                 <CircularProgress size={30} color="inherit" />
               ) : (
                 <>
-                  <FcGoogle className="text-[20px]" /> Login with Google
+                  <FcGoogle className="text-[20px]" /> Continue with Google
                 </>
               )}
             </Button>
@@ -132,7 +141,7 @@ const Login = () => {
               className="!flex !gap-3 !mt-3 !w-full !font-[600] !text-black !bg-gray-100"
             >
               <FaFacebook className="text-[20px] text-blue-700" />
-              Login with Facebook
+              Continue with Facebook
             </Button>
           </form>
         </div>

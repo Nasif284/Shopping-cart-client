@@ -42,7 +42,7 @@ const ForgotPassword = () => {
               <PasswordFiled
                 isSubmitting={isPending}
                 register={register("newPassword")}
-                errors={errors?.password?.message}
+                errors={errors?.newPassword?.message}
                 label={"Password"}
               />
               <PasswordFiled

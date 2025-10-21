@@ -1,55 +1,42 @@
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import { UserSidebar } from "../../Components/User";
+import { useSelector } from "react-redux";
+import { CircularProgress, } from "@mui/material";
 const MyAccount = () => {
+  const { user, isLoading } = useSelector((state) => state.userAuth);
+  if (isLoading) {
+    return (
+      <div className="w-full h-[100vh] flex items-center justify-center">
+        <CircularProgress color="inherit" />
+      </div>
+    );
+  }
   return (
-    <section className="py-10 w-full">
-      <div className="container flex gap-5">
-        <UserSidebar />
-        <div className="col2 w-[50%]">
-          <div className="card bg-white p-5 shadow-md rounded-md ">
-            <div className="w-full flex justify-between border-b border-[rgba(0,0,0,0.1)]">
-              <h2>My Profile</h2>
-              <Button className="!font-[600]">Change Password</Button>
-            </div>
-            <form action="">
-              <div className="flex items-center gap-5 py-5">
-                <div className="w-[50%]">
-                  <TextField
-                    className="w-full"
-                    id="outlined-basic"
-                    label="Full Name"
-                    variant="outlined"
-                  />
-                </div>
-                <div className="w-[50%]">
-                  <TextField
-                    className="w-full"
-                    id="outlined-basic"
-                    label="Email"
-                    variant="outlined"
-                  />
-                </div>
-              </div>
-              <div className="w-[48%]">
-                <TextField
-                  className="w-full"
-                  id="outlined-basic"
-                  label="Phone"
-                  variant="outlined"
-                />
-              </div>
-              <Button
-                type="submit"
-                className="!bg-primary  w-[48%] !mt-5 !text-white !text-[14px] !px-3 !py-3 flex gap-2  hover:!bg-[rgba(0,0,0,0.8)] !font-[600]"
-              >
-                Save
-              </Button>
-            </form>
-          </div>
+    <div className="col2 w-[50%]">
+      <div className="card bg-white p-5 shadow-md rounded-md ">
+        <div className="w-full flex p-3 justify-between border-b border-[rgba(0,0,0,0.1)]">
+          <h2>My Profile</h2>
+        </div>
+        <div className="p-6">
+          <ul className="divide-y divide-gray-100">
+            <li className="py-4 flex justify-between">
+              <span className="font-medium text-gray-600">Full Name</span>
+              <span className="text-gray-900">{user.name}</span>
+            </li>
+            <li className="py-4 flex justify-between">
+              <span className="font-medium text-gray-600">Email</span>
+              <span className="text-gray-900">{user.email}</span>
+            </li>
+            <li className="py-4 flex justify-between">
+              <span className="font-medium text-gray-600">Mobile</span>
+              <span className="text-gray-900">{user.mobile || "—"}</span>
+            </li>
+              <li className="py-4 flex justify-between">
+                <span className="font-medium text-gray-600">Referral Code</span>
+                <span className="text-gray-900">{user?.referralCode || "—"}</span>
+              </li>
+          </ul>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

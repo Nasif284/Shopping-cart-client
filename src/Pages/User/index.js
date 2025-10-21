@@ -13,6 +13,10 @@ import Orders from "./Orders";
 import ForgotPassEmail from "./ForgotPassEmail";
 import ForgotPassVerify from "./ForgotPassVerify";
 import NotFound from "./NotFound";
+import Addresses from "./Addresses";
+import OrderDetails from "./OrderDetails";
+import OrderFiled from "./OrderfFailed";
+import CheckoutRetry from "./CheckoutRetry";
 export {
   Home,
   ProductListing,
@@ -29,4 +33,8 @@ export {
   ForgotPassEmail,
   ForgotPassVerify,
   NotFound,
+  Addresses,
+  OrderDetails,
+  OrderFiled,
+  CheckoutRetry
 };

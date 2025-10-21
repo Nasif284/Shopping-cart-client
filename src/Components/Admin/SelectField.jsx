@@ -31,8 +31,11 @@ const SelectField = ({
             <InputLabel>{label}</InputLabel>
             <Select {...field} label={label}>
               {options.map((opt, i) => (
-                <MenuItem key={i} value={opt?.label ? opt.label : opt.name}>
-                  {opt?.label ? opt.label : opt.name}
+                <MenuItem
+                  key={i}
+                  value={opt?.label ? opt.label : opt.name ? opt.name : opt}
+                >
+                  {opt?.label ? opt.label : opt.name ? opt.name : opt}
                 </MenuItem>
               ))}
             </Select>

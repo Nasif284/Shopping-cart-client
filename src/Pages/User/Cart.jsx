@@ -1,7 +1,59 @@
 import Button from "@mui/material/Button";
 import { IoBagCheckOutline } from "react-icons/io5";
+import { CartItem } from "../../Components/User";
+import { useDispatch, useSelector } from "react-redux";
+import { useGetCartItemsQuery } from "../../Store/Api/user/cart";
+import { useEffect, useState } from "react";
+import { createOrderItems } from "../../Store/StoreSlices/orderSlice";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
+  const { user } = useSelector((state) => state.userAuth);
+  const cart = useSelector((state) => state.cart);
+  const { data } = useGetCartItemsQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
+  let filtered = data?.items.filter(
+    (e) =>
+      e.variant.stock > 0 &&
+      !e.variant.isUnlisted &&
+      !e.product.isUnlisted &&
+      !e.product.categoryId.isBlocked &&
+      !e.product.subCategoryId.isBlocked &&
+      !e.product.thirdSubCategoryId.isBlocked
+  );
+  const [items, setItems] = useState();
+  const dispatch = useDispatch();
+  let totalOldPrice, totalPrice;
+  const handleCheckout = () => {
+    dispatch(createOrderItems({
+      items: filtered, prices: {
+        subtotal: totalOldPrice,
+        discount: totalOldPrice - totalPrice,
+        total : totalPrice
+    }}));
+  };
+  if (user) {
+    totalOldPrice = filtered?.reduce(
+      (acc, cur) => acc + cur.variant.oldPrice * cur.quantity,
+      0
+    );
+    totalPrice = filtered?.reduce(
+      (acc, cur) => acc + cur.variant.price * cur.quantity,
+      0
+    );
+  } else {
+    totalOldPrice = cart.reduce((acc, cur) => acc + cur.variant.oldPrice, 0);
+    totalPrice = cart.reduce((acc, cur) => acc + cur.variant.price, 0);
+  }
+  useEffect(() => {
+    if (user) {
+      setItems(data?.items);
+    } else {
+      setItems(cart);
+    }
+  }, [data, cart, user]);
+
   return (
     <section className="py-5 ">
       <div className="container flex w-[80%] max-w-[80%] pb-10 gap-4">
@@ -9,11 +61,14 @@ const Cart = () => {
           <div className="py-2 px-3 border-b border-[rgba(0,0,0,0.1)] mb-3">
             <h2>Your Cart</h2>
             <p className="!mt-0">
-              There are <span className="font-bold text-primary">2</span> Items
-              in your cart
+              There are{" "}
+              <span className="font-bold text-primary">{items?.length}</span>{" "}
+              Items in your cart
             </p>
           </div>
-          <CartItem />
+          {items?.map((item, i) => (
+            <CartItem item={item} i={i} />
+          ))}
         </div>
         <div className="w-[25%] rightPart">
           <div className="bg-white rounded-md shadow-md p-5">
@@ -21,22 +76,31 @@ const Cart = () => {
             <div className="py-5">
               <p className="flex text-[14px] justify-between !m-0">
                 Subtotal{" "}
-                <span className=" font-bold text-primary">₹2,921.00</span>
-              </p>
-              <p className="flex justify-between !m-0">
-                Shipping <span className=" font-bold">Free</span>
+                <span className=" font-bold text-primary">
+                  ₹{totalOldPrice}
+                </span>
               </p>
               <p className="flex text-[14px] justify-between !m-0">
-                Total <span className=" font-bold text-primary">₹2,921.00</span>
+                Discount
+                <span className=" font-bold text-primary">
+                  -₹{totalOldPrice - totalPrice}
+                </span>
+              </p>
+              <p className="flex text-[14px] justify-between !m-0">
+                Total{" "}
+                <span className=" font-bold text-primary">₹{totalPrice}</span>
               </p>
             </div>
-            <Button
-              type="submit"
-              className="!bg-primary w-full !mt-2 !text-white !text-[14px] !py-2 flex gap-2  hover:!bg-[rgba(0,0,0,0.8)] !font-[600]"
-            >
-              <IoBagCheckOutline className="text-[16px]" />
-              Checkout
-            </Button>
+            <Link to={"/checkout"}>
+              <Button
+                onClick={handleCheckout}
+                type="submit"
+                className="!bg-primary w-full !mt-2 !text-white !text-[14px] !py-2 flex gap-2  hover:!bg-[rgba(0,0,0,0.8)] !font-[600]"
+              >
+                <IoBagCheckOutline className="text-[16px]" />
+                Checkout
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

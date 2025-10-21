@@ -15,6 +15,8 @@ import BannersList1 from "./BannersList1";
 import BannersList2 from "./BannersList2";
 import AddBanner from "./AddBanner";
 import ProductDetails from "./ProductDetails";
+import OrderDetails from "./OrderDetails";
+import ReturnRequests from "./ReturnRequests";
 export {
   Dashboard,
   AdminLogin,
@@ -33,4 +35,6 @@ export {
   BannersList2,
   AddBanner,
   ProductDetails,
+  OrderDetails,
+  ReturnRequests
 };

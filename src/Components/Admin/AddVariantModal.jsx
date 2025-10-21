@@ -11,7 +11,7 @@ import { useState } from "react";
 import { IoIosClose } from "react-icons/io";
 import UploadBox from "./UploadBox";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { addVariantSchema, editVariantSchema } from "../../Utils/YupSchemas";
+import { addVariantSchema, } from "../../Utils/YupSchemas";
 import { useAddVariantMutation } from "../../Store/Api/admin/product";
 import SelectField from "./SelectField";
 import { useGetSizesQuery } from "../../Store/Api/admin/size";
@@ -26,7 +26,6 @@ const AddVariantModal = ({ open, handleClose, id, category }) => {
     formState: { errors },
     handleSubmit,
     control,
-    setValue
   } = useForm({
     mode: "onBlur",
     resolver: yupResolver(addVariantSchema),
@@ -78,7 +77,7 @@ const AddVariantModal = ({ open, handleClose, id, category }) => {
       <DialogContent>
         <div className="variants-section pt-2 w-full">
           <h2 className="text-[18px] font-[600] py-3 flex justify-between items-center">
-            Edit Variant
+            Add Variant
           </h2>
           <form onSubmit={handleSubmit(onSubmit)} action="">
             <div className="flex gap-3 flex-wrap w-full">
@@ -123,6 +122,8 @@ const AddVariantModal = ({ open, handleClose, id, category }) => {
                 />
                 <TextField
                   {...register(`oldPrice`)}
+                  error={!!errors?.oldPrice}
+                  helperText={errors?.oldPrice?.message}
                   label="Old Price"
                   variant="outlined"
                   className="w-[24%]"

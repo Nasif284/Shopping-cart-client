@@ -9,7 +9,7 @@ import { useGetCategoriesByLevelQuery } from "../../Store/Api/admin/category";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { editCatSchema } from "../../Utils/YupSchemas";
+import { editProductSchema } from "../../Utils/YupSchemas";
 import SelectField from "./SelectField";
 import { useUpdateProductMutation } from "../../Store/Api/admin/product";
 
@@ -28,7 +28,7 @@ const EditProductModal = ({ open, handleClose, product }) => {
     control,
   } = useForm({
     mode: "onBlur",
-    resolver: yupResolver(editCatSchema),
+    resolver: yupResolver(editProductSchema),
     defaultValues: {
       name: product.name,
       description: product.description,
@@ -36,7 +36,6 @@ const EditProductModal = ({ open, handleClose, product }) => {
       subCategory: product.subCategory.name,
       thirdCategory: product.thirdCategory.name,
       brand: product.brand,
-      discount: product.discount,
       isFeatured: product.isFeatured ? "Yes" : "No",
     },
   });
@@ -44,7 +43,7 @@ const EditProductModal = ({ open, handleClose, product }) => {
   const onSubmit = async (data) => {
     try {
       const res = await update({ data, id: product._id }).unwrap();
-      toast.success(res.message || "category updated Successfully");
+      toast.success(res.message || "Product updated Successfully");
       handleClose();
     } catch (error) {
       if (error?.errors) {
@@ -114,18 +113,12 @@ const EditProductModal = ({ open, handleClose, product }) => {
                   width="30%"
                 />
               </div>
-              <div className="w-full flex justify-between">
+              <div className="w-full flex  gap-7">
                 <TextField
                   {...register("brand")}
                   error={!!errors.brand?.message}
                   helperText={errors.brand?.message}
                   label="Brand"
-                  variant="outlined"
-                  className="w-[30%]"
-                />
-                <TextField
-                  {...register("discount")}
-                  label="Discount"
                   variant="outlined"
                   className="w-[30%]"
                 />

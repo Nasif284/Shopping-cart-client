@@ -39,6 +39,7 @@ const EditVariantModal = ({ open, handleClose, variant, category }) => {
     },
   });
   const [images, setImages] = useState(variant.images);
+  console.log(images)
   const handleImageUpload = (files) => {
     const fileArr = Array.from(files);
     setFiles((prev) => [...prev, ...fileArr]);
@@ -64,8 +65,10 @@ const EditVariantModal = ({ open, handleClose, variant, category }) => {
     formData.append("color", data.color);
     formData.append("price", data.price);
     formData.append("oldPrice", data.oldPrice);
-    images.forEach((img) => formData.append("images", img));
-    files.forEach((file) => formData.append("files", file));
+    images.forEach((img) => formData.append("images[]", img));
+    if (files.length > 0) {
+          files.forEach((file) => formData.append("files", file));
+    }
     try {
       console.log(variant);
       const res = await edit({ id: variant._id, data: formData }).unwrap();
@@ -128,6 +131,8 @@ const EditVariantModal = ({ open, handleClose, variant, category }) => {
                 />
                 <TextField
                   {...register(`oldPrice`)}
+                  error={!!errors?.oldPrice}
+                  helperText={errors?.oldPrice?.message}
                   label="Old Price"
                   variant="outlined"
                   className="w-[24%]"

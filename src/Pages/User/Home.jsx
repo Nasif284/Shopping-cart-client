@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   AdsBannerSlider,
   AdsBannerSliderV2,
@@ -17,9 +17,18 @@ import { Navigation } from "swiper/modules";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { useGetProductsQuery } from "../../Store/Api/admin/product";
+import { useGetCategoriesByLevelQuery } from "../../Store/Api/admin/category";
+import { CircularProgress } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { clearParams } from "../../Store/StoreSlices/uiSlice";
 
 const Home = () => {
   const [value, setValue] = React.useState(0);
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(clearParams())
+  },[dispatch])
+    let { data:rootCats,isLoading: catsLoading } = useGetCategoriesByLevelQuery({ level: "first" })
   const { data: latestProduct, isLoading } = useGetProductsQuery({
     latest: true,
   });
@@ -29,12 +38,18 @@ const Home = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  if (isLoading || isFeaturedLoading) {
-    return <h1>Loading...</h1>;
+  if (isLoading || isFeaturedLoading || catsLoading) {
+    return (
+      <div className="w-full h-[100vh] flex items-center justify-center">
+        <CircularProgress color="inherit" />
+      </div>
+    );
   }
+   rootCats = rootCats.categories.filter((cat) => !cat.isBlocked);
   return (
     <>
       <HomeSlider />
+      <CatagorySlider />
       <section className="py-5 ">
         <div className="container flex gap-5">
           <div className="part1 w-[70%]">
@@ -52,7 +67,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <CatagorySlider />
+
       <section className="bg-white py-8">
         <div className="container">
           <div className="flex items-center justify-between">
@@ -70,20 +85,9 @@ const Home = () => {
                 scrollButtons="auto"
                 aria-label="scrollable auto tabs example"
               >
-                <Tab label="Item One" />
-                <Tab label="Item Two" />
-                <Tab label="Item Three" />
-                <Tab label="Item Four" />
-                <Tab label="Item Five" />
-                <Tab label="Item Six" />
-                <Tab label="Item Seven" />
-                <Tab label="Item One" />
-                <Tab label="Item Two" />
-                <Tab label="Item Three" />
-                <Tab label="Item Four" />
-                <Tab label="Item Five" />
-                <Tab label="Item Six" />
-                <Tab label="Item Seven" />
+                {rootCats.map((cat) => (
+                  <Tab label={cat.name} />
+                ))}
               </Tabs>
             </div>
           </div>

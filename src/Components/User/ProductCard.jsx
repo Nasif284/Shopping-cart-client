@@ -5,8 +5,17 @@ import { MdOutlineZoomOutMap } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa";
 import { IoCartOutline, IoGitCompareOutline } from "react-icons/io5";
 import Tooltip from "@mui/material/Tooltip";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setModalOpen, setProductId } from "../../Store/StoreSlices/uiSlice";
+import { addToCart } from "../../Store/StoreSlices/cartSlice";
+import {
+  useAddToCartMutation,
+  useGetCartItemsQuery,
+} from "../../Store/Api/user/cart";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { CircularProgress } from "@mui/material";
+import { useAddToWishlistMutation } from "../../Store/Api/user/wishlist";
 
 const ProductCard = ({
   product = {
@@ -24,7 +33,65 @@ const ProductCard = ({
     },
   },
 }) => {
+    const [addToWishlist, { isLoading: wishlistLoading }] =
+      useAddToWishlistMutation();
+  const addToWishListHandler = async () => {
+      try {
+        const res = await addToWishlist({
+          product: product._id,
+          variant: product.defaultVariant._id,
+        }).unwrap();
+        toast.success(res.message || "Product Added To Wishlist Successfully");
+      } catch (error) {
+        toast.error(error.data || "Some Error Occurred");
+      }
+    };
+  const { user } = useSelector((state) => state.userAuth);
   const dispatch = useDispatch();
+  const [isExistInCart, setIsExistInCart] = useState(false);
+  const [add, { isLoading }] = useAddToCartMutation();
+  const { data } = useGetCartItemsQuery();
+  const cart = useSelector((state) => state.cart);
+
+  const handleAddToCart = async (product, variant) => {
+    if (user) {
+      try {
+        const res = await add({
+          product: product._id,
+          variant: variant._id,
+        }).unwrap();
+        toast.success(res.message || "Product Added To Cart Successfully");
+      } catch (error) {
+        toast.error(error.data || "Some Error Occurred");
+      }
+    } else {
+      dispatch(
+        addToCart({
+          product: product,
+          variant: variant,
+          quantity: 1,
+        })
+      );
+    }
+  };
+  useEffect(() => {
+    if (user) {
+      const isExist = data?.items.find(
+        (item) =>
+          item.product._id == product?._id &&
+          item.variant._id == product.defaultVariant?._id
+      );
+
+      setIsExistInCart(!!isExist);
+    } else {
+      const isExist = cart.find(
+        (item) =>
+          item.product._id == product?._id &&
+          item.variant._id == product.defaultVariant?._id
+      );
+      setIsExistInCart(!!isExist);
+    }
+  }, [cart, product?._id, product.defaultVariant?._id, user, data]);
   return (
     <div className="productCard rounded-md border border-[#d8d8d8] overflow-hidden shadow-md h-[380px] flex flex-col justify-between">
       <div className="imgWrapper w-[100%] group overflow-hidden rounded-t-md relative transition-all">
@@ -57,11 +124,23 @@ const ProductCard = ({
               <MdOutlineZoomOutMap />
             </Button>
           </Tooltip>
-          <Tooltip title={"Add to Wish list"} placement="left">
-            <Button className="!w-[35px] !text-[18px] !h-[35px] !min-w-[35px] !bg-white !rounded-full hover:!bg-primary !text-black hover:!text-white transition-all">
-              <FaRegHeart />
-            </Button>
-          </Tooltip>
+          {!isExistInCart && (
+            <Tooltip title={"Add to Wish list"} placement="left">
+              <Button
+                onClick={addToWishListHandler}
+                className="!w-[35px] !text-[18px] !h-[35px] !min-w-[35px] !bg-white !rounded-full hover:!bg-primary !text-black hover:!text-white transition-all"
+              >
+                {wishlistLoading ? (
+                  <CircularProgress size={20} color="inherit" />
+                ) : (
+                  <>
+                    <FaRegHeart />
+                  </>
+                )}
+              </Button>
+            </Tooltip>
+          )}
+
           <Tooltip title={"Add to Compare"} placement="left">
             <Button className="!w-[35px] !text-[18px] !h-[35px] !min-w-[35px] !bg-white !rounded-full hover:!bg-primary !text-black hover:!text-white transition-all">
               <IoGitCompareOutline />
@@ -84,22 +163,56 @@ const ProductCard = ({
               </Link>
             </Tooltip>
           </h3>
-          <Rating name="size-small" defaultValue={2} size="small" readOnly />
+          <Rating
+            name="size-small"
+            value={product.rating}
+            defaultValue={2}
+            size="small"
+            readOnly
+          />
           <div className="price-box flex items-center gap-4">
             <span className="line-through text-gray-500 font-[500] text-[15px]">
-              ${product.defaultVariant.oldPrice}
+              ₹{product.defaultVariant.oldPrice.toLocaleString()}
             </span>
             <span className="text-primary font-[600] text-[15px] ">
-              ${product.defaultVariant.price}
+              ₹{product.defaultVariant.price.toLocaleString()}
             </span>
           </div>
         </div>
       </Link>
       <div className="px-3 pb-3">
-        <Button className="!bg-white flex gap-3 !rounded-md !text-primary !border-2 border-primary  w-full !font-[500]">
-          <IoCartOutline className="!text-[19px] !text-black" />
-          Add to Cart
-        </Button>
+        {product.defaultVariant.stock > 0 ? (
+          <>
+            {isExistInCart ? (
+              <Link to={"/cart"}>
+                <Button className="!bg-white flex gap-3 !rounded-md !text-primary !border-2 border-primary  w-full !font-[500]">
+                  <IoCartOutline className="!text-[19px] !text-black" />
+                  Go to Cart
+                </Button>
+              </Link>
+            ) : (
+              <Button
+                onClick={() => handleAddToCart(product, product.defaultVariant)}
+                className="!bg-white flex gap-3 !rounded-md !text-primary !border-2 border-primary  w-full !font-[500]"
+              >
+                {isLoading ? (
+                  <CircularProgress size={30} color="inherit" />
+                ) : (
+                  <>
+                    <IoCartOutline className="!text-[19px]" />
+                    Add To Cart
+                  </>
+                )}
+              </Button>
+            )}
+          </>
+        ) : (
+          <div className="flex items-center py-2 justify-center text-center w-full">
+            <span className="text-[15px] text-center text-red-500 font-[600]">
+              Out of Stock
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );
