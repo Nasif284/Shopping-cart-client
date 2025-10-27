@@ -22,7 +22,6 @@ const OrderDetails = () => {
   const isDelivered = data.displayItem.statusHistory.find(
     (e) => e.status == "Delivered"
   );
-  console.log(data.displayItem);
   return (
     <>
       <div className="col2 w-[90%]">
@@ -155,7 +154,9 @@ const OrderDetails = () => {
             <div>
               <h4 className="font-medium mb-1">Payment</h4>
               <p className="flex items-center text-sm text-gray-700">
-                {data.order.payment.method == "COD" && "Cash On Delivery"}
+                {data.order.payment.method == "COD"
+                  ? "Cash On Delivery"
+                  : data.order.payment.method}
               </p>
             </div>
             <div>

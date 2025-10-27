@@ -1,5 +1,8 @@
 import { CircularProgress, Dialog, DialogContent } from "@mui/material";
-import { useApplyCouponMutation, useGetCouponsForUserQuery } from "../../Store/Api/user/coupen";
+import {
+  useApplyCouponMutation,
+  useGetCouponsForUserQuery,
+} from "../../Store/Api/user/coupen";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { applyCoupon } from "../../Store/StoreSlices/orderSlice";
@@ -10,7 +13,10 @@ const SelectCouponModal = ({
   items,
   coupon,
 }) => {
-  const { data, isLoading } = useGetCouponsForUserQuery({ purchaseValue });
+  const { data, isLoading } = useGetCouponsForUserQuery(
+    { purchaseValue },
+    { refetchOnMountOrArgChange: true }
+  );
   const [apply, { isLoading: applyLoading }] = useApplyCouponMutation();
   const dispatch = useDispatch();
   const handleCouponSelection = async (code) => {
@@ -27,8 +33,8 @@ const SelectCouponModal = ({
           coupon: { ...res.coupon, deduction: res.couponDeduction },
         })
       );
-        toast.success(res.message || "Coupon Applied Successfully");
-        handleClose()
+      toast.success(res.message || "Coupon Applied Successfully");
+      handleClose();
     } catch (error) {
       toast.error(error.data || "Some Error Occurred");
     }
@@ -65,7 +71,8 @@ const SelectCouponModal = ({
                 <div className="mt-2">
                   <h1>{coupon.description}</h1>
                   <p className="!mt-1">
-                    Discount Value : {coupon.discountValue}{coupon.discountType == "Percentage" &&"%"}
+                    Discount Value : {coupon.discountValue}
+                    {coupon.discountType == "Percentage" && "%"}
                   </p>
                 </div>
               </div>

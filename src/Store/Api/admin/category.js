@@ -22,7 +22,7 @@ export const adminCategoryApi = adminApi.injectEndpoints({
       query: (params) => ({
         url: `/category/`,
         method: "get",
-        params
+        params,
       }),
       providesTags: ["Category"],
     }),

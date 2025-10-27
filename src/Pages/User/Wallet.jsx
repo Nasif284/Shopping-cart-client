@@ -12,11 +12,12 @@ const Wallet = () => {
   const [open, setOpen] = useState(false);
   const { data } = useGetWalletQuery();
   const [page, setPage] = useState(1);
-  const [params, setParams] = useState({ page:1, perPage: 5 });
+  const [params, setParams] = useState({ page: 1, perPage: 5 });
   const { data: wallet } = useGetWalletTransactionsQuery(params);
+  console.log(wallet?.transactions);
   const handlePagination = (event, value) => {
     setPage(value);
-    setParams((prev)=> ({...prev,page: value}))
+    setParams((prev) => ({ ...prev, page: value }));
   };
   console.log(wallet);
   const formatDate = (dateString) => {
@@ -92,12 +93,12 @@ const Wallet = () => {
                       <h4 className="font-[600] text-[15px]">
                         {transaction.description}
                       </h4>
-                      <p className="text-[12px] text-gray-500 mt-1">
+                      <p className="text-[12px] !m-0 text-gray-500 mt-1">
                         {formatDate(transaction.createdAt)}
                       </p>
-                      {transaction.orderId && (
-                        <p className="text-[11px] text-gray-400 mt-0.5">
-                          Order ID: {transaction.orderId}
+                      {transaction.relatedOrderId && (
+                        <p className="text-[11px] !m-0 text-gray-400 mt-0.5">
+                          Order ID: {transaction.relatedOrderId}
                         </p>
                       )}
                     </div>

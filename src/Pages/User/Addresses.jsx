@@ -3,14 +3,18 @@ import React, { useState } from "react";
 import { FaPlus } from "react-icons/fa6";
 import { CiMenuKebab } from "react-icons/ci";
 import { AddNewAddressModal, EditAddressModal } from "../../Components/User";
-import { useDeleteAddressMutation, useGetAddressesQuery } from "../../Store/Api/user/address";
+import {
+  useDeleteAddressMutation,
+  useGetAddressesQuery,
+} from "../../Store/Api/user/address";
 
 const Addresses = () => {
   const [open, setOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [editAddress, setEditAddress] = useState(null);
-    const { data, isLoading } = useGetAddressesQuery();
-    const [deleteAddress, {isLoading: deleteLoading}] = useDeleteAddressMutation()
+  const { data, isLoading } = useGetAddressesQuery();
+  const [deleteAddress, { isLoading: deleteLoading }] =
+    useDeleteAddressMutation();
   if (isLoading) {
     <div className="w-full h-[100vh] flex items-center justify-center">
       <CircularProgress color="inherit" />

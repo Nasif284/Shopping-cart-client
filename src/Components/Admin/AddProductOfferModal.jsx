@@ -6,7 +6,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import toast from "react-hot-toast";
-import {  useAddProductOfferMutation } from "../../Store/Api/admin/offer";
+import { useAddProductOfferMutation } from "../../Store/Api/admin/offer";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { offerSchema } from "../../Utils/YupSchemas";
@@ -19,14 +19,14 @@ const AddProductOfferModal = ({ open, handleClose, product }) => {
     formState: { errors },
   } = useForm({
     mode: "onBlur",
-      resolver: yupResolver(offerSchema),
-      defaultValues:{
-          discountValue: product.discount
-      }
+    resolver: yupResolver(offerSchema),
+    defaultValues: {
+      discountValue: product.discount,
+    },
   });
   const onSubmit = async (data) => {
-      try {
-      const res = await add({...data, product:product._id }).unwrap();
+    try {
+      const res = await add({ ...data, product: product._id }).unwrap();
       toast.success(res.message || "Offer added Successfully");
       handleClose();
     } catch (error) {

@@ -5,19 +5,19 @@ import toast from "react-hot-toast";
 const QtyBox = ({ product, setQty, qty }) => {
   const handleIncrease = () => {
     if (qty >= product.stock) {
-      return toast.error(`Adding more than ${product?.stock} products is not allowed for this Product `);
+      return toast.error(
+        `Adding more than ${product?.stock} products is not allowed for this Product `
+      );
     } else if (qty >= 5) {
       return toast.error(
         `Adding more than 5 products is not allowed for per product `
       );
     } else {
-      setQty((prev) => prev + 1)
+      setQty((prev) => prev + 1);
     }
- }
+  };
   return (
-    <div
-      className={`qtyBox w-full h-full flex items-center relative`}
-    >
+    <div className={`qtyBox w-full h-full flex items-center relative`}>
       <input
         type="number"
         defaultValue={1}

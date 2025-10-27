@@ -229,9 +229,9 @@ const CheckoutRetry = () => {
               <Razorpay
                 amount={totalPrice}
                 payload={{
-                    id,
-                    items: orderItems,
-                    failed: true
+                  id,
+                  items: orderItems,
+                  failed: true,
                 }}
                 failed={true}
               />

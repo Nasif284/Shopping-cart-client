@@ -1,9 +1,15 @@
 import { useState } from "react";
-import { OrdersTable, SearchBox, SelectBox, } from "../../Components/Admin";
+import { OrdersTable, SearchBox, SelectBox } from "../../Components/Admin";
 import FilterAndSearchHeader from "../../Components/Admin/FilterAndSearhcHeader";
 import OrdersByItemsTable from "../../Components/Admin/OrdersByItemsTable";
 const AdminOrders = () => {
-  const [params, setParams] = useState({ page: 1, perPage: 10, status: "", search: "", sortBy: "" });
+  const [params, setParams] = useState({
+    page: 1,
+    perPage: 10,
+    status: "",
+    search: "",
+    sortBy: "",
+  });
   const [itemsParams, setItemsParams] = useState({
     page: 1,
     perPage: 10,
@@ -11,16 +17,16 @@ const AdminOrders = () => {
     search: "",
     sortBy: "",
   });
-  const [type, setType] = useState("By Order ID")
+  const [type, setType] = useState("By Order ID");
   const statuses = [
-        "Confirmed",
-        "Processing",
-        "Partially Shipped",
-        "Partially Delivered",
-        "Completed",
-        "Cancelled",
-        "Return Approved",
-  ]
+    "Confirmed",
+    "Processing",
+    "Partially Shipped",
+    "Partially Delivered",
+    "Completed",
+    "Cancelled",
+    "Return Approved",
+  ];
   const itemStatuses = [
     "Confirmed",
     "Processing",
@@ -92,7 +98,7 @@ const AdminOrders = () => {
               placeholder={"Status"}
               statuses={itemStatuses}
               onChange={(status) =>
-                 setItemsParams((prev) => ({ ...prev, status }))
+                setItemsParams((prev) => ({ ...prev, status }))
               }
             />
             <SelectBox

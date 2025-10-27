@@ -21,7 +21,13 @@ import {
   Register,
   Verify,
 } from "../Pages/User";
-import { Header, Footer, ProductDialogBox, ChatBot, EditProfile } from "../Components/User";
+import {
+  Header,
+  Footer,
+  ProductDialogBox,
+  ChatBot,
+  EditProfile,
+} from "../Components/User";
 import { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import RouteValidation from "../Components/Protected/RouteValidation";

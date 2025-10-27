@@ -42,7 +42,7 @@ function App() {
         await add(storedCart).unwrap();
       };
       if (storedCart?.length) {
-        uploadToCart(storedCart)
+        uploadToCart(storedCart);
         localStorage.removeItem("cart");
       }
       console.log("Registering user with socket:", userAuth.data.user._id);

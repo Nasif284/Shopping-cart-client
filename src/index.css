@@ -198,10 +198,8 @@ h5 {
   background-color: #ff5252 !important;
 }
 
-
-.catSwiper .swiper-wrapper{
+.catSwiper .swiper-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-

@@ -17,7 +17,10 @@ const ProductDetails = () => {
   const { data: reviews, isLoading: reviewsLoading } = useGetReviewsQuery(id);
   const [page, setPage] = useState(1);
   const [params, setParams] = useState({ page: 1, perPage: 5 });
-  const { data, isLoading } = useGetVariantsQuery({ id, params },{refetchOnMountOrArgChange:true});
+  const { data, isLoading } = useGetVariantsQuery(
+    { id, params },
+    { refetchOnMountOrArgChange: true }
+  );
   const { data: product, isLoading: isProductLoading } = useGetProductByIdQuery(
     id,
     { refetchOnMountOrArgChange: true }
@@ -80,6 +83,7 @@ const ProductDetails = () => {
 
       {open && (
         <AddVariantModal
+          variants={data?.variants}
           open={open}
           handleClose={() => setOpen(false)}
           id={id}

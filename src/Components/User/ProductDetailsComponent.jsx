@@ -1,6 +1,6 @@
 import Rating from "@mui/material/Rating";
 import Button from "@mui/material/Button";
-import { IoCartOutline, IoGitCompareOutline } from "react-icons/io5";
+import { IoCartOutline } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
 import QtyBox from "./QtyBox";
 import { useDispatch, useSelector } from "react-redux";
@@ -43,7 +43,6 @@ const ProductDetailsComponent = ({
       const res = await addToWishlist({
         product: product._id,
         variant: activeVariant._id,
-      
       }).unwrap();
       toast.success(res.message || "Product Added To Wishlist Successfully");
     } catch (error) {
@@ -62,7 +61,7 @@ const ProductDetailsComponent = ({
           items: [{ product, variant: activeVariant, quantity: qty }],
           prices: {
             subtotal: activeVariant.oldPrice * qty,
-            discount: activeVariant.oldPrice * qty - activeVariant.price *qty,
+            discount: activeVariant.oldPrice * qty - activeVariant.price * qty,
             total: activeVariant.price * qty,
           },
         })
@@ -109,6 +108,7 @@ const ProductDetailsComponent = ({
     }
   };
   useEffect(() => {
+    setIsExistInCart(false);
     if (user) {
       const isExist = data?.items.find(
         (item) =>
@@ -130,7 +130,15 @@ const ProductDetailsComponent = ({
         setIsExistInCart(false);
       }
     }
-  }, [cart, product?._id, activeVariant?._id, user, data]);
+  }, [
+    cart,
+    product?._id,
+    activeVariant?._id,
+    user,
+    data,
+    selectedColor,
+    selectedSize,
+  ]);
   const [qty, setQty] = useState(1);
   const handleColorChange = (color) => {
     setSelectedColor(color);
@@ -157,7 +165,7 @@ const ProductDetailsComponent = ({
               readOnly
             />
             <span className="text-[13px]">
-              Reviews ({product?.reviewCount})
+              Reviews ({product?.reviewCount || 0})
             </span>
           </div>
           <div className="price-box flex items-center gap-4 mt-4">
@@ -167,6 +175,11 @@ const ProductDetailsComponent = ({
             <span className="text-primary font-[600] text-[20px] ">
               ₹{(activeVariant?.price * qty).toLocaleString()}
             </span>
+            <span className="text-primary font-[500] text-[15px] ">
+              {activeVariant?.discount}%{" "}
+              <span className="text-[10px]">OFF</span>
+            </span>
+
             {activeVariant?.stock > 0 && (
               <span className="text-[14px]">
                 Available in Stock:{" "}
@@ -298,11 +311,6 @@ const ProductDetailsComponent = ({
                 </span>
               </button>
             )}
-
-            <span className="flex link cursor-pointer font-[500] text-[13px] items-center gap-2">
-              <IoGitCompareOutline className="text-[18px]" />
-              Add To Compare
-            </span>
           </div>
         </>
       )}

@@ -5,11 +5,16 @@ import React, { useEffect, useState } from "react";
 import { verify } from "../../Assets";
 import { OtpBox } from "../../Components/User";
 import { Link } from "react-router-dom";
-import { useEmailChangeOtpResendMutation, useEmailChangeVerifyMutation } from "../../Store/Api/user/profile";
+import {
+  useEmailChangeOtpResendMutation,
+  useEmailChangeVerifyMutation,
+} from "../../Store/Api/user/profile";
 
 const EmailVerifyModal = ({ open, handleClose, email, setVerified }) => {
-  const [verifyEmail, { isLoading: isPending }] = useEmailChangeVerifyMutation()
-  const [resend, { isLoading: isResending }] = useEmailChangeOtpResendMutation()
+  const [verifyEmail, { isLoading: isPending }] =
+    useEmailChangeVerifyMutation();
+  const [resend, { isLoading: isResending }] =
+    useEmailChangeOtpResendMutation();
   const [otp, setOtp] = useState("");
   const [timer, setTimer] = useState(60);
   const updateTimer = () => {

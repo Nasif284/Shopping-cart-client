@@ -39,7 +39,7 @@ const EditVariantModal = ({ open, handleClose, variant, category }) => {
     },
   });
   const [images, setImages] = useState(variant.images);
-  console.log(images)
+  console.log(images);
   const handleImageUpload = (files) => {
     const fileArr = Array.from(files);
     setFiles((prev) => [...prev, ...fileArr]);
@@ -67,7 +67,7 @@ const EditVariantModal = ({ open, handleClose, variant, category }) => {
     formData.append("oldPrice", data.oldPrice);
     images.forEach((img) => formData.append("images[]", img));
     if (files.length > 0) {
-          files.forEach((file) => formData.append("files", file));
+      files.forEach((file) => formData.append("files", file));
     }
     try {
       console.log(variant);

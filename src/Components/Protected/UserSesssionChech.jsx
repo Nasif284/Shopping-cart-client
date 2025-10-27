@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
-const UserSessionCheck = ({children}) => {
+const UserSessionCheck = ({ children }) => {
   const { user, isLoading } = useSelector((state) => state.userAuth);
   if (isLoading) {
     return <div>Loading...</div>;

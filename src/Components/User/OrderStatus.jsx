@@ -14,7 +14,7 @@ const OrderStatus = ({ currentStatus, statusHistory }) => {
     "Cancelled",
   ];
   let activeIndex = STATUS_FLOW.indexOf(currentStatus);
-  if (currentStatus === "Cancelled" ) {
+  if (currentStatus === "Cancelled") {
     const confirmedHistory = statusHistory?.find(
       (h) => h.status === "Confirmed"
     );
@@ -65,7 +65,7 @@ const OrderStatus = ({ currentStatus, statusHistory }) => {
       {STATUS_FLOW.slice(
         0,
         currentStatus === "Return Rejected" ||
-        currentStatus === "Return Requested" ||
+          currentStatus === "Return Requested" ||
           currentStatus === "Return Approved"
           ? activeIndex + 1
           : 5
@@ -76,46 +76,46 @@ const OrderStatus = ({ currentStatus, statusHistory }) => {
           currentStatus === "Return Rejected" &&
           status == "Return Approved"
         ) {
-          return
+          return;
         }
-          return (
-            <div key={status} className="flex flex-col flex-1 relative ">
-              {idx !== arr.length - 1 && (
-                <div
-                  className={`absolute  top-2 left-0 right-0 h-0.5 ${
-                    isActive ? "bg-red-500" : "bg-gray-300"
-                  }`}
-                ></div>
-              )}
+        return (
+          <div key={status} className="flex flex-col flex-1 relative ">
+            {idx !== arr.length - 1 && (
               <div
-                className={`w-4 h-4 rounded-full z-10 ${
+                className={`absolute  top-2 left-0 right-0 h-0.5 ${
                   isActive ? "bg-red-500" : "bg-gray-300"
                 }`}
               ></div>
-              <div className="relative pb-9">
-                <p
-                  className={`text-xs font-medium mt-1 ${
-                    isActive ? "text-red-500" : "text-gray-600"
-                  }`}
-                >
-                  {status}
-                </p>
+            )}
+            <div
+              className={`w-4 h-4 rounded-full z-10 ${
+                isActive ? "bg-red-500" : "bg-gray-300"
+              }`}
+            ></div>
+            <div className="relative pb-9">
+              <p
+                className={`text-xs font-medium mt-1 ${
+                  isActive ? "text-red-500" : "text-gray-600"
+                }`}
+              >
+                {status}
+              </p>
 
-                <p className="text-[10px] absolute top-5 left-0 text-gray-500">
-                  {history
-                    ? new Date(history.date).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "short",
-                        day: "2-digit",
-                      })
-                    : ""}
-                </p>
-                {history?.note?.length > 0 && (
-                  <p className="!mt-4">{history?.note}</p>
-                )}
-              </div>
+              <p className="text-[10px] absolute top-5 left-0 text-gray-500">
+                {history
+                  ? new Date(history.date).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "short",
+                      day: "2-digit",
+                    })
+                  : ""}
+              </p>
+              {history?.note?.length > 0 && (
+                <p className="!mt-4">{history?.note}</p>
+              )}
             </div>
-          );
+          </div>
+        );
       })}
     </div>
   );

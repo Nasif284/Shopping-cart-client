@@ -1,10 +1,7 @@
-import {
-  Dialog,
-  DialogContent,
-} from "@mui/material";
+import { Dialog, DialogContent } from "@mui/material";
 import { useGetAddressesQuery } from "../../Store/Api/user/address";
 const SelectAddressModal = ({ open, handleClose, setSelected }) => {
-    const { data} = useGetAddressesQuery();
+  const { data } = useGetAddressesQuery();
 
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -17,7 +14,10 @@ const SelectAddressModal = ({ open, handleClose, setSelected }) => {
           </div>
           {data?.addresses.map((address) => (
             <div
-              onClick={() => {setSelected(address); handleClose() }}
+              onClick={() => {
+                setSelected(address);
+                handleClose();
+              }}
               key={address?._id}
               className="card py-3 relative  shadow-md rounded-md flex"
             >

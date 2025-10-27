@@ -29,20 +29,19 @@ const EditCatModal = ({ open, handleClose, category }) => {
     },
   });
   const [image, setImage] = useState(category.image);
-  const [file ,setFile ] = useState(null)
+  const [file, setFile] = useState(null);
   const handleImageUpload = (file) => {
     setImage(URL.createObjectURL(file[0]));
-    setFile(file[0])
+    setFile(file[0]);
   };
   const handleRemoveImage = () => {
     setImage(null);
     setFile(null);
-    
   };
   const onSubmit = async (data) => {
     if (!image) {
       toast.error("Please upload an Image");
-      return
+      return;
     }
     const formData = new FormData();
     formData.append("name", data.name);

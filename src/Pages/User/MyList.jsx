@@ -17,8 +17,11 @@ const MyList = () => {
         <div className="py-2 px-3 border-b border-[rgba(0,0,0,0.1)] mb-3">
           <h2>Your Cart</h2>
           <p className="!m-0">
-            There are <span className="font-bold text-primary">{ data.wishlist.length}</span> Items in
-            your cart
+            There are{" "}
+            <span className="font-bold text-primary">
+              {data.wishlist.length}
+            </span>{" "}
+            Items in your cart
           </p>
         </div>
         {data.wishlist.map((item) => (

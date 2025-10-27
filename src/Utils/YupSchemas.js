@@ -31,6 +31,7 @@ export const productValidationSchema = yup.object().shape({
         .transform((value, originalValue) =>
           String(originalValue).trim() === "" ? null : value
         )
+        .required("Price is required")
         .test(
           "oldPrice-greater",
           "Old price must be greater than price",
@@ -407,6 +408,16 @@ export const globalOfferSchema = yup.object().shape({
     .required("Offer value is required")
     .min(1, "Offer value must be at least 1%")
     .max(100, "Offer value cannot exceed 100%"),
+  startDate: yup
+    .date()
+    .typeError("Start date is required")
+    .required("Start date is required"),
+
+  expiryDate: yup
+    .date()
+    .typeError("Expiry date is required")
+    .required("Expiry date is required")
+    .min(yup.ref("startDate"), "Expiry date must be after start date"),
 });
 
 export const couponSchema = yup.object().shape({
@@ -481,4 +492,12 @@ export const addMoneySchema = yup.object().shape({
     .min(100, "Minimum amount is ₹100")
     .max(50000, "Maximum amount is ₹50,000")
     .required("Amount is required"),
+});
+
+export const homeSlidesSchema = yup.object().shape({
+  description: yup
+    .string()
+    .required("Description is required")
+    .min(5, "Description should be at least 5 characters"),
+  link: yup.string().required("Link is required"),
 });

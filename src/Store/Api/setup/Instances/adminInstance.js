@@ -2,7 +2,7 @@ import axios from "axios";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const adminInstance = axios.create({
-  baseURL:apiUrl
+  baseURL: apiUrl,
 });
 
 adminInstance.interceptors.request.use(

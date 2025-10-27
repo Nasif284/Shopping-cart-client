@@ -52,8 +52,8 @@ const AddNewAddressModal = ({ open, handleClose }) => {
     handleSubmit,
     control,
   } = useForm({
-      mode: "onBlur",
-      resolver: yupResolver(addressSchema)
+    mode: "onBlur",
+    resolver: yupResolver(addressSchema),
   });
 
   const onSubmit = async (data) => {

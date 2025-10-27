@@ -10,12 +10,12 @@ import TableRow from "@mui/material/TableRow";
 const AdminTable = ({ columns, rows, page, totalPosts, setParams }) => {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const handleChangePage = (event, newPage) => {
-    setParams((prev) => ({ ...prev, page: newPage+1 }));
+    setParams((prev) => ({ ...prev, page: newPage + 1 }));
   };
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(event.target.value);
-    console.log(rowsPerPage)
+    console.log(rowsPerPage);
     setParams((prev) => ({ ...prev, perPage: event.target.value }));
   };
 
@@ -65,7 +65,7 @@ const AdminTable = ({ columns, rows, page, totalPosts, setParams }) => {
         component="div"
         count={totalPosts}
         rowsPerPage={rowsPerPage}
-        page={page-1}
+        page={page - 1}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />

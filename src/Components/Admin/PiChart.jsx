@@ -1,10 +1,4 @@
-import {
-  Cell,
-  Pie,
-  PieChart,
-  Tooltip,
-  Legend,
-} from "recharts";
+import { Cell, Pie, PieChart, Tooltip, Legend } from "recharts";
 import { useGetStatusChartQuery } from "../../Store/Api/admin/orders";
 
 const COLORS = ["#FFA500", "#00C49F", "#4CAF50", "#FF4C4C", "#8A2BE2"];
@@ -95,4 +89,3 @@ export default function OrderStatusChart({ show, filter }) {
     </PieChart>
   );
 }
-

@@ -12,7 +12,9 @@ import toast from "react-hot-toast";
 const baseUrl = import.meta.env.VITE_API_URL;
 const OrderItemDetails = () => {
   const { id } = useParams();
-  const { data, isLoading } = useGetOrderItemByIdQuery(id, {refetchOnMountOrArgChange: true});
+  const { data, isLoading } = useGetOrderItemByIdQuery(id, {
+    refetchOnMountOrArgChange: true,
+  });
   const [reject, { isLoading: rejectLoading }] = useRejectReturnMutation();
   const [approve, { isLoading: approveLoading }] = useApproveReturnMutation();
   const [open, setOpen] = useState(false);
@@ -75,7 +77,7 @@ const OrderItemDetails = () => {
             </div>
 
             <a
-              href={`${baseUrl}/api/user/orders/${data.order.items[0]._id}/invoice`}
+              href={`${baseUrl}/api/user/orders/${data?.displayItem._id}/invoice`}
               className="px-3 py-1 border rounded-md text-sm cursor-pointer"
             >
               Invoice
@@ -133,15 +135,20 @@ const OrderItemDetails = () => {
                 <h3 className="font-medium w-[85%]">
                   {data?.displayItem.name}
                 </h3>
-                <Button
-                  onClick={() => {
-                    setOpen(true);
-                    setItem(data?.displayItem);
-                  }}
-                  className="!bg-primary !absolute top-0 right-0 !px-2 !mt-2 !text-white !capitalize !text-[12px] !py-2 flex gap-2  hover:!bg-[rgba(0,0,0,0.8)] !font-[600]"
-                >
-                  Change Status
-                </Button>
+                {data.displayItem.status !== "Cancelled" &&
+                  data.displayItem.status !== "Delivered" &&
+                  data.displayItem.status !== "Return Requested" &&
+                  data.displayItem.status !== "Return Approved" && (
+                    <Button
+                      onClick={() => {
+                        setOpen(true);
+                        setItem(data?.displayItem);
+                      }}
+                      className="!bg-primary !absolute top-0 right-0 !px-2 !mt-2 !text-white !capitalize !text-[12px] !py-2 flex gap-2  hover:!bg-[rgba(0,0,0,0.8)] !font-[600]"
+                    >
+                      Change Status
+                    </Button>
+                  )}
               </div>
               <div className="flex gap-5">
                 <p className="text-sm text-gray-600">

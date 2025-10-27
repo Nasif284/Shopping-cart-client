@@ -125,5 +125,5 @@ export const {
   useGetFailedOrderQuery,
   useRetryFiledOrderWithCodMutation,
   useRetryFiledOrderWithRazorpayMutation,
-  useRetryFiledOrderWithWalletMutation
+  useRetryFiledOrderWithWalletMutation,
 } = orderApi;

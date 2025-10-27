@@ -31,6 +31,6 @@ export const adminApi = createApi({
     "Report",
     "TopProducts",
     "TopCategories",
-    "TopBrands"
+    "TopBrands",
   ],
 });

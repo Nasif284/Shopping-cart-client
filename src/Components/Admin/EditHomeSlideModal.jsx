@@ -1,21 +1,34 @@
-import { Button, Dialog, DialogContent, CircularProgress } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  TextField,
+  CircularProgress,
+} from "@mui/material";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { IoIosClose } from "react-icons/io";
-import { useSelector } from "react-redux";
-import NormalUploadBox from "../Admin/NormalUploadBox";
-import { useChangeImageMutation } from "../../Store/Api/user/profile";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { homeSlidesSchema } from "../../Utils/YupSchemas";
+import NormalUploadBox from "./NormalUploadBox";
+import { useEditHomeSlideMutation } from "../../Store/Api/admin/homeSlides";
 
-const EditProfileImageModal = ({ open, handleClose }) => {
-  const { user } = useSelector((state) => state.userAuth);
-  const [upload, { isLoading }] = useChangeImageMutation();
+const EditHomeSlidesModal = ({ open, handleClose, slide }) => {
+  const [edit, { isLoading }] = useEditHomeSlideMutation();
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm();
-  const [image, setImage] = useState(user.image);
+  } = useForm({
+    mode: "onBlur",
+    resolver: yupResolver(homeSlidesSchema),
+    defaultValues: {
+      description: slide.description,
+      link: slide.link,
+    },
+  });
+  const [image, setImage] = useState(slide.banner);
   const [file, setFile] = useState(null);
   const handleImageUpload = (file) => {
     setImage(URL.createObjectURL(file[0]));
@@ -25,18 +38,23 @@ const EditProfileImageModal = ({ open, handleClose }) => {
     setImage(null);
     setFile(null);
   };
-  const onSubmit = async () => {
+  const onSubmit = async (data) => {
     if (!image) {
-      return toast.error("Please upload an Image");
+      toast.error("Please upload an Image");
+      return;
     }
     const formData = new FormData();
-    formData.append("image", file);
+    formData.append("description", data.description);
+    formData.append("link", data.link);
+    if (file) {
+      formData.append(`image`, file);
+    }
     try {
-      const res = await upload(formData).unwrap();
-      toast.success(res.message || "category updated Successfully");
+      const res = await edit({ id: slide._id, data: formData }).unwrap();
+      toast.success(res.message || "Home Slide updated Successfully");
       handleClose();
     } catch (error) {
-      toast.error(error.data || "category updating failed");
+      toast.error(error.data || "Home Slide updating failed");
     }
   };
 
@@ -44,8 +62,28 @@ const EditProfileImageModal = ({ open, handleClose }) => {
     <Dialog open={open} onClose={handleClose}>
       <DialogContent>
         <div className=" w-full">
-          <h2 className="text-[18px] font-[600]">Edit Image</h2>
+          <h2 className="text-[18px] font-[600]">Edit Home Slide</h2>
           <form onSubmit={handleSubmit(onSubmit)} className="mt-5" action="">
+            <div className="flex gap-3">
+              <TextField
+                error={!!errors?.description}
+                helperText={errors?.description?.message}
+                {...register("description")}
+                id="outlined-basic"
+                label="Description"
+                variant="outlined"
+                className="w-full"
+              />
+              <TextField
+                error={!!errors?.link}
+                helperText={errors?.link?.message}
+                {...register("link")}
+                id="outlined-basic"
+                label="Link To"
+                variant="outlined"
+                className="w-full"
+              />
+            </div>
             {image && (
               <div className=" mt-5  flex flex-col gap-3 justify-center relative items-center bg-gray-100 hover:bg-gray-200  w-[100%] rounded-md  border-dashed border-1 border-[rgba(0,0,0,0.2)] h-[120px]">
                 <span
@@ -61,6 +99,7 @@ const EditProfileImageModal = ({ open, handleClose }) => {
                 />
               </div>
             )}
+
             <NormalUploadBox
               edit={true}
               register={register("image")}
@@ -92,4 +131,4 @@ const EditProfileImageModal = ({ open, handleClose }) => {
   );
 };
 
-export default EditProfileImageModal;
+export default EditHomeSlidesModal;

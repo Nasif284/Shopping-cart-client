@@ -43,7 +43,15 @@ const TopCategory = ({ filter }) => {
       category.orderCount
     )
   );
-  return <AdminTable page={data?.page} setParams={setParams} totalPosts={data?.totalPosts} columns={topCategoryColumns} rows={topProductsRows} />;
+  return (
+    <AdminTable
+      page={data?.page}
+      setParams={setParams}
+      totalPosts={data?.totalPosts}
+      columns={topCategoryColumns}
+      rows={topProductsRows}
+    />
+  );
 };
 
 export default TopCategory;

@@ -5,18 +5,19 @@ const SearchBox = ({ onSearch }) => {
   const [search, setSearch] = useState("");
   const handleChange = (e) => {
     if (!e.target.value) {
-            setSearch("");
-            onSearch("");
-      } setSearch(e.target.value);
-    };
+      setSearch("");
+      onSearch("");
+    }
+    setSearch(e.target.value);
+  };
   useEffect(() => {
     const timer = setTimeout(() => {
       if (search.trim().length > 0) {
-        onSearch(search)
+        onSearch(search);
       }
-    }, 300)
-    return ()=>  clearTimeout(timer)
-  },[search,onSearch])
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [search, onSearch]);
 
   const handleClear = () => {
     setSearch("");

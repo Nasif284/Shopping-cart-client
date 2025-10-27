@@ -87,7 +87,9 @@ const OrdersByItemsTable = ({ params, setParams }) => {
       </div>,
       order.category.name,
       order.items.quantity,
-      <span>₹{(order.items.price*order.items.quantity).toLocaleString()}</span>,
+      <span>
+        ₹{(order.items.price * order.items.quantity).toLocaleString()}
+      </span>,
       new Date(order.createdAt).toLocaleDateString("en-GB"),
       <Badge status={order.items.status} />,
       <Link to={`/admin/orders/items/${order.items._id}`}>

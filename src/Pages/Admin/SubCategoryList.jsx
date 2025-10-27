@@ -200,7 +200,7 @@ const SubCategoryList = () => {
         />
       )}
       {offerOpen && (
-        <AddCategoryOfferModal        
+        <AddCategoryOfferModal
           open={offerOpen}
           handleClose={() => setOfferOpen(false)}
           categoryId={selectedCat}

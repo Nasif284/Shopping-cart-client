@@ -257,19 +257,21 @@ const ProductSidebar = ({ catParams }) => {
               >
                 <MenuItem
                   className="!text-[13px] !text-black"
-                  onClick={() => handleMaxPrice({ param: 1000, label:"1000" })}
+                  onClick={() => handleMaxPrice({ param: 1000, label: "1000" })}
                 >
                   1000
                 </MenuItem>
                 <MenuItem
                   className="!text-[13px] !text-black"
-                  onClick={() => handleMaxPrice({ param: 2000,label:"2000" })}
+                  onClick={() => handleMaxPrice({ param: 2000, label: "2000" })}
                 >
                   2000
                 </MenuItem>
                 <MenuItem
                   className="!text-[13px] !text-black"
-                  onClick={() => handleMaxPrice({ param: 3000,label:"3000 +" })}
+                  onClick={() =>
+                    handleMaxPrice({ param: 3000, label: "3000 +" })
+                  }
                 >
                   3000 +
                 </MenuItem>

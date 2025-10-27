@@ -21,9 +21,10 @@ const uiSlice = createSlice({
     },
     clearParams: (state) => {
       state.params = { page: 1, perPage: 12 };
-    }
+    },
   },
 });
 
-export const { setModalOpen, setProductId, setParams,clearParams } = uiSlice.actions;
+export const { setModalOpen, setProductId, setParams, clearParams } =
+  uiSlice.actions;
 export default uiSlice.reducer;

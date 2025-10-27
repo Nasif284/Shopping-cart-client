@@ -11,9 +11,7 @@ import { SelectField } from "../Admin";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { couponSchema } from "../../Utils/YupSchemas";
 import DateField from "./DateFiled";
-import {
-  useEditCouponMutation,
-} from "../../Store/Api/admin/coupon";
+import { useEditCouponMutation } from "../../Store/Api/admin/coupon";
 import dayjs from "dayjs";
 const EditCouponModal = ({ open, handleClose, coupon }) => {
   const [edit, { isLoading }] = useEditCouponMutation();

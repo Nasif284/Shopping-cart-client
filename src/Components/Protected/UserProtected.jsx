@@ -8,7 +8,7 @@ const UserProtected = () => {
     return <div>Loading...</div>;
   }
   if (user) {
-    return <Outlet/>
+    return <Outlet />;
   } else {
     toast.error("Please Login");
     return <Navigate to="/login" replace />;

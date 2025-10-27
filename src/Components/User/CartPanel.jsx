@@ -17,26 +17,32 @@ import _ from "lodash";
 const CartPanel = ({ open, setOpen }) => {
   const { user } = useSelector((state) => state.userAuth);
   const cart = useSelector((state) => state.cart);
-  const { data } = useGetCartItemsQuery(undefined,{refetchOnMountOrArgChange:true});
+  const { data } = useGetCartItemsQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
   const [items, setItems] = useState();
   const dispatch = useDispatch();
-   let filtered = data?.items.filter(
-     (e) =>
-       e.variant.stock > 0 &&
-       !e.variant.isUnlisted &&
-       !e.product.isUnlisted &&
-       !e.product.categoryId.isBlocked &&
-       !e.product.subCategoryId.isBlocked &&
-       !e.product.thirdSubCategoryId.isBlocked
-   );
+  let filtered = data?.items.filter(
+    (e) =>
+      e.variant.stock > 0 &&
+      !e.variant.isUnlisted &&
+      !e.product.isUnlisted &&
+      !e.product.categoryId.isBlocked &&
+      !e.product.subCategoryId.isBlocked &&
+      !e.product.thirdSubCategoryId.isBlocked
+  );
   const handleCheckout = () => {
-    dispatch(createOrderItems({
-      items: filtered, prices: {
-        subtotal: totalOldPrice,
-        discount: totalOldPrice - totalPrice,
-        total : totalPrice
-    }}));
-        setOpen(false);
+    dispatch(
+      createOrderItems({
+        items: filtered,
+        prices: {
+          subtotal: totalOldPrice,
+          discount: totalOldPrice - totalPrice,
+          total: totalPrice,
+        },
+      })
+    );
+    setOpen(false);
   };
   let totalOldPrice, totalPrice;
   if (user) {
@@ -130,7 +136,8 @@ const CartPanel = ({ open, setOpen }) => {
                   )}
 
                   <span className="text-primary font-bold text-[14px]">
-                    Price : ₹{(item.variant.price * item.quantity).toLocaleString()}
+                    Price : ₹
+                    {(item.variant.price * item.quantity).toLocaleString()}
                   </span>
                 </div>
 
@@ -148,7 +155,9 @@ const CartPanel = ({ open, setOpen }) => {
             <p className="font-[600] !text-[15px]">
               Items ({filtered?.length})
             </p>
-            <p className="text-primary font-bold">₹{totalOldPrice.toLocaleString()}</p>
+            <p className="text-primary font-bold">
+              ₹{totalOldPrice.toLocaleString()}
+            </p>
           </div>
           <div className="flex items-center justify-between border-b border-[rgba(0,0,0,0.1)]">
             <p className="font-[600] !text-[15px]">Discount:</p>
@@ -158,23 +167,31 @@ const CartPanel = ({ open, setOpen }) => {
           </div>
           <div className="flex items-center justify-between">
             <p className="font-[600] !text-[15px]">Total (tax excl.)</p>
-            <p className="text-primary font-bold">₹{totalPrice.toLocaleString()}</p>
+            <p className="text-primary font-bold">
+              ₹{totalPrice.toLocaleString()}
+            </p>
           </div>
           <div className="flex w-full gap-2 mt-3">
             <Link
               onClick={() => setOpen(false)}
-              className="w-[50%]"
+              className={`${filtered.length > 0 ? "w-[50%]" : "w-full"}`}
               to={"/cart"}
             >
               <Button className="!bg-primary !rounded-md !text-white w-full !font-[500]">
                 View Cart
               </Button>
             </Link>
-            <Link onClick={handleCheckout} className="w-[50%]" to={"/checkout"}>
-              <Button className="!bg-white  !rounded-md !text-primary !border-2 border-primary  w-full !font-[500]">
-                Checkout
-              </Button>
-            </Link>
+            {filtered?.length > 0 && (
+              <Link
+                onClick={handleCheckout}
+                className="w-[50%]"
+                to={"/checkout"}
+              >
+                <Button className="!bg-white  !rounded-md !text-primary !border-2 border-primary  w-full !font-[500]">
+                  Checkout
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       </div>

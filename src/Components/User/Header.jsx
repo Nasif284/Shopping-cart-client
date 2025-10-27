@@ -5,7 +5,6 @@ import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { LuGitCompareArrows } from "react-icons/lu";
 import { FaRegHeart } from "react-icons/fa";
 import Tooltip from "@mui/material/Tooltip";
 import Navigation from "./Navigation";
@@ -33,12 +32,14 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 const Header = () => {
-  const {data:wishlist} = useGetWishlistQuery()
-    const { data } = useGetCartItemsQuery(undefined,{refetchOnMountOrArgChange:true});
+  const { data: wishlist } = useGetWishlistQuery();
+  const { data } = useGetCartItemsQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
   const { user, isAuthenticated: isLogin } = useSelector(
     (state) => state.userAuth
   );
-    const cart = useSelector((state) => state.cart);
+  const cart = useSelector((state) => state.cart);
 
   const [logoutUser] = useLogoutMutation();
   const dispatch = useDispatch();
@@ -227,19 +228,13 @@ const Header = () => {
                   </Tooltip>
                 </li>
                 <li>
-                  <Tooltip title="Compare">
-                    <IconButton aria-label="compare">
-                      <StyledBadge badgeContent={4} color="secondary">
-                        <LuGitCompareArrows />
-                      </StyledBadge>
-                    </IconButton>
-                  </Tooltip>
-                </li>
-                <li>
                   <Link to={"/myList"}>
                     <Tooltip title="Wish List">
                       <IconButton aria-label="wish-list">
-                        <StyledBadge badgeContent={wishlist?.wishlist.length} color="secondary">
+                        <StyledBadge
+                          badgeContent={wishlist?.wishlist.length}
+                          color="secondary"
+                        >
                           <FaRegHeart />
                         </StyledBadge>
                       </IconButton>

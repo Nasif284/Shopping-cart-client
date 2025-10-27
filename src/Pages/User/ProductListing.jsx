@@ -20,8 +20,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setParams } from "../../Store/StoreSlices/uiSlice";
 import { CircularProgress } from "@mui/material";
 const ProductListing = () => {
-  const [sort,setSort] = useState("Sort By")
-   const catParams = useParams();
+  const [sort, setSort] = useState("Sort By");
+  const catParams = useParams();
   const { params } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
@@ -47,9 +47,9 @@ const ProductListing = () => {
     setPage(value);
     dispatch(setParams({ page: value }));
   };
-  const handleSort = ({param,label}) => {
-    setSort(label)
-    dispatch(setParams({ sortBy:param }));
+  const handleSort = ({ param, label }) => {
+    setSort(label);
+    dispatch(setParams({ sortBy: param }));
     handleClose();
   };
   useEffect(() => {

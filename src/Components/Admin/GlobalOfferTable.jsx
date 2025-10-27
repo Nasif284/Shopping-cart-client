@@ -16,11 +16,13 @@ import EditGlobalOfferModal from "./EditGlobalOfferModal";
 const CategoryColumns = [
   { id: "title", label: "Title", minWidth: 100 },
   { id: "offer", label: "Offer", minWidth: 100, align: "center" },
+  { id: "startDate", label: "Start Date", minWidth: 100, align: "center" },
+  { id: "expiryDate", label: "Start Date", minWidth: 100, align: "center" },
   { id: "action", label: "Action", minWidth: 100, align: "center" },
 ];
 
-function CategoryCreateData(title, offer, action) {
-  return { title, offer, action };
+function CategoryCreateData(title, offer, startDate, expiryDate, action) {
+  return { title, offer, startDate, expiryDate, action };
 }
 
 const GlobalOfferTable = ({ params, setParams }) => {
@@ -40,7 +42,7 @@ const GlobalOfferTable = ({ params, setParams }) => {
     setOpen(true);
   };
   const handleAddOffer = () => {
-    setAddOpen(true)
+    setAddOpen(true);
   };
   if (isLoading) {
     return (
@@ -53,12 +55,14 @@ const GlobalOfferTable = ({ params, setParams }) => {
     setOffer(id);
     setConfOpen(true);
     setIsBlocked(isBlocked);
-    };
-    console.log(data.offers);
+  };
+  console.log(data.offers);
   const CategoryRows = data.offers.map((offer) =>
     CategoryCreateData(
       offer.title,
       <span>{offer.discountValue}%</span>,
+      <span>{new Date(offer.startDate).toLocaleDateString("en-GB")}</span>,
+      <span>{new Date(offer.expiryDate).toLocaleDateString("en-GB")}</span>,
       <div className="flex gap-2 !text-[18px] justify-center items-center ">
         {!offer.isActive ? (
           <Button
@@ -87,8 +91,8 @@ const GlobalOfferTable = ({ params, setParams }) => {
 
   return (
     <>
-          <div className="  flex justify-between my-4 ">
-           <h2 className="text-[18px] font-[600]">Offers</h2>
+      <div className="  flex justify-between my-4 ">
+        <h2 className="text-[18px] font-[600]">Offers</h2>
         <Button
           onClick={handleAddOffer}
           className="!flex !bg-blue-500 !text-white !font-[600] !h-[40px] !capitalize !px-5 !gap-3"
@@ -125,8 +129,13 @@ const GlobalOfferTable = ({ params, setParams }) => {
           isLoading={isBlockLoading}
           handleClose={() => setConfOpen(false)}
         />
-          )}
-          {addOpen && <AddGlobalOfferModal open={addOpen} handleClose={()=> setAddOpen(false)}/>}
+      )}
+      {addOpen && (
+        <AddGlobalOfferModal
+          open={addOpen}
+          handleClose={() => setAddOpen(false)}
+        />
+      )}
     </>
   );
 };

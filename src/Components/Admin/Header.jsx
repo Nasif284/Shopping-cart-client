@@ -26,10 +26,10 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 const Header = ({ setShow, show }) => {
   const { admin } = useSelector((state) => state.adminAuth);
-  const dispatch = useDispatch()
-  const [logout] = useAdminLogoutMutation()
+  const dispatch = useDispatch();
+  const [logout] = useAdminLogoutMutation();
   const [anchorEl, setAnchorEl] = useState(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -40,14 +40,14 @@ const Header = ({ setShow, show }) => {
   const handleLogout = async () => {
     try {
       setAnchorEl(null);
-      const res = await logout().unwrap()
-        dispatch(clearAdmin());
-      navigate("/admin/login")
-      toast.success(res.message || "Admin Logged Out Successfully")
+      const res = await logout().unwrap();
+      dispatch(clearAdmin());
+      navigate("/admin/login");
+      toast.success(res.message || "Admin Logged Out Successfully");
     } catch (error) {
-      toast.error(error.data|| "Some Error Occurred")
+      toast.error(error.data || "Some Error Occurred");
     }
-  }
+  };
   return (
     <header
       className={`w-full z-50 fixed transition-all pr-7 h-[auto] py-2 ${show ? "pl-70" : "pl-5"} bg-[#fff] shadow-md flex items-center justify-between`}
@@ -143,7 +143,8 @@ const Header = ({ setShow, show }) => {
             onClick={handleLogout}
             className="!bg-white flex items-center gap-3"
           >
-              <IoMdLogOut className="text-[18px]" /> <span className="text-[14px]">Logout out</span>
+            <IoMdLogOut className="text-[18px]" />{" "}
+            <span className="text-[14px]">Logout out</span>
           </MenuItem>
         </Menu>
       </div>

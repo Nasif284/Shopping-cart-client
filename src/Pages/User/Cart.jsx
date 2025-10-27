@@ -6,6 +6,7 @@ import { useGetCartItemsQuery } from "../../Store/Api/user/cart";
 import { useEffect, useState } from "react";
 import { createOrderItems } from "../../Store/StoreSlices/orderSlice";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Cart = () => {
   const { user } = useSelector((state) => state.userAuth);
@@ -26,12 +27,19 @@ const Cart = () => {
   const dispatch = useDispatch();
   let totalOldPrice, totalPrice;
   const handleCheckout = () => {
-    dispatch(createOrderItems({
-      items: filtered, prices: {
-        subtotal: totalOldPrice,
-        discount: totalOldPrice - totalPrice,
-        total : totalPrice
-    }}));
+    if (filtered.length == 0) {
+      return toast.error("No products in the cart");
+    }
+    dispatch(
+      createOrderItems({
+        items: filtered,
+        prices: {
+          subtotal: totalOldPrice,
+          discount: totalOldPrice - totalPrice,
+          total: totalPrice,
+        },
+      })
+    );
   };
   if (user) {
     totalOldPrice = filtered?.reduce(
@@ -91,16 +99,18 @@ const Cart = () => {
                 <span className=" font-bold text-primary">₹{totalPrice}</span>
               </p>
             </div>
-            <Link to={"/checkout"}>
-              <Button
-                onClick={handleCheckout}
-                type="submit"
-                className="!bg-primary w-full !mt-2 !text-white !text-[14px] !py-2 flex gap-2  hover:!bg-[rgba(0,0,0,0.8)] !font-[600]"
-              >
-                <IoBagCheckOutline className="text-[16px]" />
-                Checkout
-              </Button>
-            </Link>
+            {filtered?.length > 0 && (
+              <Link to={"/checkout"}>
+                <Button
+                  onClick={handleCheckout}
+                  type="submit"
+                  className="!bg-primary w-full !mt-2 !text-white !text-[14px] !py-2 flex gap-2  hover:!bg-[rgba(0,0,0,0.8)] !font-[600]"
+                >
+                  <IoBagCheckOutline className="text-[16px]" />
+                  Checkout
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       </div>

@@ -5,16 +5,18 @@ import { useState } from "react";
 import { CircularProgress, Pagination } from "@mui/material";
 import { Link } from "react-router-dom";
 const Orders = () => {
-  const [page,setPage] = useState(1)
-  const { data, isLoading } = useGetOrdersQuery({page,perPage:5});
+  const [page, setPage] = useState(1);
+  const { data, isLoading } = useGetOrdersQuery({ page, perPage: 5 });
 
-  const handlePagination = (e,value) => {
-    setPage(value)
-  }
+  const handlePagination = (e, value) => {
+    setPage(value);
+  };
   if (isLoading) {
-    return <div className="w-full h-[100vh] flex items-center justify-center">
-            <CircularProgress color="inherit" />
-          </div>
+    return (
+      <div className="w-full h-[100vh] flex items-center justify-center">
+        <CircularProgress color="inherit" />
+      </div>
+    );
   }
   return (
     <div className="col2 w-[80%]">
@@ -23,7 +25,9 @@ const Orders = () => {
           <h2>Orders</h2>
           <p className="!m-0">
             There are{" "}
-            <span className="font-bold text-primary">{data.totalPosts || 0}</span>{" "}
+            <span className="font-bold text-primary">
+              {data.totalPosts || 0}
+            </span>{" "}
             Items in Orders
           </p>
         </div>
@@ -79,7 +83,8 @@ const Orders = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     ₹
-                    {(order.items.oldPrice * order.items.quantity
+                    {(
+                      order.items.oldPrice * order.items.quantity
                     ).toLocaleString()}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">

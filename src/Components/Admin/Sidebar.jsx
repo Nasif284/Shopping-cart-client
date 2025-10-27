@@ -179,7 +179,7 @@ const Sidebar = ({ show }) => {
             </ul>
           </Collapse>
         </li>
-        <li>
+        {/* <li>
           <Link to={"/admin/banner1"}>
             <Button
               onClick={() => openCollapse(4)}
@@ -210,20 +210,12 @@ const Sidebar = ({ show }) => {
               />
             </ul>
           </Collapse>
-        </li>
+        </li> */}
         <li>
           <Link to={"/admin/coupons"}>
             <Button className="!w-full !items-center !py-2 !capitalize !justify-start !flex !gap-3 !text-[15px] !text-[rgba(0,0,0,0.8)] !font-[500]">
               <RiCouponLine className="!text-[18px]" />
               <span>Coupon</span>
-            </Button>
-          </Link>
-        </li>
-        <li>
-          <Link to={"/admin/blogs"}>
-            <Button className="!w-full !items-center !py-2 !capitalize !justify-start !flex !gap-3 !text-[15px] !text-[rgba(0,0,0,0.8)] !font-[500]">
-              <SiBloglovin className="!text-[18px]" />
-              <span>Blogs</span>
             </Button>
           </Link>
         </li>

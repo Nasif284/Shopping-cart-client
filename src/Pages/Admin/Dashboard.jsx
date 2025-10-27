@@ -20,6 +20,7 @@ import { useState } from "react";
 import { useGetSalesReportQuery } from "../../Store/Api/admin/orders";
 import TopBrands from "../../Components/Admin/TopBrands";
 import SalesLineGraph from "../../Components/Admin/SalesLineGraph";
+import toast from "react-hot-toast";
 const BASE_URL = import.meta.env.VITE_API_URL;
 const Dashboard = ({ show }) => {
   const [filterType, setFilterType] = useState("daily");
@@ -43,7 +44,7 @@ const Dashboard = ({ show }) => {
   const generateYearOptions = () => {
     const currentYear = new Date().getFullYear();
     const years = [];
-    for (let i = currentYear - 5; i <= currentYear + 1; i++) {
+    for (let i = currentYear - 5; i <= currentYear; i++) {
       years.push(i);
     }
     return years;
@@ -73,6 +74,22 @@ const Dashboard = ({ show }) => {
   };
 
   const handleApplyFilter = () => {
+    if (filterType == "custom") {
+      if (!customStartDate || !customEndDate) {
+        return toast.error("Please select both start and end dates");
+      }
+
+      const start = new Date(customStartDate);
+      const end = new Date(customEndDate);
+
+      if (start > end) {
+        return toast.error("Start date cannot be after end date");
+      }
+      if (end > new Date() || end > new Date()) {
+        return toast.error("Enter valid date");
+      }
+    }
+
     const newFilter = {
       type: filterType,
       startDate: customStartDate,
@@ -80,8 +97,8 @@ const Dashboard = ({ show }) => {
       year: selectedYear,
       month: selectedMonth,
     };
+
     setAppliedFilter(newFilter);
-    console.log("Applying global filter:", newFilter);
   };
   const handleDownloadPDF = () => {
     const { type, startDate, endDate, year, month } = appliedFilter;

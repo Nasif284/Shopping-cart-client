@@ -96,8 +96,8 @@ const ProductTable = ({ params, setParams }) => {
   const [open, setOpen] = useState(false);
   const [confOpen, setConfOpen] = useState(false);
   const [isUnlisted, setIsUnlisted] = useState();
-  const [offerOpen, setOfferOpen] = useState(false)
-  
+  const [offerOpen, setOfferOpen] = useState(false);
+
   const { data, isLoading } = useGetProductsQuery(params);
   const [product, setProduct] = useState(null);
   const handleEdit = (product) => {
@@ -110,9 +110,11 @@ const ProductTable = ({ params, setParams }) => {
     setIsUnlisted(isUnlisted);
   };
   if (isLoading) {
-    return  <div className="w-full h-[100vh] flex items-center justify-center">
-            <CircularProgress color="inherit" />
-          </div>;
+    return (
+      <div className="w-full h-[100vh] flex items-center justify-center">
+        <CircularProgress color="inherit" />
+      </div>
+    );
   }
   const ProductsRows = data.products.map((product) =>
     productsCreateData(
@@ -148,8 +150,7 @@ const ProductTable = ({ params, setParams }) => {
         }}
         className="!bg-blue-400 !text-white !capitalize !text-[12px]"
       >
-        {product.discount > 0 ? "Edit Offer" :"Add Offer" }
-        
+        {product.discount > 0 ? "Edit Offer" : "Add Offer"}
       </Button>,
       <Link to={`/admin/products/${product._id}`}>
         <Button className="!bg-green-500 !text-white !capitalize !text-[12px]">
@@ -201,8 +202,13 @@ const ProductTable = ({ params, setParams }) => {
           id={product}
         />
       )}
-      {offerOpen && 
-      <AddProductOfferModal open={offerOpen} product={product} handleClose={()=> setOfferOpen(false)}/>}
+      {offerOpen && (
+        <AddProductOfferModal
+          open={offerOpen}
+          product={product}
+          handleClose={() => setOfferOpen(false)}
+        />
+      )}
     </>
   );
 };

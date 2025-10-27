@@ -30,7 +30,7 @@ const CategoryListTable = () => {
   const [block, { isLoading: isBlockLoading }] = useBlockCategoryMutation();
   const [open, setOpen] = useState(false);
   const [confOpen, setConfOpen] = useState(false);
-  const [offerOpen, setOfferOpen] = useState(false)
+  const [offerOpen, setOfferOpen] = useState(false);
   const [isBlocked, setIsBlocked] = useState();
   const [category, setCategory] = useState();
   const handleClose = () => {
@@ -53,9 +53,9 @@ const CategoryListTable = () => {
     setIsBlocked(isBlocked);
   };
   const handleAddOffer = (id) => {
-    setOfferOpen(true)
-    setCategory(id)
-  }
+    setOfferOpen(true);
+    setCategory(id);
+  };
   const CategoryRows = data.categories.map((cat) =>
     CategoryCreateData(
       <div className="w-[70px] rounded-md overflow-hidden">
@@ -139,7 +139,13 @@ const CategoryListTable = () => {
           handleClose={() => setConfOpen(false)}
         />
       )}
-      {offerOpen && <AddCategoryOfferModal open={offerOpen} handleClose={()=> setOfferOpen(false)} categoryId={category}/>}
+      {offerOpen && (
+        <AddCategoryOfferModal
+          open={offerOpen}
+          handleClose={() => setOfferOpen(false)}
+          categoryId={category}
+        />
+      )}
     </>
   );
 };

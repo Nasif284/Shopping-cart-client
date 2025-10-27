@@ -23,7 +23,7 @@ const AddCategoryOfferModal = ({ open, handleClose, categoryId }) => {
   });
   const onSubmit = async (data) => {
     try {
-      const res = await add({...data, category: categoryId}).unwrap();
+      const res = await add({ ...data, category: categoryId }).unwrap();
       toast.success(res.message || "Offer added Successfully");
       handleClose();
     } catch (error) {

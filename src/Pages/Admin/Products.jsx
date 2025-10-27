@@ -1,4 +1,4 @@
-import { ProductTable} from "../../Components/Admin";
+import { ProductTable } from "../../Components/Admin";
 import { FaPlus } from "react-icons/fa";
 import { Button } from "@mui/material";
 import { useState } from "react";

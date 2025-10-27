@@ -6,14 +6,14 @@ import {
   CircularProgress,
 } from "@mui/material";
 import toast from "react-hot-toast";
-import {  useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { SelectField } from "../Admin";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { couponSchema } from "../../Utils/YupSchemas";
 import DateField from "./DateFiled";
 import { useAddCouponMutation } from "../../Store/Api/admin/coupon";
 const AddCouponModal = ({ open, handleClose }) => {
-  const [add, { isLoading }] = useAddCouponMutation()
+  const [add, { isLoading }] = useAddCouponMutation();
   const {
     register,
     formState: { errors },
@@ -24,8 +24,8 @@ const AddCouponModal = ({ open, handleClose }) => {
     resolver: yupResolver(couponSchema),
   });
 
-    const onSubmit = async (data) => {
-      console.log(data)
+  const onSubmit = async (data) => {
+    console.log(data);
     try {
       const res = await add({
         ...data,

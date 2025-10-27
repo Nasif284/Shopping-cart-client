@@ -17,13 +17,15 @@ import NotFound from "./NotFound";
 import { useGetReviewsQuery } from "../../Store/Api/user/order";
 const ProductDetails = () => {
   const { id } = useParams();
-  const { data, isLoading } = useGetProductByIdQuery(id, { refetchOnMountOrArgChange: true });
-  const { data: reviews, isLoading: reviewsLoading } =useGetReviewsQuery(id)
-  console.log(reviews)
+  const { data, isLoading } = useGetProductByIdQuery(id, {
+    refetchOnMountOrArgChange: true,
+  });
+  const { data: reviews, isLoading: reviewsLoading } = useGetReviewsQuery(id);
+  console.log(reviews);
   const [selectedSize, setSelectedSize] = useState();
   const [selectedColor, setSelectedColor] = useState();
   const [activeVariant, setActiveVariant] = useState();
-  const [activeTab, setActiveTab] = useState(0);  
+  const [activeTab, setActiveTab] = useState(0);
   useEffect(() => {
     if (data?.product) {
       const colors = Object.keys(data.product.groupedVariants);
@@ -39,7 +41,7 @@ const ProductDetails = () => {
       );
     }
   }, [data]);
- 
+
   const { data: related, isLoading: relatedLoading } = useGetProductsQuery({
     category: data?.product.category.name,
     subCategory: data?.product.subCategory.name,
@@ -49,9 +51,9 @@ const ProductDetails = () => {
   if (isLoading || relatedLoading || reviewsLoading) {
     return <h1>Loading...</h1>;
   }
-     if (!data?.product) {
-      return <NotFound/>
-     }
+  if (!data?.product) {
+    return <NotFound />;
+  }
   return (
     <>
       <div className="py-5">
@@ -130,7 +132,7 @@ const ProductDetails = () => {
               className={`${activeTab === 2 && "text-primary "} text-[17px] font-[600] cursor-pointer link`}
               onClick={() => setActiveTab(2)}
             >
-              Reviews ({data.product.reviewCount})
+              Reviews ({data.product.reviewCount || 0})
             </span>
           </div>
           <div className="shadow-md py-5 px-8 w-full rounded-md">
@@ -185,10 +187,12 @@ const ProductDetails = () => {
             )}
           </div>
         </div>
-        <div className="container !mt-10">
-          <h2 className="text-[22px] mb-3 font-[600]">Related Products</h2>
-          <ProductSlider items={6} products={related.products} />
-        </div>
+        {related.products.length > 0 && (
+          <div className="container !mt-10">
+            <h2 className="text-[22px] mb-3 font-[600]">Related Products</h2>
+            <ProductSlider items={6} products={related.products} />
+          </div>
+        )}
       </section>
     </>
   );

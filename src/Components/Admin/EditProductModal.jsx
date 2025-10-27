@@ -20,7 +20,7 @@ const EditProductModal = ({ open, handleClose, product }) => {
   let { data: rootCats, isLoading: isRootCatLoading } =
     useGetCategoriesByLevelQuery({ level: "first" });
   let { data: thirdCats, isLoading: isThirdCatLoading } =
-    useGetCategoriesByLevelQuery({level:"third"});
+    useGetCategoriesByLevelQuery({ level: "third" });
   const {
     register,
     formState: { errors },
@@ -47,12 +47,12 @@ const EditProductModal = ({ open, handleClose, product }) => {
       handleClose();
     } catch (error) {
       if (error?.errors) {
-            Object.values(error.errors).forEach((err) => {
-              toast.error(err.msg);
-            });
-          } else {
-            toast.error(error.data || "Error occurred");
-          }
+        Object.values(error.errors).forEach((err) => {
+          toast.error(err.msg);
+        });
+      } else {
+        toast.error(error.data || "Error occurred");
+      }
     }
   };
   if (isSubCatLoading || isRootCatLoading || isThirdCatLoading) {

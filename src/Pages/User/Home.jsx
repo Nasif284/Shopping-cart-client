@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AdsBannerSlider,
   AdsBannerSliderV2,
@@ -23,12 +23,19 @@ import { useDispatch } from "react-redux";
 import { clearParams } from "../../Store/StoreSlices/uiSlice";
 
 const Home = () => {
-  const [value, setValue] = React.useState(0);
-  const dispatch = useDispatch()
+  const [value, setValue] = useState(0);
+  const [category, setCategory] = useState("Fashion");
+  const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(clearParams())
-  },[dispatch])
-    let { data:rootCats,isLoading: catsLoading } = useGetCategoriesByLevelQuery({ level: "first" })
+    dispatch(clearParams());
+  }, [dispatch]);
+  let { data: rootCats, isLoading: catsLoading } = useGetCategoriesByLevelQuery(
+    { level: "first" }
+  );
+  const { data: popular, isLoading: popularLoading } = useGetProductsQuery({
+    category: [category],
+    popular: true,
+  });
   const { data: latestProduct, isLoading } = useGetProductsQuery({
     latest: true,
   });
@@ -37,15 +44,17 @@ const Home = () => {
   });
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    setCategory(event.target.textContent);
   };
-  if (isLoading || isFeaturedLoading || catsLoading) {
+  if (isLoading || isFeaturedLoading || catsLoading || popularLoading) {
     return (
       <div className="w-full h-[100vh] flex items-center justify-center">
         <CircularProgress color="inherit" />
       </div>
     );
   }
-   rootCats = rootCats.categories.filter((cat) => !cat.isBlocked);
+
+  rootCats = rootCats.categories.filter((cat) => !cat.isBlocked);
   return (
     <>
       <HomeSlider />
@@ -74,7 +83,7 @@ const Home = () => {
             <div className="left-sec">
               <h2 className="text-[22px] font-[600]">Popular Products</h2>
               <p className="text-[14px] font-[400]">
-                Do not miss the current offers until the end of March.
+                Do not miss the current offers until the end of November.
               </p>
             </div>
             <div className="rightSec w-[60%]">
@@ -91,24 +100,22 @@ const Home = () => {
               </Tabs>
             </div>
           </div>
-          <ProductSlider items={6} />
+
+          <ProductSlider items={6} products={popular.products} />
         </div>
       </section>
       <section className=" bg-white pt-2 pb-4">
         <div className="container">
-          <div className="freeShipping w-full px-4 py-5 border-2 border-[#ff5252] flex items-center justify-between rounded-md mb-7">
+          <div className="freeShipping w-full px-4 py-5 border-2 border-[#ff5252] flex items-center justify-center gap-7 rounded-md mb-7">
             <div className="col1 flex items-center gap-4">
               <FaShippingFast className="text-[50px]" />
               <span className="text-[22px] font-[500]">FREE SHIPPING</span>
             </div>
             <div className="col2">
-              <p className="mb-0 font-[500]">
-                Free Delivery Now On Your First Order and over $200
-              </p>
+              <p className="mb-0 font-[500]">Free Delivery For all Orders</p>
             </div>
-            <p className="font-bold text-[30px]">- Only $200*</p>
           </div>
-          <AdsBannerSliderV2 items={4} />
+          {/* <AdsBannerSliderV2 items={4} /> */}
         </div>
       </section>
       <section className=" bg-white pb-5">
@@ -122,10 +129,10 @@ const Home = () => {
         <div className="container">
           <h2 className="text-[22px] font-[600]">Featured Products</h2>
           <ProductSlider products={featuredProduct?.products} items={6} />
-          <AdsBannerSlider items={3} />
+          {/* <AdsBannerSlider items={3} /> */}
         </div>
       </section>
-      <section className="pb-8 bg-white blogSection">
+      {/* <section className="pb-8 bg-white blogSection">
         <div className="container overflow-hidden">
           <h2 className="text-[22px] font-[600] mb-5">From the Blog</h2>
           <Swiper
@@ -158,7 +165,7 @@ const Home = () => {
             </SwiperSlide>
           </Swiper>
         </div>
-      </section>
+      </section> */}
     </>
   );
 };

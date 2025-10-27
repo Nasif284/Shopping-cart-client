@@ -36,5 +36,5 @@ export {
   AddBanner,
   ProductDetails,
   OrderDetails,
-  ReturnRequests
+  ReturnRequests,
 };

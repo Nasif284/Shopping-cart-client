@@ -35,7 +35,7 @@ const Register = () => {
       const res = await signUp(data).unwrap();
       toast.success(res.message || "User Registered Successfully");
       localStorage.setItem("userEmail", data.email);
-      localStorage.setItem("otpExpiry",Date.now()+ 60000);
+      localStorage.setItem("otpExpiry", Date.now() + 60000);
       navigate("/verify");
       reset();
     } catch (error) {

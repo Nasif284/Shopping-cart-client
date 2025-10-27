@@ -98,6 +98,24 @@ const AddProducts = () => {
       toast.error("Fix errors in current variant before adding new one");
       return;
     }
+    const variants = getValues("variants");
+
+    const duplicates = new Set();
+    let hasDuplicate = false;
+
+    for (let i = 0; i < variants.length; i++) {
+      const key = `${variants[i].color}_${variants[i].size}`;
+      if (duplicates.has(key)) {
+        hasDuplicate = true;
+        break;
+      }
+      duplicates.add(key);
+    }
+
+    if (hasDuplicate) {
+      toast.error("Duplicate variant detected (same color and size).");
+      return;
+    }
     append({
       size: "",
       price: "",
@@ -109,10 +127,28 @@ const AddProducts = () => {
   };
 
   const onSubmit = async (data) => {
+    const variants = getValues("variants");
+
+    const duplicates = new Set();
+    let hasDuplicate = false;
+
+    for (let i = 0; i < variants.length; i++) {
+      const key = `${variants[i].color}_${variants[i].size}`;
+      if (duplicates.has(key)) {
+        hasDuplicate = true;
+        break;
+      }
+      duplicates.add(key);
+    }
+
+    if (hasDuplicate) {
+      toast.error("Duplicate variant detected (same color and size).");
+      return;
+    }
     try {
       const formData = new FormData();
 
-  formData.append("name", data.name);
+      formData.append("name", data.name);
       formData.append("description", data.description);
       formData.append("category", data.category);
       formData.append("subCategory", data.subCategory);
@@ -131,7 +167,7 @@ const AddProducts = () => {
             formData.append(`variants[${i}][images]`, imageObj.file);
           });
         } else {
-          toast.error("Image field is required")
+          toast.error("Image field is required");
         }
       });
 
@@ -164,9 +200,11 @@ const AddProducts = () => {
     isThirdCatLoading ||
     sizesLoading
   ) {
-    return  <div className="w-full h-[100vh] flex items-center justify-center">
-            <CircularProgress color="inherit" />
-          </div>;
+    return (
+      <div className="w-full h-[100vh] flex items-center justify-center">
+        <CircularProgress color="inherit" />
+      </div>
+    );
   }
 
   subCats = subCats.categories

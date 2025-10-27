@@ -1,5 +1,6 @@
 import Rating from "@mui/material/Rating";
 import React from "react";
+import { userPlaceHolder } from "../../Assets";
 
 const Review = ({ review }) => {
   return (
@@ -7,7 +8,11 @@ const Review = ({ review }) => {
       <div className="flex items-center justify-between">
         <div className="col1 flex gap-3 items-center">
           <div className="img w-[40px] h-[40px] rounded-full overflow-hidden">
-            <img src={review.user.image} className="w-full" alt="" />
+            <img
+              src={review.user.image || userPlaceHolder}
+              className="w-full"
+              alt=""
+            />
           </div>
           <div className="flex flex-col">
             <h4 className="text-[13px]">{review.user.name}</h4>
@@ -17,7 +22,12 @@ const Review = ({ review }) => {
           </div>
         </div>
         <div className="col2">
-          <Rating name="size-small" defaultValue={2} size="small" readOnly />
+          <Rating
+            name="size-small"
+            defaultValue={review.rating}
+            size="small"
+            readOnly
+          />
         </div>
       </div>
       <p className="!mt-2 ">{review.review}</p>

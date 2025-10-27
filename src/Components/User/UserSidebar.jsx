@@ -16,9 +16,9 @@ import EditProfileImageModal from "./EditProfileImageModal";
 
 const UserSidebar = () => {
   const { user } = useSelector((state) => state.userAuth);
-  const [open, setOpen] = useState(false)
-  const [imgLoaded, setImgLoaded] = useState()
-  const [imgError, setImgError] =useState()
+  const [open, setOpen] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState();
+  const [imgError, setImgError] = useState();
   return (
     <>
       <div className="col1 w-[20%]">

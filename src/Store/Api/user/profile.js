@@ -42,4 +42,10 @@ export const profileApi = userApi.injectEndpoints({
   }),
 });
 
-export const { useChangeImageMutation, useEditProfileMutation, useEmailChangeOtpMutation, useEmailChangeOtpResendMutation, useEmailChangeVerifyMutation } = profileApi;
+export const {
+  useChangeImageMutation,
+  useEditProfileMutation,
+  useEmailChangeOtpMutation,
+  useEmailChangeOtpResendMutation,
+  useEmailChangeVerifyMutation,
+} = profileApi;

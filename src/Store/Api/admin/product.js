@@ -15,7 +15,7 @@ export const adminProductApi = adminApi.injectEndpoints({
         url: `/products/`,
         params: params,
       }),
-      providesTags:["Product"]
+      providesTags: ["Product"],
     }),
     updateProduct: builder.mutation({
       query: ({ data, id }) => ({
@@ -30,7 +30,7 @@ export const adminProductApi = adminApi.injectEndpoints({
         url: `/products/unlist/${id}`,
         method: "patch",
       }),
-      invalidatesTags: ["Product","ProductById"]
+      invalidatesTags: ["Product", "ProductById"],
     }),
     getVariants: builder.query({
       query: ({ id, params }) => ({
@@ -45,15 +45,14 @@ export const adminProductApi = adminApi.injectEndpoints({
         url: `/products/${id}`,
         method: "get",
       }),
-      providesTags:["ProductById"]
+      providesTags: ["ProductById"],
     }),
     unlistVariant: builder.mutation({
       query: (id) => ({
         url: `/products/variants/unlist/${id}`,
         method: "patch",
       }),
-      invalidatesTags: ["Variants","ProductById"],
-      
+      invalidatesTags: ["Variants", "ProductById"],
     }),
     editVariant: builder.mutation({
       query: ({ id, data }) => ({
@@ -77,6 +76,13 @@ export const adminProductApi = adminApi.injectEndpoints({
         params,
       }),
     }),
+    getPopularProducts: builder.query({
+      query: (params) => ({
+        url: "/products/popular",
+        method: "get",
+        params,
+      }),
+    }),
   }),
 });
 
@@ -91,4 +97,5 @@ export const {
   useEditVariantMutation,
   useAddVariantMutation,
   useGetSearchSuggestionsQuery,
+  useGetPopularProductsQuery,
 } = adminProductApi;

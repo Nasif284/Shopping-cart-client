@@ -8,7 +8,7 @@ import CategoryPanel from "./CategoryPanel";
 import { useGetAllCategoriesQuery } from "../../Store/Api/admin/category";
 const Navigation = () => {
   const [toggle, setToggle] = useState(false);
-  const { data, isLoading } = useGetAllCategoriesQuery({user:true});
+  const { data, isLoading } = useGetAllCategoriesQuery({ user: true });
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
@@ -29,7 +29,10 @@ const Navigation = () => {
           <div className="col_2 w-[60%] flex justify-center">
             <ul className="flex items-center gap-7">
               <li>
-                <Link to={"/"} className="link transition text-[14px] font-[500] ">
+                <Link
+                  to={"/"}
+                  className="link transition text-[14px] font-[500] "
+                >
                   Home
                 </Link>
               </li>

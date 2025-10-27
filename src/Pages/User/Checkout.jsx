@@ -69,7 +69,10 @@ const Checkout = () => {
   };
   const handleRemoveCoupon = async () => {
     try {
-      const res = await remove({ items: orderItems }).unwrap();
+      const res = await remove({
+        items: orderItems,
+        code: coupon.code,
+      }).unwrap();
       dispatch(removeCoupon({ items: res.items }));
       toast.success(res.message || "Coupon Removed Successfully");
     } catch (error) {

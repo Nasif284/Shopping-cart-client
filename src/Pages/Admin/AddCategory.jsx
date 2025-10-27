@@ -20,20 +20,20 @@ const AddCategory = () => {
     resolver: yupResolver(catSchema),
   });
   const [image, setImage] = useState(null);
-  const [file,setFile] = useState(null)
+  const [file, setFile] = useState(null);
   const handleImageUpload = (file) => {
     setImage(URL.createObjectURL(file[0]));
-    setFile(file[0])
+    setFile(file[0]);
   };
   const handleRemoveImage = () => {
     setImage(null);
     reset({ image: null });
-    setFile(null)
+    setFile(null);
   };
   const onSubmit = async (data) => {
     if (!file) {
-      toast.error("Image is required")
-      return
+      toast.error("Image is required");
+      return;
     }
     const formData = new FormData();
 

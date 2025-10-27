@@ -58,8 +58,8 @@ const AddMoneyToWalletModal = ({ open, handleClose }) => {
               razorpay_signature: response.razorpay_signature,
               amount: formData.amount,
             };
-              await verify(verifyPayload).unwrap();
-              handleClose()
+            await verify(verifyPayload).unwrap();
+            handleClose();
             toast.success("Money added to wallet successfully");
           } catch (err) {
             toast.error("Payment failed", err.message);

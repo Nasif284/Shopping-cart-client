@@ -10,6 +10,7 @@ import { useAddGlobalOffersMutation } from "../../Store/Api/admin/offer";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { globalOfferSchema } from "../../Utils/YupSchemas";
+import DateField from "./DateFiled";
 
 const AddGlobalOfferModal = ({ open, handleClose }) => {
   const [add, { isLoading }] = useAddGlobalOffersMutation();
@@ -17,6 +18,7 @@ const AddGlobalOfferModal = ({ open, handleClose }) => {
     register,
     handleSubmit,
     formState: { errors },
+    control,
   } = useForm({
     mode: "onBlur",
     resolver: yupResolver(globalOfferSchema),
@@ -56,6 +58,20 @@ const AddGlobalOfferModal = ({ open, handleClose }) => {
                 label="Offer Percentage Value"
                 variant="outlined"
                 className="w-full"
+              />
+            </div>
+            <div className="w-full mt-3 gap-4 flex justify-between">
+              <DateField
+                name={"startDate"}
+                label={"Starts From"}
+                control={control}
+                errorMessage={errors.startDate?.message}
+              />
+              <DateField
+                name={"expiryDate"}
+                label={"Expires At"}
+                control={control}
+                errorMessage={errors.expiryDate?.message}
               />
             </div>
             <div className="w-full flex gap-3">

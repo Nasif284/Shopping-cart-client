@@ -12,21 +12,21 @@ import { offerSchema } from "../../Utils/YupSchemas";
 import { useEditCategoryOfferMutation } from "../../Store/Api/admin/offer";
 
 const EditCategoryOfferModal = ({ open, handleClose, category }) => {
-  const [edit, { isLoading }] = useEditCategoryOfferMutation()
+  const [edit, { isLoading }] = useEditCategoryOfferMutation();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     mode: "onBlur",
-      resolver: yupResolver(offerSchema),
-      defaultValues: {
-        discountValue: category.discountValue
-    }
+    resolver: yupResolver(offerSchema),
+    defaultValues: {
+      discountValue: category.discountValue,
+    },
   });
   const onSubmit = async (data) => {
     try {
-      const res = await edit({ id: category._id, data}).unwrap();
+      const res = await edit({ id: category._id, data }).unwrap();
       toast.success(res.message || "Offer Edited Successfully");
       handleClose();
     } catch (error) {

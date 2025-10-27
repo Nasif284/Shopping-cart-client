@@ -8,7 +8,7 @@ const cartApi = userApi.injectEndpoints({
         method: "post",
         body: data,
       }),
-      invalidatesTags: ["Cart","wishlist"],
+      invalidatesTags: ["Cart", "wishlist"],
     }),
     getCartItems: builder.query({
       query: () => ({
@@ -28,7 +28,7 @@ const cartApi = userApi.injectEndpoints({
       query: ({ id, params }) => ({
         url: `/cart/${id}`,
         method: "patch",
-        params  
+        params,
       }),
       invalidatesTags: ["Cart"],
     }),
@@ -36,10 +36,16 @@ const cartApi = userApi.injectEndpoints({
       query: (body) => ({
         url: "/cart/validate",
         method: "post",
-        body
-      })
-    })
+        body,
+      }),
+    }),
   }),
 });
 
-export const {useAddToCartMutation,useRemoveFromCartMutation,useEditItemQuantityMutation,useGetCartItemsQuery, useValidateProductMutation} = cartApi
+export const {
+  useAddToCartMutation,
+  useRemoveFromCartMutation,
+  useEditItemQuantityMutation,
+  useGetCartItemsQuery,
+  useValidateProductMutation,
+} = cartApi;

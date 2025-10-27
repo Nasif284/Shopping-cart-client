@@ -54,5 +54,5 @@ export {
   ImageCropper,
   PasswordResetModal,
   OrderStatusModal,
-  ReturnRequestTable
+  ReturnRequestTable,
 };

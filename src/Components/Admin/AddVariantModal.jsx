@@ -11,12 +11,12 @@ import { useState } from "react";
 import { IoIosClose } from "react-icons/io";
 import UploadBox from "./UploadBox";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { addVariantSchema, } from "../../Utils/YupSchemas";
+import { addVariantSchema } from "../../Utils/YupSchemas";
 import { useAddVariantMutation } from "../../Store/Api/admin/product";
 import SelectField from "./SelectField";
 import { useGetSizesQuery } from "../../Store/Api/admin/size";
 
-const AddVariantModal = ({ open, handleClose, id, category }) => {
+const AddVariantModal = ({ open, handleClose, id, category, variants }) => {
   const [add, { isLoading }] = useAddVariantMutation();
   const { data: sizes, isLoading: sizesLoading } = useGetSizesQuery();
   const [files, setFiles] = useState([]);
@@ -51,6 +51,15 @@ const AddVariantModal = ({ open, handleClose, id, category }) => {
   const onSubmit = async (data) => {
     if (!files) {
       toast.error("Upload at least one image");
+    }
+    const hasDuplicate = variants.some(
+      (v) =>
+        v.color?.toLowerCase() === data.color?.toLowerCase() &&
+        v.size?.toLowerCase() === data.size?.toLowerCase()
+    );
+    if (hasDuplicate) {
+      toast.error("Variant with this color and size already exists!");
+      return;
     }
     const formData = new FormData();
     formData.append("name", data.name);

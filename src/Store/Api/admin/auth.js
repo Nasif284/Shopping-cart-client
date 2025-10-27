@@ -18,11 +18,15 @@ export const adminAuthApi = adminApi.injectEndpoints({
     }),
     adminLogout: builder.mutation({
       query: () => ({
-        url: '/logout',
-        method:"get"
-      })
-    })
+        url: "/logout",
+        method: "get",
+      }),
+    }),
   }),
 });
 
-export const { useAdminLoginMutation, useAdminAuthMeQuery,useAdminLogoutMutation } = adminAuthApi;
+export const {
+  useAdminLoginMutation,
+  useAdminAuthMeQuery,
+  useAdminLogoutMutation,
+} = adminAuthApi;

@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { CircularProgress, } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 const MyAccount = () => {
   const { user, isLoading } = useSelector((state) => state.userAuth);
   if (isLoading) {
@@ -29,10 +29,10 @@ const MyAccount = () => {
               <span className="font-medium text-gray-600">Mobile</span>
               <span className="text-gray-900">{user.mobile || "—"}</span>
             </li>
-              <li className="py-4 flex justify-between">
-                <span className="font-medium text-gray-600">Referral Code</span>
-                <span className="text-gray-900">{user?.referralCode || "—"}</span>
-              </li>
+            <li className="py-4 flex justify-between">
+              <span className="font-medium text-gray-600">Referral Code</span>
+              <span className="text-gray-900">{user?.referralCode || "—"}</span>
+            </li>
           </ul>
         </div>
       </div>

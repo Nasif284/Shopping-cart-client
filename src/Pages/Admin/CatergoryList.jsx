@@ -6,7 +6,7 @@ const CategoryList = () => {
       <div className="flex items-center justify-between ">
         <h2 className="text-[18px] font-[600]">Category List</h2>
       </div>
-        <CategoryListTable />
+      <CategoryListTable />
     </div>
   );
 };

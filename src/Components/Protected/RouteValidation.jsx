@@ -15,11 +15,10 @@ const RouteValidation = ({ children }) => {
   let { data: thirdCats, isLoading: isThirdCatLoading } =
     useGetCategoriesByLevelQuery({ level: "third" });
 
-
   if (isRootCatLoading || isSubCatLoading || isThirdCatLoading) {
     return <h1>Loading...</h1>;
   }
-console.log(subCats.categories);
+  console.log(subCats.categories);
   const findClosestMatch = (cats, param) => {
     const names = cats.categories.map((c) => c.name.toLowerCase());
     const match = stringSimilarity.findBestMatch(param, names);
@@ -43,7 +42,10 @@ console.log(subCats.categories);
       subMatch.toLowerCase() !== subCategory.toLowerCase() ||
       thirdMatch.toLowerCase() !== thirdCategory.toLowerCase()
     ) {
-      navigate(`/${rootMatch.toLowerCase()}/${subMatch.toLowerCase()}/${thirdMatch.toLowerCase()}`, { replace: true });
+      navigate(
+        `/${rootMatch.toLowerCase()}/${subMatch.toLowerCase()}/${thirdMatch.toLowerCase()}`,
+        { replace: true }
+      );
       return null;
     }
   } else if (category && subCategory) {
@@ -58,7 +60,9 @@ console.log(subCats.categories);
       rootMatch.toLowerCase() !== category.toLowerCase() ||
       subMatch.toLowerCase() !== subCategory.toLowerCase()
     ) {
-      navigate(`/${rootMatch.toLowerCase()}/${subMatch.toLowerCase()}`, { replace: true });
+      navigate(`/${rootMatch.toLowerCase()}/${subMatch.toLowerCase()}`, {
+        replace: true,
+      });
       return null;
     }
   } else if (category) {

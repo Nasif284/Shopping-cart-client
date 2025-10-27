@@ -3,12 +3,12 @@ import axios from "axios";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const userInstance = axios.create({
-  baseURL:apiUrl
+  baseURL: apiUrl,
 });
 
 userInstance.interceptors.request.use(
   (config) => {
-    config.withCredentials = true; 
+    config.withCredentials = true;
     return config;
   },
   (error) => Promise.reject(error)
@@ -24,7 +24,7 @@ userInstance.interceptors.response.use(
         await axios.get(`${apiUrl}/api/user/refresh`, {
           withCredentials: true,
         });
-          return userInstance(originalRequest);
+        return userInstance(originalRequest);
       } catch (refreshError) {
         return Promise.reject(refreshError);
       }
@@ -33,4 +33,4 @@ userInstance.interceptors.response.use(
   }
 );
 
-export default userInstance
+export default userInstance;

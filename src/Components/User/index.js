@@ -75,5 +75,5 @@ export {
   CartQtyBox,
   OrderStatus,
   ReasonModal,
-  Razorpay
+  Razorpay,
 };

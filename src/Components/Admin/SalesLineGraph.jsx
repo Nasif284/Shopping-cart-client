@@ -7,10 +7,9 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
-import {  useGetSalesChartQuery } from "../../Store/Api/admin/orders";
+import { useGetSalesChartQuery } from "../../Store/Api/admin/orders";
 
 const SalesLineGraph = ({ show, filter }) => {
-
   const { data, isLoading, isError } = useGetSalesChartQuery(filter);
 
   if (isLoading)
@@ -58,7 +57,7 @@ const SalesLineGraph = ({ show, filter }) => {
             type="number"
             strokeWidth={0}
             style={{ fontSize: "11px", fontFamily: "inter" }}
-           allowDecimals={false}
+            allowDecimals={false}
           />
 
           <Tooltip cursor={{ stroke: "#00b879" }} />

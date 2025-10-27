@@ -9,25 +9,30 @@ import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { offerSchema } from "../../Utils/YupSchemas";
-import {  useEditGlobalOfferMutation } from "../../Store/Api/admin/offer";
+import { useEditGlobalOfferMutation } from "../../Store/Api/admin/offer";
+import DateField from "./DateFiled";
+import dayjs from "dayjs";
 
 const EditGlobalOfferModal = ({ open, handleClose, offer }) => {
-  const [edit, { isLoading }] = useEditGlobalOfferMutation()
+  const [edit, { isLoading }] = useEditGlobalOfferMutation();
   const {
     register,
     handleSubmit,
     formState: { errors },
+    control,
   } = useForm({
     mode: "onBlur",
-      resolver: yupResolver(offerSchema),
-      defaultValues: {
-          discountValue: offer.discountValue,
-          title: offer.title
-    }
+    resolver: yupResolver(offerSchema),
+    defaultValues: {
+      discountValue: offer.discountValue,
+      title: offer.title,
+      startDate: offer?.startDate ? dayjs(offer.startDate) : null,
+      expiryDate: offer?.expiryDate ? dayjs(offer.expiryDate) : null,
+    },
   });
   const onSubmit = async (data) => {
     try {
-      const res = await edit({ id: offer._id, data}).unwrap();
+      const res = await edit({ id: offer._id, data }).unwrap();
       toast.success(res.message || "Offer Edited Successfully");
       handleClose();
     } catch (error) {
@@ -61,6 +66,20 @@ const EditGlobalOfferModal = ({ open, handleClose, offer }) => {
                 className="w-full"
               />
             </div>
+            <div className="w-full mt-3 gap-4 flex justify-between">
+              <DateField
+                name={"startDate"}
+                label={"Starts From"}
+                control={control}
+                errorMessage={errors.startDate?.message}
+              />
+              <DateField
+                name={"expiryDate"}
+                label={"Expires At"}
+                control={control}
+                errorMessage={errors.expiryDate?.message}
+              />
+            </div>
             <div className="w-full flex gap-3">
               <Button
                 type="submit"
@@ -86,4 +105,4 @@ const EditGlobalOfferModal = ({ open, handleClose, offer }) => {
   );
 };
 
-export default EditGlobalOfferModal
+export default EditGlobalOfferModal;

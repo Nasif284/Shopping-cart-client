@@ -10,28 +10,31 @@ import SelectField from "./SelectField";
 import { useForm } from "react-hook-form";
 import { useUpdateStatusMutation } from "../../Store/Api/admin/orders";
 
-const OrderStatusModal = ({ open,item, handleClose }) => {
-    const [update,{isLoading}] = useUpdateStatusMutation()
-    const { control, handleSubmit, } = useForm({
-        defaultValues: {
-          status: item.status
-      }
-    });
+const OrderStatusModal = ({ open, item, handleClose }) => {
+  const [update, { isLoading }] = useUpdateStatusMutation();
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      status: item.status,
+    },
+  });
 
- const validNextStatus = {
-   Confirmed: ["Processing", "Cancelled"],
-   Processing: ["Shipped", "Cancelled"],
-   Shipped: ["Out for Delivery", "Cancelled"],
-   "Out for Delivery": ["Delivered", "Cancelled"],
-   Delivered: [],
-   Cancelled: [],
- };
+  const validNextStatus = {
+    Confirmed: ["Processing", "Cancelled"],
+    Processing: ["Shipped", "Cancelled"],
+    Shipped: ["Out for Delivery", "Cancelled"],
+    "Out for Delivery": ["Delivered", "Cancelled"],
+    Delivered: [],
+    Cancelled: [],
+  };
 
- const allowedStatuses = validNextStatus[item.status] || [];
- 
+  const allowedStatuses = validNextStatus[item.status] || [];
+
   const onSubmit = async (data) => {
     try {
-        const res = await update({ id: item._id, data: { status: data.status } }).unwrap();
+      const res = await update({
+        id: item._id,
+        data: { status: data.status },
+      }).unwrap();
       toast.success(res.message || "Status updated Successfully");
       handleClose();
     } catch (error) {

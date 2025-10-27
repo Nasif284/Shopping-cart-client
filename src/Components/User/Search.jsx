@@ -57,7 +57,7 @@ const Search = () => {
     navigate("/search");
     setClear(true);
     setSuggestionsShow(false);
-        setSuggestions({ products: [], categories: [] });
+    setSuggestions({ products: [], categories: [] });
 
     let stored = JSON.parse(localStorage.getItem("searchHistory")) || [];
     stored = [item, ...stored.filter((e) => e !== item)];
@@ -95,11 +95,11 @@ const Search = () => {
         value={search}
         onChange={(e) => {
           if (e.target.value.length == 0) {
-             handleClear()
+            handleClear();
           } else {
             setSearch(e.target.value);
             setSuggestionsShow(true);
-           } 
+          }
         }}
         onClick={() => {
           setSuggestionsShow(true);
@@ -109,7 +109,7 @@ const Search = () => {
         className="w-full h-[35px] focus:outline-none bg-inherit p-2 text-[15px]"
       />
 
-      {clear  ? (
+      {clear ? (
         <Button
           onClick={handleClear}
           className="!w-[37px] !min-w-[37px] !h-[37px] !rounded-full !text-black"

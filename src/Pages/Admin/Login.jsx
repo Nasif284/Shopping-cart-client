@@ -26,7 +26,6 @@ const AdminLogin = () => {
     };
   }, [navigate]);
 
-  
   const {
     register,
     handleSubmit,

@@ -23,7 +23,7 @@ const PasswordResetModal = ({ open, handleClose }) => {
     try {
       const res = await resetPass({ ...data, email: user.email }).unwrap();
       toast.success(res.message || "Password reset successfully");
-      handleClose()
+      handleClose();
     } catch (error) {
       toast.error(error.data || "Password reset failed");
     }
@@ -37,14 +37,14 @@ const PasswordResetModal = ({ open, handleClose }) => {
             {!user.password ? "Set Password" : "Reset Password"}
           </h2>
           <form onSubmit={handleSubmit(onSubmit)} className="mt-5" action="">
-            {user.password &&
+            {user.password && (
               <PasswordFiled
                 isSubmitting={isLoading}
                 register={register("currentPassword")}
                 errors={errors?.currentPassword?.message}
                 label={"Current Password"}
               />
-            }
+            )}
 
             <div className="flex gap-3">
               <PasswordFiled

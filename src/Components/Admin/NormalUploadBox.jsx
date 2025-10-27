@@ -9,10 +9,10 @@ const NormalUploadBox = ({
 }) => {
   const onChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
-         handleImageUpload(e.target.files);
+      handleImageUpload(e.target.files);
     }
   };
-  
+
   return (
     <>
       <div
@@ -36,7 +36,6 @@ const NormalUploadBox = ({
         />
       </div>
       {errors && <p className="text-red-500 text-sm">{errors.message}</p>}
-
     </>
   );
 };

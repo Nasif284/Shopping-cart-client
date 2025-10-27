@@ -1,7 +1,5 @@
 export const axiosBaseQuery =
-  (
-    { baseUrl, instance } 
-  ) =>
+  ({ baseUrl, instance }) =>
   async ({ url, method, body, params }) => {
     try {
       const result = await instance({
@@ -16,7 +14,7 @@ export const axiosBaseQuery =
         error: {
           status: error.response?.status,
           data: error.response?.data?.message || error.message,
-          errors : error.response?.data.errors
+          errors: error.response?.data.errors,
         },
       };
     }

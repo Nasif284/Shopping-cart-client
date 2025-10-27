@@ -1,7 +1,7 @@
 import AdminTable from "./AdminTable";
 import { Button, Tooltip } from "@mui/material";
 import { Badge } from "../User";
-import {  useGetReturnRequestsQuery } from "../../Store/Api/admin/orders";
+import { useGetReturnRequestsQuery } from "../../Store/Api/admin/orders";
 import { Link } from "react-router-dom";
 const ProductsColumns = [
   { id: "orderId", label: "Order Id", minWidth: 200 },
@@ -66,7 +66,7 @@ function productsCreateData(
 
 const ReturnRequestTable = ({ params, setParams }) => {
   const { data, isLoading } = useGetReturnRequestsQuery(params);
-  console.log(data)
+  console.log(data);
   const ProductsRows = data?.orders?.map((order) =>
     productsCreateData(
       order.orderId,
@@ -107,4 +107,4 @@ const ReturnRequestTable = ({ params, setParams }) => {
   );
 };
 
-export default ReturnRequestTable
+export default ReturnRequestTable;

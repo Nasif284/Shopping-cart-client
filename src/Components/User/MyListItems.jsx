@@ -19,7 +19,10 @@ const MyListItems = ({ item }) => {
   };
   const handleAddToCart = async () => {
     try {
-      const res= await add({ product: item.product, variant: item.variant }).unwrap();
+      const res = await add({
+        product: item.product,
+        variant: item.variant,
+      }).unwrap();
       toast.success(res.message || "Product Added to Cart");
     } catch (error) {
       toast.error(error.data || "Some Error Occurred");

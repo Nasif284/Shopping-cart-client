@@ -97,7 +97,6 @@ export default function ChatBot() {
             transition={{ duration: 0.25, ease: "easeOut" }}
             className="relative w-96 h-[520px] bg-white shadow-2xl rounded-3xl flex flex-col overflow-hidden border border-gray-100"
           >
-
             <div className="flex justify-between items-center bg-gradient-to-r from-[#ff5252] to-[#e04848] text-white px-6 py-4">
               <motion.div
                 initial={{ x: -10, opacity: 0 }}
@@ -173,7 +172,6 @@ export default function ChatBot() {
                 </motion.div>
               ))}
             </div>
-
 
             <AnimatePresence>
               {showScrollTop && (

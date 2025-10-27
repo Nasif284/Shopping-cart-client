@@ -43,7 +43,15 @@ const TopBrands = ({ filter }) => {
       brand.orderCount
     )
   );
-  return <AdminTable page={data?.page} setParams={setParams} totalPosts={data?.totalPosts} columns={topBrandsColumns} rows={topBrandsRows} />;
+  return (
+    <AdminTable
+      page={data?.page}
+      setParams={setParams}
+      totalPosts={data?.totalPosts}
+      columns={topBrandsColumns}
+      rows={topBrandsRows}
+    />
+  );
 };
 
 export default TopBrands;

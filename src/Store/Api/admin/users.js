@@ -21,10 +21,14 @@ export const userManagementApi = adminApi.injectEndpoints({
       query: (params) => ({
         url: `/users/chart`,
         method: "get",
-        params
+        params,
       }),
     }),
   }),
 });
 
-export const { useGetUsersQuery, useBlockUserMutation, useGetUsersChartDataQuery } = userManagementApi;
+export const {
+  useGetUsersQuery,
+  useBlockUserMutation,
+  useGetUsersChartDataQuery,
+} = userManagementApi;

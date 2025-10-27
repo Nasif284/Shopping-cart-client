@@ -35,4 +35,9 @@ export const addressApi = userApi.injectEndpoints({
   }),
 });
 
-export const { useAddAddressMutation, useGetAddressesQuery, useEditAddressMutation, useDeleteAddressMutation } = addressApi;
+export const {
+  useAddAddressMutation,
+  useGetAddressesQuery,
+  useEditAddressMutation,
+  useDeleteAddressMutation,
+} = addressApi;

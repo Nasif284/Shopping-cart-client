@@ -33,19 +33,19 @@ const ProductCard = ({
     },
   },
 }) => {
-    const [addToWishlist, { isLoading: wishlistLoading }] =
-      useAddToWishlistMutation();
+  const [addToWishlist, { isLoading: wishlistLoading }] =
+    useAddToWishlistMutation();
   const addToWishListHandler = async () => {
-      try {
-        const res = await addToWishlist({
-          product: product._id,
-          variant: product.defaultVariant._id,
-        }).unwrap();
-        toast.success(res.message || "Product Added To Wishlist Successfully");
-      } catch (error) {
-        toast.error(error.data || "Some Error Occurred");
-      }
-    };
+    try {
+      const res = await addToWishlist({
+        product: product._id,
+        variant: product.defaultVariant._id,
+      }).unwrap();
+      toast.success(res.message || "Product Added To Wishlist Successfully");
+    } catch (error) {
+      toast.error(error.data || "Some Error Occurred");
+    }
+  };
   const { user } = useSelector((state) => state.userAuth);
   const dispatch = useDispatch();
   const [isExistInCart, setIsExistInCart] = useState(false);
@@ -140,12 +140,6 @@ const ProductCard = ({
               </Button>
             </Tooltip>
           )}
-
-          <Tooltip title={"Add to Compare"} placement="left">
-            <Button className="!w-[35px] !text-[18px] !h-[35px] !min-w-[35px] !bg-white !rounded-full hover:!bg-primary !text-black hover:!text-white transition-all">
-              <IoGitCompareOutline />
-            </Button>
-          </Tooltip>
         </div>
       </div>
       <Link to={`/product/${product._id}`}>

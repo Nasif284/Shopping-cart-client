@@ -1,10 +1,10 @@
-import { PayPalButtons} from "@paypal/react-paypal-js";
+import { PayPalButtons } from "@paypal/react-paypal-js";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const PayPalButton = ({ amount, payload }) => {
-    const navigate = useNavigate();
-    const usdAmount = (amount / 83).toFixed(2);
+  const navigate = useNavigate();
+  const usdAmount = (amount / 83).toFixed(2);
   return (
     <PayPalButtons
       style={{

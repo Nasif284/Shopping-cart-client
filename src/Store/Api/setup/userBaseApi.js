@@ -11,5 +11,15 @@ export const userApi = createApi({
   refetchOnFocus: true,
   refetchOnReconnect: true,
   endpoints: () => ({}),
-  tagTypes: ["Auth", "Addresses", "Cart", "Users", "Orders","Order", "wishlist", "Coupons","Wallet"],
+  tagTypes: [
+    "Auth",
+    "Addresses",
+    "Cart",
+    "Users",
+    "Orders",
+    "Order",
+    "wishlist",
+    "Coupons",
+    "Wallet",
+  ],
 });

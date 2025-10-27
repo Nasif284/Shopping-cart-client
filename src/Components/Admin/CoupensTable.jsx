@@ -4,7 +4,10 @@ import { useState } from "react";
 import BlockConfirmModal from "./BlockConfirmModel";
 import { FaPlus } from "react-icons/fa";
 import AddCouponModal from "./AddCoupenModal";
-import { useGetCouponsQuery, useToggleCouponStatusMutation } from "../../Store/Api/admin/coupon";
+import {
+  useGetCouponsQuery,
+  useToggleCouponStatusMutation,
+} from "../../Store/Api/admin/coupon";
 import EditCouponModal from "./EditCouponModal";
 const CategoryColumns = [
   { id: "code", label: "Code", minWidth: 100 },
@@ -47,7 +50,7 @@ function CategoryCreateData(
 }
 
 const CouponsTable = ({ params, setParams }) => {
-    const { data, isLoading } = useGetCouponsQuery(params);
+  const { data, isLoading } = useGetCouponsQuery(params);
   const [block, { isLoading: isBlockLoading }] =
     useToggleCouponStatusMutation();
   const [open, setOpen] = useState(false);
@@ -63,7 +66,7 @@ const CouponsTable = ({ params, setParams }) => {
     setOpen(true);
   };
   const handleAddOffer = () => {
-    setAddOpen(true)
+    setAddOpen(true);
   };
   if (isLoading) {
     return (
@@ -76,7 +79,7 @@ const CouponsTable = ({ params, setParams }) => {
     setCoupon(id);
     setConfOpen(true);
     setIsBlocked(isBlocked);
-    };
+  };
   const CategoryRows = data.coupons.map((coupon) =>
     CategoryCreateData(
       coupon.code,
@@ -87,7 +90,9 @@ const CouponsTable = ({ params, setParams }) => {
         <span>{coupon.discountValue}%</span>
       ),
       new Date(coupon.startDate).toLocaleDateString("en-GB"),
-     coupon.expiryDate?  new Date(coupon.expiryDate).toLocaleDateString("en-GB") : "No expiry set",
+      coupon.expiryDate
+        ? new Date(coupon.expiryDate).toLocaleDateString("en-GB")
+        : "No expiry set",
       <div className="flex gap-2 !text-[18px] justify-center items-center ">
         {!coupon.isActive ? (
           <Button
@@ -116,8 +121,8 @@ const CouponsTable = ({ params, setParams }) => {
 
   return (
     <>
-          <div className="  flex justify-between my-4 ">
-           <h2 className="text-[18px] font-[600]">Offers</h2>
+      <div className="  flex justify-between my-4 ">
+        <h2 className="text-[18px] font-[600]">Offers</h2>
         <Button
           onClick={handleAddOffer}
           className="!flex !bg-blue-500 !text-white !font-[600] !h-[40px] !capitalize !px-5 !gap-3"
@@ -140,9 +145,8 @@ const CouponsTable = ({ params, setParams }) => {
       {open && (
         <EditCouponModal
           open={open}
-          coupon = {coupon}
-                  handleClose={handleClose}
-                  
+          coupon={coupon}
+          handleClose={handleClose}
         />
       )}
       {confOpen && (
@@ -155,8 +159,10 @@ const CouponsTable = ({ params, setParams }) => {
           isLoading={isBlockLoading}
           handleClose={() => setConfOpen(false)}
         />
-          )}
-          {addOpen && <AddCouponModal open={addOpen} handleClose={()=> setAddOpen(false)}/>}
+      )}
+      {addOpen && (
+        <AddCouponModal open={addOpen} handleClose={() => setAddOpen(false)} />
+      )}
     </>
   );
 };

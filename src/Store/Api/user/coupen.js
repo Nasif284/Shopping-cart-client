@@ -27,4 +27,8 @@ const couponApi = userApi.injectEndpoints({
   }),
 });
 
-export const {useGetCouponsForUserQuery, useApplyCouponMutation, useRemoveAppliedCouponMutation} = couponApi
+export const {
+  useGetCouponsForUserQuery,
+  useApplyCouponMutation,
+  useRemoveAppliedCouponMutation,
+} = couponApi;

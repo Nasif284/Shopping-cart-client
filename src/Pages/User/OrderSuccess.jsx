@@ -7,7 +7,7 @@ const OrderSuccess = () => {
     <div className="flex flex-col items-center justify-center h-[80vh] text-center">
       <img src={success} alt="" className="w-[100px]" />
       <p className="!text-[20px] !mb-0 text-gray-600">
-       Order Placed Successfully
+        Order Placed Successfully
       </p>
       <Link
         to={"/orders"}

@@ -82,8 +82,7 @@ const EditProfile = () => {
               onClick={() => setOpen(true)}
               className="!font-[600]"
             >
-              {user.password ? "Change Password" : "Set Password" }
-          
+              {user.password ? "Change Password" : "Set Password"}
             </Button>
           </div>
           <form onSubmit={handleSubmit(onSubmit)} action="">

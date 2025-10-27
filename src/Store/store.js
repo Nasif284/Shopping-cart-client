@@ -4,11 +4,11 @@ import userAuthSlice from "./StoreSlices/userAuthSlice";
 import adminAuthSlice from "./StoreSlices/adminAuthSlice";
 import { userApi } from "./Api/setup/userBaseApi";
 import { adminApi } from "./Api/setup/AdminBaseApi";
-import cartReducer from "./StoreSlices/cartSlice"
-import orderReducer from './StoreSlices/orderSlice'
+import cartReducer from "./StoreSlices/cartSlice";
+import orderReducer from "./StoreSlices/orderSlice";
 
 import { persistReducer, persistStore } from "redux-persist";
-import storage from 'redux-persist/lib/storage'
+import storage from "redux-persist/lib/storage";
 
 const orderPersistConfig = {
   key: "order-v2",
@@ -32,4 +32,4 @@ export const store = configureStore({
   ],
 });
 
-export const persistor = persistStore(store)
+export const persistor = persistStore(store);

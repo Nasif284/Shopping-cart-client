@@ -36,5 +36,5 @@ export {
   Addresses,
   OrderDetails,
   OrderFiled,
-  CheckoutRetry
+  CheckoutRetry,
 };

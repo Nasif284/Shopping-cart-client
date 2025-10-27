@@ -3,8 +3,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Autoplay, Navigation } from "swiper/modules";
-import { slide1 } from "../../Assets";
+import { useGetHomeSlidesQuery } from "../../Store/Api/admin/homeSlides";
 const HomeSlider = () => {
+  const { data } = useGetHomeSlidesQuery({ user: true });
   return (
     <div className="homeSlider py-3">
       <div className="container">
@@ -19,26 +20,13 @@ const HomeSlider = () => {
           modules={[Navigation, Autoplay]}
           className="mySwiper"
         >
-          <SwiperSlide>
-            <div className="item rounded-[20px] overflow-hidden">
-              <img src={slide1} alt="" className="w-full" />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="item rounded-[20px] overflow-hidden">
-              <img src={slide1} alt="" className="w-full" />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="item rounded-[20px] overflow-hidden">
-              <img src={slide1} alt="" className="w-full" />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="item rounded-[20px] overflow-hidden">
-              <img src={slide1} alt="" className="w-full" />
-            </div>
-          </SwiperSlide>
+          {data?.homeSlides.map((slide) => (
+            <SwiperSlide key={slide._id}>
+              <div className="item rounded-[20px] overflow-hidden">
+                <img src={slide.banner} alt="" className="w-full" />
+              </div>
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
     </div>

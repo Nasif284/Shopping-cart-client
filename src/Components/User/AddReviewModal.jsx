@@ -25,8 +25,11 @@ const AddReviewModal = ({ open, item, handleClose }) => {
     resolver: yupResolver(reviewSchema),
   });
   const onSubmit = async (data) => {
-      try {
-      const res = await add({ id: item._id, data:{...data, rating:value} }).unwrap();
+    try {
+      const res = await add({
+        id: item._id,
+        data: { ...data, rating: value },
+      }).unwrap();
       toast.success(res.message || "Review added Successfully");
       handleClose();
     } catch (error) {

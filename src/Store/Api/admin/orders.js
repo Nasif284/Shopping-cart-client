@@ -133,5 +133,5 @@ export const {
   useGetTopSellingBrandsQuery,
   useGetSalesChartQuery,
   useGetRevenueChartQuery,
-  useGetStatusChartQuery
+  useGetStatusChartQuery,
 } = adminOrderApi;

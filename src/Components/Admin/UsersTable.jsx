@@ -20,7 +20,7 @@ function usersCreateData(user, email, phone, created, action) {
   return { user, email, phone, created, action };
 }
 
-const UsersTable = ({params, setParams}) => {
+const UsersTable = ({ params, setParams }) => {
   const [blockUser, { isLoading: blockLoading }] = useBlockUserMutation();
   const [user, setUser] = useState();
   const [isBlocked, setIsBlocked] = useState();
@@ -32,9 +32,11 @@ const UsersTable = ({params, setParams}) => {
   };
   const { data, isLoading } = useGetUsersQuery(params);
   if (isLoading) {
-    return  <div className="w-full h-[100vh] flex items-center justify-center">
-            <CircularProgress color="inherit" />
-          </div>;
+    return (
+      <div className="w-full h-[100vh] flex items-center justify-center">
+        <CircularProgress color="inherit" />
+      </div>
+    );
   }
   const UsersRows = data.users.map((user) =>
     usersCreateData(
@@ -76,7 +78,13 @@ const UsersTable = ({params, setParams}) => {
   );
   return (
     <>
-      <AdminTable columns={UsersColumns} rows={UsersRows} setParams={setParams} totalPosts={data.totalPosts} page={data.page}  />
+      <AdminTable
+        columns={UsersColumns}
+        rows={UsersRows}
+        setParams={setParams}
+        totalPosts={data.totalPosts}
+        page={data.page}
+      />
       {open && (
         <BlockConfirmModal
           open={open}

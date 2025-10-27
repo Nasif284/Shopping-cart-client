@@ -17,7 +17,6 @@ const Razorpay = ({ amount, payload, failed = false }) => {
   let verificationInProgress = false;
   const handleRazorpayPayment = async () => {
     try {
-      
       const { data } = await create({ amount, ...payload });
       const order = data?.order;
       const options = {
@@ -31,22 +30,21 @@ const Razorpay = ({ amount, payload, failed = false }) => {
           if (verificationInProgress) return;
           verificationInProgress = true;
           try {
-           
             if (failed) {
-               const verifyPayload = {
-                 razorpay_order_id: response.razorpay_order_id,
-                 razorpay_payment_id: response.razorpay_payment_id,
-                 razorpay_signature: response.razorpay_signature,
-                 ...payload,
-               };
+              const verifyPayload = {
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                ...payload,
+              };
               await retry(verifyPayload).unwrap();
             } else {
-                  const verifyPayload = {
-                    razorpay_order_id: response.razorpay_order_id,
-                    razorpay_payment_id: response.razorpay_payment_id,
-                    razorpay_signature: response.razorpay_signature,
-                    payload,
-                  };
+              const verifyPayload = {
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                payload,
+              };
               await verify(verifyPayload).unwrap();
             }
             navigate("/checkout/success");
@@ -86,7 +84,7 @@ const Razorpay = ({ amount, payload, failed = false }) => {
         navigate("/checkout/failed");
       });
     } catch (error) {
-      console.log(error.data)
+      console.log(error.data);
       toast.error(error.data || "Some Error Occurred");
     }
   };

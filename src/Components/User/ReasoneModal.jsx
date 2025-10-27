@@ -9,11 +9,14 @@ import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { reasonSchema } from "../../Utils/YupSchemas";
-import { useCancelOrderMutation, useReturnOrderMutation } from "../../Store/Api/user/order";
+import {
+  useCancelOrderMutation,
+  useReturnOrderMutation,
+} from "../../Store/Api/user/order";
 
 const ReasonModal = ({ open, item, handleClose, type }) => {
-    const [cancel, { isLoading }] = useCancelOrderMutation();
-    const [returnOrder , {isLoading: returnLoading}] = useReturnOrderMutation()
+  const [cancel, { isLoading }] = useCancelOrderMutation();
+  const [returnOrder, { isLoading: returnLoading }] = useReturnOrderMutation();
 
   const {
     handleSubmit,
@@ -24,12 +27,12 @@ const ReasonModal = ({ open, item, handleClose, type }) => {
     resolver: yupResolver(reasonSchema),
   });
   const onSubmit = async (data) => {
-      try {
-          let res;
+    try {
+      let res;
       if (type == "Cancel") {
-        res = await cancel({id:item._id, data}).unwrap();
+        res = await cancel({ id: item._id, data }).unwrap();
       } else if (type == "Return") {
-            res = await returnOrder({ id: item._id, data }).unwrap();
+        res = await returnOrder({ id: item._id, data }).unwrap();
       }
       toast.success(res.message || "Status updated Successfully");
       handleClose();

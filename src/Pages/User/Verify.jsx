@@ -47,7 +47,7 @@ const Verify = () => {
     try {
       const res = await resend({ email });
       localStorage.setItem("otpExpiry", Date.now() + 60000);
-        updateTimer();
+      updateTimer();
       toast.success(res.message || "OTP resend to you mail");
     } catch (error) {
       toast.error(error.data || "Could not resend OTP");
@@ -77,7 +77,9 @@ const Verify = () => {
                     "Resend OTP"
                   )}
                 </Link>
-              ) : <div></div>}
+              ) : (
+                <div></div>
+              )}
 
               {timer > 0 ? <span>00:{timer}</span> : <span>OTP Expired</span>}
             </div>

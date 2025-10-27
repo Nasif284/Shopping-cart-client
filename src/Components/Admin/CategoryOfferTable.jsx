@@ -31,8 +31,8 @@ const CategoryOfferTable = ({ params, setParams }) => {
     setOpen(false);
   };
   const handleEdit = (offer) => {
-      setCategory(offer);
-      setOpen(true)
+    setCategory(offer);
+    setOpen(true);
   };
   if (isLoading) {
     return (
@@ -78,7 +78,6 @@ const CategoryOfferTable = ({ params, setParams }) => {
 
   return (
     <>
-
       <div className="relative w-full  overflow-x-scroll shadow-md sm:rounded-lg">
         <AdminTable
           columns={CategoryColumns}

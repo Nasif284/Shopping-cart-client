@@ -33,8 +33,8 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 const CustomBarShape = (props) => {
   const { x, y, width, height, value } = props;
-  const barHeight = value === 0 ? 4 : height; 
-  const barY = value === 0 ? y - 4 : y; 
+  const barHeight = value === 0 ? 4 : height;
+  const barY = value === 0 ? y - 4 : y;
 
   return (
     <rect
@@ -49,7 +49,7 @@ const CustomBarShape = (props) => {
   );
 };
 
-const Performance = ({ show , filter}) => {
+const Performance = ({ show, filter }) => {
   const { data } = useGetUsersChartDataQuery(filter);
   return (
     <div className="performance">
