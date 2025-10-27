@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearUser } from "../../Store/StoreSlices/userAuthSlice";
 import { useGetCartItemsQuery } from "../../Store/Api/user/cart";
 import { useGetWishlistQuery } from "../../Store/Api/user/wishlist";
+import { logo } from "../../Assets";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -100,9 +101,10 @@ const Header = () => {
         <div className="header  border-gray-300 border-b-[1px] py-4  ">
           <div className="container flex items-center justify-between">
             <div className="col1 w-[25%]">
-              <h1 className="text-[25px] font-[600] text-primary">
+              {/* <h1 className="text-[25px] font-[600] text-primary">
                 Shopping cart
-              </h1>
+              </h1> */}
+              <img src={logo} className="w-[225px]" alt="" />
             </div>
             <div className="col2 w-[45%] ">
               <Search />

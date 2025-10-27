@@ -54,23 +54,26 @@ const HomeSlider2 = () => {
       </SwiperSlide>
       <SwiperSlide>
         <div className="item rounded-md overflow-hidden w-full relative">
-          <img src="https://demos.codezeel.com/prestashop/PRS21/PRS210502/modules/cz_imageslider/views/img/sample-2.jpg" />
-          <div className="info -right-[100%] opacity-0 absolute duration-500 top-0 transition-all w-[50%] h-[100%] flex  flex-col justify-center z-50 p-8">
+          <img
+            src="https://demos.codezeel.com/prestashop/PRS21/PRS210502/modules/cz_imageslider/views/img/sample-1.jpg"
+            alt="banner"
+          />
+          <div className="info absolute top-0 -right-[100%] duration-500 opacity-0 transition-all w-[50%] h-[100%] flex  flex-col justify-center z-50 p-8">
             <h4 className="text-[20px] font-[500] w-full mb-3">
               Big Saving Days Sale
             </h4>
             <h2 className="text-[35px] font-[600]">
-              Buy Modern Chair In Black Color
+              Women Solid Round Green T-Shirt
             </h2>
             <h3 className="text-[20px] flex items-center gap-3 font-[500] w-full mb-3 mt-3">
               Starting At Only{" "}
               <span className="text-[35px] font-[600] text-primary">
-                $99.00
+                $59.00
               </span>
             </h3>
             <div>
               <Button className="!mt-4 !bg-primary !text-white !px-5  py-4">
-                SHOP NOW
+                SUBSCRIBE
               </Button>
             </div>
           </div>

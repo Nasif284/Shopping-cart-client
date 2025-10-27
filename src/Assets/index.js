@@ -9,6 +9,8 @@ import userPlaceHolder from "./userPlaceHolder.png";
 import typing from "./Loading Animation.gif";
 import success from "./success.png";
 import failed from "./close.png";
+import logo from './main logo.jpg'
+import chappal from './flip flops.jpg'
 export {
   slide1,
   cat1,
@@ -21,4 +23,6 @@ export {
   typing,
   success,
   failed,
+  logo,
+  chappal
 };

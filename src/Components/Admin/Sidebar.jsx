@@ -13,6 +13,7 @@ import { Collapse } from "react-collapse";
 import { Link } from "react-router-dom";
 import DropdownButton from "./DropdownButton";
 import { MdOutlineLocalOffer } from "react-icons/md";
+import { logo } from "../../Assets";
 const Sidebar = ({ show }) => {
   const [collIndex, setCollIndex] = useState(null);
   const openCollapse = (index) => {
@@ -27,9 +28,7 @@ const Sidebar = ({ show }) => {
       className={`sidebar transition-all duration-400 fixed z-[100] top-0 ${show ? "left-0 " : "-left-100"} w-[18%] h-full bg-white border-r border-[rgba(0,0,0,0.1)] py-2 px-2`}
     >
       <div className="  w-full flex items-center justify-center py-2">
-        <h1 className="text-[25px] text-center font-[600] text-[#ff5252]">
-          Shopping Cart
-        </h1>
+             <img src={logo} className="w-[225px]" alt="" />
       </div>
       <ul className="pl-4 mt-4">
         <li>
