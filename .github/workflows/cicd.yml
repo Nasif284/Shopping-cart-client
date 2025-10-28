@@ -29,7 +29,5 @@ jobs:
                 aws-secret-access-key : ${{secrets.AWS_SECRETE_ACCESS_KEY}}
                 aws-region: ap-south-1
 
-            - name : rename bucket
-              run:  aws s3 sync s3://gratia-frontend-app s3://gratiaonline.shop
             - name: Deploy to s3 bucket
-              run: aws s3 sync dist s3://gratia-frontend-app --delete
+              run: aws s3 sync dist s3://www.gratiaonline.shop --delete
