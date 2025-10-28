@@ -30,4 +30,4 @@ jobs:
                 aws-region: ap-south-1
 
             - name: Deploy to s3 bucket
-              run: aws s3 sync build s3://gratia-frontend-app --delete
+              run: aws s3 sync dist s3://gratia-frontend-app --delete
