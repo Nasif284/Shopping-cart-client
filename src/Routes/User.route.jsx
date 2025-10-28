@@ -31,7 +31,7 @@ import {
 import { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import RouteValidation from "../Components/Protected/RouteValidation";
-import { userSessionCheck } from "../Utils/protectedRoute";
+import { userSessionCheck } from "../Utils/ProtectedRoute";
 import MyAccountLayout from "../Layout/MyAccountLayout";
 import UserProtected from "../Components/Protected/UserProtected";
 import OrderSuccess from "../Pages/User/OrderSuccess";
