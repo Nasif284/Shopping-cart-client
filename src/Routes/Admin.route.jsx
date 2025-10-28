@@ -25,7 +25,7 @@ import { AdminLayout } from "../Components/Admin";
 import { Toaster } from "react-hot-toast";
 import { NotFound } from "../Pages/User";
 import AdminProtected from "../Components/Protected/AdminProtected";
-import { adminSessionCheck } from "../Utils/protectedRoute";
+import { adminSessionCheck } from "../Utils/ProtectedRoute";
 import OrderItemDetails from "../Pages/Admin/OrderItemDetails";
 import CategoryOffer from "../Pages/Admin/CategoryOffer";
 import GlobalOffer from "../Pages/Admin/GlobalOffer";

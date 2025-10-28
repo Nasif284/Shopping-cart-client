@@ -328,7 +328,7 @@ const Dashboard = ({ show }) => {
                 Total Sales Count
               </p>
               <h3 className="text-[24px] font-[700] text-blue-600 mt-1">
-                {data.salesCount}
+                {data?.salesCount}
               </h3>
               <p className="text-[11px] text-gray-500 mt-1">In this Period</p>
             </div>
