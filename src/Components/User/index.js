@@ -23,7 +23,7 @@ import ProductDetailsComponent from "./ProductDetailsComponent";
 import OtpBox from "./OtpBox";
 import CartItem from "./CartItem";
 import UserSidebar from "./UserSidebar";
-import MyListItems from "./MylistItems";
+import MyListItems from "./MyListItems";
 import Badge from "./Badge";
 import ProductDialogBox from "./ProductDialogBox";
 import ChatBot from "./ChatBox";
