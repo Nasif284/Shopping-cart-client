@@ -1,0 +1,33 @@
+name: Deploy to S3
+on:
+    push:
+        branches: 
+            - main
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Node Setup
+              uses: actions/setup-node@v1
+              with:
+                node-version: ${{secrets.NODE_VERSION}}
+
+            - name: Dependency Install
+              run: npm install
+
+            - name: Build
+              run: npm run build
+
+            - name: Configure Aws
+              uses: aws-actions/configure-aws-credentials@v1
+              with: 
+                aws-access-key-id : ${{secrets.AWS_ACCESS_KEY_ID}}
+                aws-secrete-access-key : ${{secrets.AWS_SECRETE_ACCESS_KEY}}
+                aws-region: ap-south-1
+
+            - name: Deploy to s3 bucket
+              run: aws s3 sync build s3://gratia-frontend-app --delete
