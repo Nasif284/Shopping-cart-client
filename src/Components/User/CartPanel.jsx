@@ -13,7 +13,6 @@ import {
 import toast from "react-hot-toast";
 import CartQtyBox from "./CartQtyBox";
 import { createOrderItems } from "../../Store/StoreSlices/orderSlice";
-import _, { filter } from "lodash";
 const CartPanel = ({ open, setOpen }) => {
   const { user } = useSelector((state) => state.userAuth);
   const cart = useSelector((state) => state.cart);
