@@ -13,7 +13,7 @@ import {
 import toast from "react-hot-toast";
 import CartQtyBox from "./CartQtyBox";
 import { createOrderItems } from "../../Store/StoreSlices/orderSlice";
-import _ from "lodash";
+import _, { filter } from "lodash";
 const CartPanel = ({ open, setOpen }) => {
   const { user } = useSelector((state) => state.userAuth);
   const cart = useSelector((state) => state.cart);
@@ -22,15 +22,20 @@ const CartPanel = ({ open, setOpen }) => {
   });
   const [items, setItems] = useState();
   const dispatch = useDispatch();
-  let filtered = data?.items.filter(
-    (e) =>
-      e.variant.stock > 0 &&
-      !e.variant.isUnlisted &&
-      !e.product.isUnlisted &&
-      !e.product.categoryId.isBlocked &&
-      !e.product.subCategoryId.isBlocked &&
-      !e.product.thirdSubCategoryId.isBlocked
-  );
+  let filtered 
+  if(user) {
+    filtered = data?.items.filter(
+      (e) =>
+        e.variant.stock > 0 &&
+        !e.variant.isUnlisted &&
+        !e.product.isUnlisted &&
+        !e.product.categoryId.isBlocked &&
+        !e.product.subCategoryId.isBlocked &&
+        !e.product.thirdSubCategoryId.isBlocked
+    );
+  } else {
+    filtered = cart
+  } 
   const handleCheckout = () => {
     dispatch(
       createOrderItems({
@@ -45,6 +50,7 @@ const CartPanel = ({ open, setOpen }) => {
     setOpen(false);
   };
   let totalOldPrice, totalPrice;
+
   if (user) {
     totalOldPrice = filtered?.reduce(
       (acc, cur) => acc + cur.variant.oldPrice * cur.quantity,
@@ -174,7 +180,7 @@ const CartPanel = ({ open, setOpen }) => {
           <div className="flex w-full gap-2 mt-3">
             <Link
               onClick={() => setOpen(false)}
-              className={`${filtered.length > 0 ? "w-[50%]" : "w-full"}`}
+              className={`${filtered?.length > 0 ? "w-[50%]" : "w-full"}`}
               to={"/cart"}
             >
               <Button className="!bg-primary !rounded-md !text-white w-full !font-[500]">

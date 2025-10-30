@@ -38,7 +38,7 @@ const ProductCard = ({
   const { user } = useSelector((state) => state.userAuth);
   console.log("user", user)
   const addToWishListHandler = async () => {
-      if (!user.user) {
+      if (!user) {
         return toast.error("Please Login to Buy this Product");
       }
     try {
@@ -59,7 +59,7 @@ const ProductCard = ({
   const cart = useSelector((state) => state.cart);
 
   const handleAddToCart = async (product, variant) => {
-    if (user.user) {
+    if (user) {
       try {
         const res = await add({
           product: product._id,
