@@ -27,6 +27,9 @@ const Cart = () => {
   const dispatch = useDispatch();
   let totalOldPrice, totalPrice;
   const handleCheckout = () => {
+    if (!user) {
+      return toast.error("Please Login to Proceed with Checkout");
+    }
     if (filtered.length == 0) {
       return toast.error("No products in the cart");
     }

@@ -36,6 +36,9 @@ const CartPanel = ({ open, setOpen }) => {
     filtered = cart
   } 
   const handleCheckout = () => {
+    if (!user) {
+      return toast.error("Please Login to Proceed with Checkout")
+    }
     dispatch(
       createOrderItems({
         items: filtered,
