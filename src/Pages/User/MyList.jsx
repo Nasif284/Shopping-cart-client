@@ -15,13 +15,13 @@ const MyList = () => {
     <div className="col2 w-[50%]">
       <div className="card bg-white px-3 py-2 shadow-md rounded-md ">
         <div className="py-2 px-3 border-b border-[rgba(0,0,0,0.1)] mb-3">
-          <h2>Your Cart</h2>
+          <h2>Your Wishlist</h2>
           <p className="!m-0">
             There are{" "}
             <span className="font-bold text-primary">
               {data.wishlist.length}
             </span>{" "}
-            Items in your cart
+            Items in your wishlist
           </p>
         </div>
         {data.wishlist.map((item) => (
