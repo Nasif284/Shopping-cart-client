@@ -14,16 +14,21 @@ const Cart = () => {
   const { data } = useGetCartItemsQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
-  const navigate = useNavigate()
-  let filtered = data?.items.filter(
-    (e) =>
-      e.variant.stock > 0 &&
-      !e.variant.isUnlisted &&
-      !e.product.isUnlisted &&
-      !e.product.categoryId.isBlocked &&
-      !e.product.subCategoryId.isBlocked &&
-      !e.product.thirdSubCategoryId.isBlocked
-  );
+  const navigate = useNavigate();
+  let filtered;
+  if (user) {
+    filtered = data?.items.filter(
+      (e) =>
+        e.variant.stock > 0 &&
+        !e.variant.isUnlisted &&
+        !e.product.isUnlisted &&
+        !e.product.categoryId.isBlocked &&
+        !e.product.subCategoryId.isBlocked &&
+        !e.product.thirdSubCategoryId.isBlocked
+    );
+  } else {
+    filtered = cart;
+  }
   const [items, setItems] = useState();
   const dispatch = useDispatch();
   let totalOldPrice, totalPrice;
@@ -44,7 +49,7 @@ const Cart = () => {
         },
       })
     );
-    navigate("/checkout")
+    navigate("/checkout");
   };
   if (user) {
     totalOldPrice = filtered?.reduce(
@@ -105,16 +110,14 @@ const Cart = () => {
               </p>
             </div>
             {filtered?.length > 0 && (
-
-                <Button
-                  onClick={handleCheckout}
-                  type="submit"
-                  className="!bg-primary w-full !mt-2 !text-white !text-[14px] !py-2 flex gap-2  hover:!bg-[rgba(0,0,0,0.8)] !font-[600]"
-                >
-                  <IoBagCheckOutline className="text-[16px]" />
-                  Checkout
-                </Button>
-
+              <Button
+                onClick={handleCheckout}
+                type="submit"
+                className="!bg-primary w-full !mt-2 !text-white !text-[14px] !py-2 flex gap-2  hover:!bg-[rgba(0,0,0,0.8)] !font-[600]"
+              >
+                <IoBagCheckOutline className="text-[16px]" />
+                Checkout
+              </Button>
             )}
           </div>
         </div>
