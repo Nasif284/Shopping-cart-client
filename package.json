@@ -51,6 +51,7 @@
     "styled-components": "^6.1.19",
     "swiper": "^11.2.10",
     "tailwindcss": "^4.1.11",
+    "vite-plugin-pwa": "^1.1.0",
     "yup": "^1.7.0"
   },
   "devDependencies": {
