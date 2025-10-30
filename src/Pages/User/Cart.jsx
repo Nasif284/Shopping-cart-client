@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useGetCartItemsQuery } from "../../Store/Api/user/cart";
 import { useEffect, useState } from "react";
 import { createOrderItems } from "../../Store/StoreSlices/orderSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const Cart = () => {
@@ -14,6 +14,7 @@ const Cart = () => {
   const { data } = useGetCartItemsQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
+  const navigate = useNavigate()
   let filtered = data?.items.filter(
     (e) =>
       e.variant.stock > 0 &&
@@ -43,6 +44,7 @@ const Cart = () => {
         },
       })
     );
+    navigate("/checkout")
   };
   if (user) {
     totalOldPrice = filtered?.reduce(
@@ -103,7 +105,7 @@ const Cart = () => {
               </p>
             </div>
             {filtered?.length > 0 && (
-              <Link to={"/checkout"}>
+
                 <Button
                   onClick={handleCheckout}
                   type="submit"
@@ -112,7 +114,7 @@ const Cart = () => {
                   <IoBagCheckOutline className="text-[16px]" />
                   Checkout
                 </Button>
-              </Link>
+
             )}
           </div>
         </div>

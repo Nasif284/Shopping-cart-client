@@ -1,6 +1,6 @@
 import Drawer from "@mui/material/Drawer";
 import { IoMdClose } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdDeleteOutline } from "react-icons/md";
 import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,6 +35,7 @@ const CartPanel = ({ open, setOpen }) => {
   } else {
     filtered = cart
   } 
+  const navigate = useNavigate()
   const handleCheckout = () => {
     if (!user) {
       return toast.error("Please Login to Proceed with Checkout")
@@ -50,6 +51,7 @@ const CartPanel = ({ open, setOpen }) => {
       })
     );
     setOpen(false);
+    navigate("/checkout");
   };
   let totalOldPrice, totalPrice;
 
@@ -190,15 +192,14 @@ const CartPanel = ({ open, setOpen }) => {
               </Button>
             </Link>
             {filtered?.length > 0 && (
-              <Link
-                onClick={handleCheckout}
-                className="w-[50%]"
-                to={"/checkout"}
-              >
-                <Button className="!bg-white  !rounded-md !text-primary !border-2 border-primary  w-full !font-[500]">
+
+                <Button
+                  onClick={handleCheckout}
+                  className="!bg-white  !rounded-md !text-primary !border-2 border-primary  w-[50%] !font-[500]"
+                >
                   Checkout
                 </Button>
-              </Link>
+ 
             )}
           </div>
         </div>
