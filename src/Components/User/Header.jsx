@@ -72,7 +72,7 @@ const Header = () => {
           <div className="container flex items-center justify-between">
             <div className="col1 w-[50%]">
               <p className="text-[13px] font-[500]">
-                Get up to 50% off new season styles, limited time only
+                Get up to 50% off new season styles, limited time only afdsf asdfdsf git 
               </p>
             </div>
             <div className="col2 flex items-center justify-end">
