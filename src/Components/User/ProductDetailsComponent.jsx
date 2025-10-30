@@ -39,6 +39,9 @@ const ProductDetailsComponent = ({
   const [validate] = useValidateProductMutation();
   const cart = useSelector((state) => state.cart);
   const addToWishListHandler = async () => {
+      if (!user) {
+        return toast.error("Please Login to Buy this Product");
+      }
     try {
       const res = await addToWishlist({
         product: product._id,
@@ -50,6 +53,9 @@ const ProductDetailsComponent = ({
     }
   };
   const handleBuyNow = async () => {
+    if (!user) {
+      return toast.error("Please Login to Buy this Product")
+    }
     setBuyNowLoading(true);
     try {
       await validate({

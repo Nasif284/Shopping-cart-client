@@ -35,7 +35,11 @@ const ProductCard = ({
 }) => {
   const [addToWishlist, { isLoading: wishlistLoading }] =
     useAddToWishlistMutation();
+    const { user } = useSelector((state) => state.userAuth);
   const addToWishListHandler = async () => {
+      if (!user) {
+        return toast.error("Please Login to Buy this Product");
+      }
     try {
       const res = await addToWishlist({
         product: product._id,
@@ -46,7 +50,7 @@ const ProductCard = ({
       toast.error(error.data || "Some Error Occurred");
     }
   };
-  const { user } = useSelector((state) => state.userAuth);
+
   const dispatch = useDispatch();
   const [isExistInCart, setIsExistInCart] = useState(false);
   const [add, { isLoading }] = useAddToCartMutation();
