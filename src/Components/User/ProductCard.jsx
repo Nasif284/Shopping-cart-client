@@ -39,7 +39,7 @@ const ProductCard = ({
   console.log("user", user)
   const addToWishListHandler = async () => {
       if (!user) {
-        return toast.error("Please Login to Buy this Product");
+        return toast.error("Please Login to add the products to wishlist");
       }
     try {
       const res = await addToWishlist({
