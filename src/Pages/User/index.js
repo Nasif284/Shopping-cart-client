@@ -17,6 +17,8 @@ import Addresses from "./Addresses";
 import OrderDetails from "./OrderDetails";
 import OrderFiled from "./OrderfFailed";
 import CheckoutRetry from "./CheckoutRetry";
+import Terms from "./Terms";
+import PrivacyPolicy from "./PrivacyPolicy";
 export {
   Home,
   ProductListing,
@@ -37,4 +39,6 @@ export {
   OrderDetails,
   OrderFiled,
   CheckoutRetry,
+  Terms,
+  PrivacyPolicy
 };

@@ -62,6 +62,18 @@ const UserRouter = () => {
           element={userSessionCheck(<ForgotPassEmail />)}
         />
         <Route
+          path="/terms-of-service"
+          element={userSessionCheck(<ForgotPassEmail />)}
+        />
+        <Route
+          path="/privacy-and-policy"
+          element={userSessionCheck(<ForgotPassEmail />)}
+        />
+        <Route
+          path="/password/forgot"
+          element={userSessionCheck(<ForgotPassEmail />)}
+        />
+        <Route
           path="/password/forgot/verify"
           element={userSessionCheck(<ForgotPassVerify />)}
         />
