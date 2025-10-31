@@ -16,9 +16,11 @@ import {
   OrderDetails,
   OrderFiled,
   Orders,
+  PrivacyPolicy,
   ProductDetails,
   ProductListing,
   Register,
+  Terms,
   Verify,
 } from "../Pages/User";
 import {
@@ -63,11 +65,11 @@ const UserRouter = () => {
         />
         <Route
           path="/terms-of-service"
-          element={userSessionCheck(<ForgotPassEmail />)}
+          element={userSessionCheck(<Terms />)}
         />
         <Route
           path="/privacy-and-policy"
-          element={userSessionCheck(<ForgotPassEmail />)}
+          element={userSessionCheck(<PrivacyPolicy />)}
         />
         <Route
           path="/password/forgot"
