@@ -122,13 +122,13 @@ const CouponsTable = ({ params, setParams }) => {
   return (
     <>
       <div className="  flex justify-between my-4 ">
-        <h2 className="text-[18px] font-[600]">Offers</h2>
+        <h2 className="text-[18px] font-[600]">Coupons</h2>
         <Button
           onClick={handleAddOffer}
           className="!flex !bg-blue-500 !text-white !font-[600] !h-[40px] !capitalize !px-5 !gap-3"
         >
           <FaPlus />
-          Add New Offer
+          Add New Coupon
         </Button>
       </div>
 
