@@ -446,7 +446,7 @@ export const couponSchema = yup.object().shape({
     .number()
     .typeError("Discount value must be a number")
     .positive("Discount must be greater than 0")
-    .when("type", {
+    .when("discountType", {
       is: "Percentage",
       then: (schema) =>
         schema.max(100, "Percentage discount cannot exceed 100%"),
