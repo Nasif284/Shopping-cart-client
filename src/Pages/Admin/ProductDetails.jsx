@@ -66,7 +66,7 @@ const ProductDetails = () => {
           color="primary"
         />
       </div>
-      <div className=" pt-10 bg-white w-full border-[#d8d8d8] overflow-hidden shadow-md rounded-md px-5 py-3">
+      {/* <div className=" pt-10 bg-white w-full border-[#d8d8d8] overflow-hidden shadow-md rounded-md px-5 py-3">
         <div className="flex items-center gap-8 mb-5">
           <span className={` text-[17px] font-[600] cursor-pointer link`}>
             Reviews ({reviews.reviews.length})
@@ -79,7 +79,7 @@ const ProductDetails = () => {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
 
       {open && (
         <AddVariantModal

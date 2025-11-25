@@ -1,33 +1,40 @@
 name: Deploy to S3
 on:
-    push:
-        branches: 
-            - master
+  push:
+    branches: 
+      - master
+
 jobs:
-    deploy:
-        runs-on: ubuntu-latest
+  deploy:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-            - name: Node Setup
-              uses: actions/setup-node@v1
-              with:
-                node-version: ${{secrets.NODE_VERSION}}
+      - name: Node Setup
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{secrets.NODE_VERSION}}
 
-            - name: Dependency Install
-              run: npm install
+      - name: Create .env file
+        run: |
+          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> .env
+          echo "VITE_RAZORPAY_TEST_KEY_ID=${{ secrets.VITE_RAZORPAY_TEST_KEY_ID }}" >> .env
+          echo "VITE_PAYPAL_CLIENT_ID=${{ secrets.VITE_PAYPAL_CLIENT_ID }}" >> .env
 
-            - name: Build
-              run: npm run build
+      - name: Dependency Install
+        run: npm install
 
-            - name: Configure Aws
-              uses: aws-actions/configure-aws-credentials@v1
-              with: 
-                aws-access-key-id : ${{secrets.AWS_ACCESS_KEY_ID}}
-                aws-secret-access-key : ${{secrets.AWS_SECRETE_ACCESS_KEY}}
-                aws-region: ap-south-1
+      - name: Build
+        run: npm run build
 
-            - name: Deploy to s3 bucket
-              run: aws s3 sync dist s3://www.gratiaonline.shop --delete
+      - name: Configure Aws
+        uses: aws-actions/configure-aws-credentials@v1
+        with: 
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{secrets.AWS_SECRETE_ACCESS_KEY}}
+          aws-region: ap-south-1
+
+      - name: Deploy to s3 bucket
+        run: aws s3 sync dist s3://www.gratiaonline.shop --delete

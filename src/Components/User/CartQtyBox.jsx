@@ -17,6 +17,11 @@ const CartQtyBox = ({ item, i }) => {
           `Adding more than 5 items is not allowed for per product `
         );
       }
+       if (mode == "minus" && item.quantity == 1) {
+         return toast.error(
+           `less than 1 items is not allowed `
+         );
+       }
       try {
         await edit({ id: item._id, params: { mode } }).unwrap();
       } catch (error) {
