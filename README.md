@@ -125,8 +125,7 @@ sequenceDiagram
 ### 3. Intelligent URL Routing & Algorithmic Fuzzy Auto-Correction
 Deep-linked hierarchical category URLs (`/:category/:subCategory/:thirdCategory`) are protected by [`RouteValidation.jsx`](src/Components/Protected/RouteValidation.jsx):
 - **Algorithmic String Similarity**: Employs the **Sørensen–Dice coefficient algorithm** (`string-similarity`) to compare user-typed URL slugs against available database categories.
-- **Auto-Correction Redirect**: If a user enters a slightly misspelled route (e.g. `/electrnics/lap-tops`), the component calculates match confidence:
-  $$\text{Similarity}(S_1, S_2) = \frac{2 |S_1 \cap S_2|}{|S_1| + |S_2|} > 0.4$$
+- **Auto-Correction Redirect**: If a user enters a slightly misspelled route (e.g. `/electrnics/lap-tops`), the component calculates match confidence using the Sørensen–Dice index (`Similarity = (2 * |S1 ∩ S2|) / (|S1| + |S2|) > 0.4`).
 - **Canonical Routing**: Automatically updates the browser location via `navigate(..., { replace: true })` to the canonical URL slug, preserving SEO equity and mitigating 404 dead-ends.
 
 ---
