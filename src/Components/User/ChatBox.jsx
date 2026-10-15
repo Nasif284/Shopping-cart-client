@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, ArrowUp, Bot, User } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 import { useSendMessageMutation } from "../../Store/Api/user/auth";
 import { typing } from "../../Assets";
 
@@ -148,7 +149,7 @@ export default function ChatBot() {
                   )}
 
                   <div
-                    className={`max-w-[80%] p-3 rounded-2xl shadow-sm ${
+                    className={`max-w-[85%] p-3.5 rounded-2xl shadow-sm ${
                       msg.sender === "user"
                         ? "bg-gradient-to-br from-[#ff5252] to-[#e04848] text-white rounded-br-md"
                         : "bg-white text-gray-800 border border-gray-100 rounded-bl-md"
@@ -159,8 +160,55 @@ export default function ChatBot() {
                         <img className="w-8 h-8" src={typing} alt="Typing..." />
                         <span className="text-sm text-gray-500">Typing...</span>
                       </div>
+                    ) : msg.sender === "bot" ? (
+                      <div className="text-sm leading-relaxed text-gray-800 break-words">
+                        <ReactMarkdown
+                          components={{
+                            p: ({ children }) => (
+                              <p className="mb-2 last:mb-0 leading-relaxed">
+                                {children}
+                              </p>
+                            ),
+                            ul: ({ children }) => (
+                              <ul className="list-disc pl-4 my-2 space-y-1">
+                                {children}
+                              </ul>
+                            ),
+                            ol: ({ children }) => (
+                              <ol className="list-decimal pl-4 my-2 space-y-1">
+                                {children}
+                              </ol>
+                            ),
+                            li: ({ children }) => (
+                              <li className="leading-relaxed">{children}</li>
+                            ),
+                            strong: ({ children }) => (
+                              <strong className="font-bold text-gray-950">
+                                {children}
+                              </strong>
+                            ),
+                            em: ({ children }) => (
+                              <em className="italic">{children}</em>
+                            ),
+                            a: ({ href, children }) => (
+                              <a
+                                href={href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-primary font-semibold underline hover:text-red-700"
+                              >
+                                {children}
+                              </a>
+                            ),
+                          }}
+                        >
+                          {msg.text}
+                        </ReactMarkdown>
+                      </div>
                     ) : (
-                      <p className="text-sm leading-relaxed">{msg.text}</p>
+                      <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                        {msg.text}
+                      </p>
                     )}
                   </div>
 
