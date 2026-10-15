@@ -7,9 +7,9 @@ const BlogItem = () => {
     <div className="blog-card">
       <div className="imgWrapper w-full rounded-md overflow-hidden group cursor-pointer relative">
         <img
-          src="https://demos.codezeel.com/prestashop/PRS21/PRS210502/img/psblog/b/9/1105_813/b-blog-7.jpg"
-          alt=""
-          className="w-full transition-all group-hover:scale-105"
+          src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=800&auto=format&fit=crop"
+          alt="blog"
+          className="w-full h-[220px] object-cover transition-all group-hover:scale-105"
         />
         <span className="date font-[400] flex items-center justify-center p-2 text-[12px] gap-1 rounded-md absolute bottom-[15px] right-[15px] bg-primary text-white ">
           <CiClock2 />
