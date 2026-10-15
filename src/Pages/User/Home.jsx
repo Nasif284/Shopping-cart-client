@@ -66,12 +66,18 @@ const Home = () => {
           </div>
           <div className="part2 w-[30%] gap-3 flex items-center flex-col justify-between">
             <BannerBoxV2
-              info="left"
-              image="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=600&auto=format&fit=crop"
+              info="right"
+              image="https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=600&auto=format&fit=crop"
+              title="Trending Footwear Collection"
+              price="$29.00"
+              link="/footwear"
             />
             <BannerBoxV2
               info="right"
-              image="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=600&auto=format&fit=crop"
+              image="https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=600&auto=format&fit=crop"
+              title="Luxury Beauty & Skincare"
+              price="$19.00"
+              link="/beauty"
             />
           </div>
         </div>
