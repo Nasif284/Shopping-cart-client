@@ -128,7 +128,6 @@ const Home = () => {
         <div className="container">
           <h2 className="text-[22px] font-[600]">Latest Products</h2>
           <ProductSlider products={latestProduct?.products} items={6} />
-          <AdsBannerSlider items={3} />
         </div>
       </section>
       <section className=" bg-white pb-5">
